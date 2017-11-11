@@ -57,10 +57,10 @@ void Controller::build_sgv_from_sgl() {
 void Controller::set_state(unsigned int next_state) {
     if(states.size() > next_state) {
         current_state = next_state;
-//        states.at(current_state)->init();
+        states.at(current_state)->init();
 
         /* Getting the sgl from the current state if updated */
-//        load_sgl_from_state();
+        load_sgl_from_state();
     } else {
         std::cerr << "Invalid state id : " << next_state << std::endl;
         end();
@@ -106,7 +106,6 @@ Controller::State::State(
 
 void Controller::State::main() {
     int ns = logic();
-//    std::cout << "return " << ns << std::endl;
 
     if(ns > -1) {
         onExit();

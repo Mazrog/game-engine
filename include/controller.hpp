@@ -72,8 +72,6 @@ public:
     /* -------------------- */
 
 
-    void debug(){ std::cout << states.size() << std::endl; }
-
     /* Event structure to be accessed from States */
     struct EventContext {
         const uint8_t           * keyboard;

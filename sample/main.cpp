@@ -6,7 +6,7 @@ int main() {
     Engine::init();
 
     Controller::State test{
-            [&] {
+            [] {
                 auto keyboard   = Engine::get_controller().eventContext.keyboard;
                 SDL_Event ev;
 
@@ -31,15 +31,12 @@ int main() {
             }
     },
     pause{
-            [&] {
+            [] {
                 auto keyboard   = Engine::get_controller().eventContext.keyboard;
                 SDL_Event ev;
 
                 while(poll_event(&ev)) {
                     switch (ev.type) {
-                        case SDL_QUIT:
-                            Engine::engine.controller.end();
-                            break;
                         case SDL_KEYDOWN:
                             if (ev.key.keysym.scancode == SDL_SCANCODE_P) {
                                 std::cout << "Resuming the game : P" << std::endl;
@@ -59,8 +56,6 @@ int main() {
     };
 
     Engine::add_states(&test, &pause);
-
-//    Engine::engine.controller.debug();
 
     Engine::start();
 
