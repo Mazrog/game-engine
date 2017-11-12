@@ -95,20 +95,3 @@ void Controller::end() {
     sgl = nullptr;
     Engine::engine.data.running = false;
 }
-
-/* Classe State */
-Controller::State::State(
-                         std::function<int()> const&    logic,
-                         std::function<void()> const&   init,
-                         std::function<void()>  const&  exit) :
-        onInit(init), logic(logic), onExit(exit),
-        sgl(nullptr) {}
-
-void Controller::State::main() {
-    int ns = logic();
-
-    if(ns > -1) {
-        onExit();
-        Engine::engine.controller.set_state(static_cast<unsigned int>(ns));
-    }
-}

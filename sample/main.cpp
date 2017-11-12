@@ -1,19 +1,19 @@
  #include <iostream>
 
 #include "engine.hpp"
+#include "samplestate.hpp"
 
 int main() {
     Engine::init();
 
-    Controller::State test{
-            [] {
+    SampleState test{
+            [&] {
                 auto keyboard   = Engine::get_controller().eventContext.keyboard;
                 SDL_Event ev;
 
                 while(poll_event(&ev)) {
                     switch (ev.type) {
                         case SDL_KEYDOWN:
-                            std::cout << "kappa" << std::endl;
                             if (ev.key.keysym.scancode == SDL_SCANCODE_P) {
                                 std::cout << "Pausing the game" << std::endl;
                                 return 1;
@@ -31,7 +31,7 @@ int main() {
             }
     },
     pause{
-            [] {
+            [&] {
                 auto keyboard   = Engine::get_controller().eventContext.keyboard;
                 SDL_Event ev;
 
@@ -39,7 +39,7 @@ int main() {
                     switch (ev.type) {
                         case SDL_KEYDOWN:
                             if (ev.key.keysym.scancode == SDL_SCANCODE_P) {
-                                std::cout << "Resuming the game : P" << std::endl;
+                                std::cout << "Resuming the game" << std::endl;
                                 return 0;
                             }
                             break;
@@ -54,6 +54,8 @@ int main() {
                 return -1;
             }
     };
+
+
 
     Engine::add_states(&test, &pause);
 

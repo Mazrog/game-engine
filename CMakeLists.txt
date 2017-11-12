@@ -14,21 +14,50 @@ set(CXX_FLAGS "-Wall -Wextra")
 
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${CXX_FLAGS}")
 
-set(SOURCE_FILES
-        sample/main.cpp
-        src/engine.cpp
-        src/display.cpp
-        src/controller.cpp
-        src/sg.cpp
+# #################################################################################################
+# Library config
+set(LIB_SRC
+        lib/src/engine.cpp
+        lib/src/display.cpp
+        lib/src/controller.cpp
+        lib/src/gamestate.cpp
+        lib/src/scenegraph/scenegraph.cpp
 )
 
-include_directories( include )
+add_library(
+        ${project_name}
+        SHARED
+        ${LIB_SRC}
+)
 
-add_executable(${project_name} ${SOURCE_FILES})
+target_include_directories( ${project_name}
+        PRIVATE lib/include
+)
 
-target_link_libraries(${project_name}
+target_link_libraries( ${project_name}
         SDL2
         ${OPENGL_LIBRARIES}
         ${GLEW_LIBRARIES}
-        # pthread
+)
+
+# #################################################################################################
+# Exec config
+set(EXEC_SRC_FILES
+        sample/main.cpp
+        sample/src/samplestate.cpp
+        sample/src/cube.cpp
+)
+
+add_executable(
+        ${project_name}_sample
+        ${EXEC_SRC_FILES}
+)
+
+target_include_directories( ${project_name}_sample
+        PRIVATE lib/include
+        PRIVATE sample/include
+)
+
+target_link_libraries( ${project_name}_sample
+        engine
 )

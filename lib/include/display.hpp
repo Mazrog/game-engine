@@ -10,7 +10,7 @@
 #include <SDL2/SDL.h>
 #include <GL/glew.h>
 
-#include "sg.hpp"
+#include "scenegraph/scenegraph.hpp"
 
 void get_error(const char * t = "");
 

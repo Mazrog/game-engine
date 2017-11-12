@@ -8,40 +8,13 @@
 #include <iostream>
 #include <vector>
 #include <queue>
-#include <functional>
 
-#include "sg.hpp"
+#include "gamestate.hpp"
+#include "scenegraph/scenegraph.hpp"
 
 int poll_event(SDL_Event * event);
 
 class Controller {
-    /* Définition classe State */
-public:
-    class State{
-    public:
-        State(
-                std::function<int()> const&   main,
-                std::function<void()> const&  init = [] {},
-                std::function<void()> const&  exit = [] {}
-        );
-
-        ~State() { delete sgl; };
-
-        void init() { onInit(); }
-        void main();
-
-        SGL * get_sgl() const { return sgl; }
-
-    private:
-        /* Base functions */
-        std::function<void()>   onInit;
-        std::function<int()>    logic;
-        std::function<void()>   onExit;
-
-        SGL         * sgl;
-    };
-
-/* ---------------------------------------------------------------- */
 public:
     Controller();
 
@@ -54,7 +27,7 @@ public:
 
     /* Add States ---------------------------------------------------- */
     template <typename ...Trail>
-    void add_states(State * s, Trail... ts){
+    void add_states(GameState * s, Trail... ts){
         states.push_back(s);
         add_states(ts...);
     }
@@ -83,7 +56,7 @@ private:
     SGL             * sgl;
 
     /* States */
-    std::vector<State *>    states;
+    std::vector<GameState *>    states;
     unsigned int            current_state;
 };
 
