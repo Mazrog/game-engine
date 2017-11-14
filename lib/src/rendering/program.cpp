@@ -100,6 +100,8 @@ void ShaderProgram::linkProgram(GLuint& _progId, GLuint vertexShader, GLuint fra
         return;
     }
 
+    glUseProgram(_progId); get_error();
+
     /* Program is ok, we can detach, free and delete shaders */
     glDetachShader(_progId, vertexShader); get_error();
     glDetachShader(_progId, fragmentShader); get_error();

@@ -6,8 +6,12 @@
 #define ENGINE_RENDERER_HPP
 
 #include "scenegraph/sg_logic.hpp"
+#include "program.hpp"
 
 class Renderer {
+public:
+    static ShaderProgram        prog;
+
 protected:
     virtual void operator() ( ) = 0;
 };

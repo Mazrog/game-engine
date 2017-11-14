@@ -15,7 +15,6 @@
 class RenderElement : public Renderer {
 public:
     static void init();
-    static ShaderProgram   prog;
 
 public:
     RenderElement() = default;

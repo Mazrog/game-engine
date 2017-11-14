@@ -3,7 +3,9 @@
 #include "engine.hpp"
 
 #include "rendering/renderElement.hpp"
+#include "rendering/simpleRender.hpp"
 #include "src/cube.hpp"
+#include "src/triangle.hpp"
 #include "state/samplestate.hpp"
 
 int paused_game(GameState *){
@@ -60,8 +62,10 @@ int main() {
 
     /*  */
     Cube<RenderElement> * c = new Cube<RenderElement>();
-
     test.bind(SG_NODE_TYPE::SG_STATIC, "cube", c);
+
+    Triangle<SimpleRender> * t =  new Triangle<SimpleRender>();
+    test.bind(SG_NODE_TYPE::SG_STATIC, "triangle", t);
 
     /* ----------- */
 
@@ -71,6 +75,7 @@ int main() {
 
 
     delete c;
+    delete t;
 
     return 0;
 }

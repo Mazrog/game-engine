@@ -48,5 +48,5 @@ Cube<Render>::~Cube() = default;
 
 template < class Render >
 void Cube<Render>::render() {
-    Render()();
+    renderer();
 }

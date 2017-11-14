@@ -8,10 +8,8 @@
 #include "display.hpp"
 #include "renderElement.hpp"
 
-ShaderProgram RenderElement::prog;
-
 void RenderElement::init() {
-    RenderElement::prog = ShaderProgram("sample/shaders/vert.glsl", "sample/shaders/frag.glsl");
+    prog = ShaderProgram("sample/shaders/vert.glsl", "sample/shaders/frag.glsl");
 }
 
 RenderElement::RenderElement(SGL_Node * node) {
@@ -31,8 +29,9 @@ RenderElement::RenderElement(SGL_Node * node) {
 
     glEnableVertexAttribArray(0); get_error();
     glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, (void *) 0); get_error();
-    glEnableVertexAttribArray(1); get_error();
+    glEnableVertexAttribArray(3); get_error();
     glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 0, (void *) 0); get_error();
+
 }
 
 void RenderElement::operator()() {
