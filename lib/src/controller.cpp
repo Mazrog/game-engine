@@ -10,11 +10,12 @@
 /* ######################################################## */
 /* Dequeuing the events saved in the event Context */
 int poll_event(SDL_Event *event) {
-    if(Engine::get_controller().eventContext.events.empty()){
+    std::queue<SDL_Event> & queue = Engine::get_controller().eventContext.events;
+    if(queue.empty()){
         return 0;
     } else {
-        *event = Engine::get_controller().eventContext.events.front();
-        Engine::get_controller().eventContext.events.pop();
+        *event = queue.front();
+        queue.pop();
         return 1;
     }
 }
@@ -29,24 +30,27 @@ void Controller::init() {
             SDL_GetKeyboardState(nullptr),
             std::queue<SDL_Event>()
     };
-
-    current_state = 0;
 }
 
 void Controller::start() {
-    states.at(current_state)->init();
+    set_state(0);
 }
 
 void Controller::load_sgl_from_state() {
     if(states.size() > current_state){
         sgl = states.at(current_state)->get_sgl();
+        build_sgv_from_sgl();
     } else {
         std::cerr << "No current state to get the SGL from, please set one." << std::endl;
     }
 }
 
 void Controller::build_sgv_from_sgl() {
-    SGV * sgv = nullptr;
+    SGV * sgv = new SGV();
+
+    for(auto& it : sgl->rendering_order){
+        sgv->nodes.push_back(it);
+    }
 
     /* Convert phase */
     /* Updating the sgv */
@@ -59,7 +63,6 @@ void Controller::set_state(unsigned int next_state) {
         current_state = next_state;
         states.at(current_state)->init();
 
-        /* Getting the sgl from the current state if updated */
         load_sgl_from_state();
     } else {
         std::cerr << "Invalid state id : " << next_state << std::endl;

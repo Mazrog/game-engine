@@ -76,5 +76,5 @@ void Display::frame() {
 }
 
 void Display::render_sgv(SGV * sgv) {
-
+    sgv->render();
 }

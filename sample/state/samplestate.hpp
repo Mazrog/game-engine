@@ -10,9 +10,9 @@
 class SampleState : public GameState {
 public:
     explicit SampleState(
-            std::function<int()> const&   main,
-            std::function<void()> const&  init = [] {},
-            std::function<void()> const&  exit = [] {}
+            std::function<int(GameState * self)> const&   main,
+            std::function<void(GameState * self)> const&  init = [] (GameState *) {},
+            std::function<void(GameState * self)> const&  exit = [] (GameState *) {}
     );
 
     ~SampleState() = default;

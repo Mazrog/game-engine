@@ -10,7 +10,7 @@
 #include <SDL2/SDL.h>
 #include <GL/glew.h>
 
-#include "scenegraph/scenegraph.hpp"
+#include "scenegraph/sg_visual.hpp"
 
 void get_error(const char * t = "");
 
@@ -24,12 +24,6 @@ public:
     void frame();
 
     void render_sgv(SGV * sgv);
-
-private:
-    /* Render variables */
-    GLuint      prog;
-    GLuint      vao;
-    GLuint      vbo;
 };
 
 

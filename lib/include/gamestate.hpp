@@ -8,28 +8,36 @@
 
 #include <functional>
 
-#include "scenegraph/scenegraph.hpp"
+#include "scenegraph/sg_logic.hpp"
 
 class GameState{
 public:
     GameState(
-            std::function<int()> const&   main,
-            std::function<void()> const&  init,
-            std::function<void()> const&  exit
+            std::function<int(GameState * self)> const&   main,
+            std::function<void(GameState * self)> const&  init,
+            std::function<void(GameState * self)> const&  exit
     );
 
     virtual ~GameState();
 
     virtual void init() = 0;
+    virtual void init(GameState * self);
+
     virtual void main() = 0;
+    virtual void main(GameState * self);
+
     virtual void exit() = 0;
+    virtual void exit(GameState * self);
+
+
+    void bind(SG_NODE_TYPE type, const char * name, SGL_Node * node);
 
     SGL * get_sgl() const { return sgl; }
 
 protected:
-    std::function<void()>   onInit;
-    std::function<int()>    logic;
-    std::function<void()>   onExit;
+    std::function<void(GameState * self)>   onInit;
+    std::function<int(GameState * self)>    logic;
+    std::function<void(GameState * self)>   onExit;
 
     SGL         * sgl;
 };

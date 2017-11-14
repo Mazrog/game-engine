@@ -57,7 +57,7 @@ private:
 
     /* States */
     std::vector<GameState *>    states;
-    unsigned int            current_state;
+    unsigned int                current_state;
 };
 
 

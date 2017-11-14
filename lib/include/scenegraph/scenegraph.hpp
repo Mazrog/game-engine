@@ -5,18 +5,25 @@
 #ifndef ENGINE_SG_HPP
 #define ENGINE_SG_HPP
 
+#include <vector>
+#include <map>
+#include <glm/glm.hpp>
 
-class SG {
-
+enum class SG_NODE_TYPE : unsigned {
+    SG_STATIC,
+    SG_DYNAMIC,
+    SG_CAMERA,
+    SG_FORCE
 };
 
 
-class SGV : public SG{
+struct RenderingData {
+    std::vector<glm::vec3>  vertices;
+    std::vector<glm::vec3>  uvs;
+    std::vector<glm::vec3>  normals;
+    std::vector<unsigned >  links;
 
-};
-
-class SGL : public SG{
-
+    RenderingData();
 };
 
 #endif //ENGINE_SG_HPP

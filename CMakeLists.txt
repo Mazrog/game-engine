@@ -21,7 +21,14 @@ set(LIB_SRC
         lib/src/display.cpp
         lib/src/controller.cpp
         lib/src/gamestate.cpp
+
         lib/src/scenegraph/scenegraph.cpp
+        lib/src/scenegraph/sg_logic.cpp
+        lib/src/scenegraph/sg_visual.cpp
+
+        lib/src/rendering/renderer.cpp
+        lib/src/rendering/camera.cpp
+        lib/src/rendering/program.cpp
 )
 
 add_library(
@@ -44,8 +51,11 @@ target_link_libraries( ${project_name}
 # Exec config
 set(EXEC_SRC_FILES
         sample/main.cpp
-        sample/src/samplestate.cpp
-        sample/src/cube.cpp
+
+        sample/state/samplestate.cpp
+
+        sample/rendering/simpleRender.cpp
+        sample/rendering/renderElement.cpp
 )
 
 add_executable(
@@ -55,7 +65,9 @@ add_executable(
 
 target_include_directories( ${project_name}_sample
         PRIVATE lib/include
-        PRIVATE sample/include
+        PRIVATE sample/rendering
+        PRIVATE sample/src
+        PRIVATE sample/state
 )
 
 target_link_libraries( ${project_name}_sample
