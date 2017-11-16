@@ -18,14 +18,16 @@ public:
     virtual ~SGL_Node() = default;
 
     virtual void render() = 0;
+    RenderingData&  get_rendering_data() { return renderingData; }
+    DynamicData&    get_dynamic_data() { return dynamicData; }
 
-    virtual RenderingData& get_data() { return renderingData; };
 
     bool operator<(SGL_Node && b);
 
 protected:
     unsigned        draw_order; /* Draw order for the rendering */
     RenderingData   renderingData;
+    DynamicData     dynamicData;
 };
 
 

@@ -29,9 +29,13 @@ public:
     virtual void exit() = 0;
     virtual void exit(GameState * self);
 
-
+    /* FONCTIONS EXPOSURE */
     void bind(SG_NODE_TYPE type, const char * name, SGL_Node * node);
 
+    /* Element getters */
+    SGL_Node * get(const char * name);
+
+    /* GETTERS */
     SGL * get_sgl() const { return sgl; }
 
 protected:

@@ -11,6 +11,7 @@
 /* Dequeuing the events saved in the event Context */
 int poll_event(SDL_Event *event) {
     std::queue<SDL_Event> & queue = Engine::get_controller().eventContext.events;
+
     if(queue.empty()){
         return 0;
     } else {

@@ -16,19 +16,20 @@ set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${CXX_FLAGS}")
 
 # #################################################################################################
 # Library config
+#                       ENGINE
 set(LIB_SRC
-        lib/src/engine.cpp
-        lib/src/display.cpp
-        lib/src/controller.cpp
-        lib/src/gamestate.cpp
+        lib_engine/src/engine.cpp
+        lib_engine/src/display.cpp
+        lib_engine/src/controller.cpp
+        lib_engine/src/gamestate.cpp
 
-        lib/src/scenegraph/scenegraph.cpp
-        lib/src/scenegraph/sg_logic.cpp
-        lib/src/scenegraph/sg_visual.cpp
+        lib_engine/src/scenegraph/scenegraph.cpp
+        lib_engine/src/scenegraph/sg_logic.cpp
+        lib_engine/src/scenegraph/sg_visual.cpp
 
-        lib/src/rendering/renderer.cpp
-        lib/src/rendering/camera.cpp
-        lib/src/rendering/program.cpp
+        lib_engine/src/rendering/renderer.cpp
+        lib_engine/src/rendering/camera.cpp
+        lib_engine/src/rendering/program.cpp
 )
 
 add_library(
@@ -38,14 +39,32 @@ add_library(
 )
 
 target_include_directories( ${project_name}
-        PRIVATE lib/include
+        PRIVATE lib_engine/include
 )
 
 target_link_libraries( ${project_name}
         SDL2
+        SDL2_image
         ${OPENGL_LIBRARIES}
         ${GLEW_LIBRARIES}
 )
+# ####################################################
+#                       GEOMETRY
+set(LIB_GEOM_SRC
+        lib_geom/src/base.cpp
+)
+
+add_library(
+        geom
+        SHARED
+        ${LIB_GEOM_SRC}
+)
+
+target_include_directories( geom
+        PRIVATE lib_geom/include
+)
+
+#target_link_libraries( geom )
 
 # #################################################################################################
 # Exec config
@@ -64,7 +83,9 @@ add_executable(
 )
 
 target_include_directories( ${project_name}_sample
-        PRIVATE lib/include
+        PRIVATE lib_engine/include
+        PRIVATE lib_geom/include
+
         PRIVATE sample/rendering
         PRIVATE sample/src
         PRIVATE sample/state
@@ -72,4 +93,5 @@ target_include_directories( ${project_name}_sample
 
 target_link_libraries( ${project_name}_sample
         engine
+        geom
 )

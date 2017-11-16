@@ -38,3 +38,7 @@ void GameState::init() { init(this); }
 void GameState::bind(SG_NODE_TYPE type, const char * name, SGL_Node *node) {
     sgl->bind(type, name, node);
 }
+
+SGL_Node * GameState::get(const char *name) {
+    return sgl->graph.at(name);
+}

@@ -5,6 +5,8 @@
 #ifndef ENGINE_RENDERER_HPP
 #define ENGINE_RENDERER_HPP
 
+#include <glm/gtc/type_ptr.hpp>
+
 #include "scenegraph/sg_logic.hpp"
 #include "program.hpp"
 
@@ -13,7 +15,7 @@ public:
     static ShaderProgram        prog;
 
 protected:
-    virtual void operator() ( ) = 0;
+    virtual void operator() ( DynamicData const& dd ) = 0;
 };
 
 

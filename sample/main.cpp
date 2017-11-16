@@ -1,6 +1,7 @@
 #include <iostream>
 
 #include "engine.hpp"
+#include "base.hpp"
 
 #include "rendering/renderElement.hpp"
 #include "rendering/simpleRender.hpp"
@@ -35,7 +36,7 @@ int main() {
     Engine::init();
 
     SampleState test{
-            [] (GameState *) {
+            [] (GameState * self) {
                 auto keyboard   = Engine::get_controller().eventContext.keyboard;
                 SDL_Event ev;
 
@@ -49,6 +50,36 @@ int main() {
                             break;
                         default:;
                     }
+                }
+
+                if(keyboard[SDL_SCANCODE_UP]){
+                    translate(*self->get("triangle")->get_dynamic_data().tranform,
+                              glm::vec3(0.f, .05f, 0.f));
+                }
+
+                if(keyboard[SDL_SCANCODE_DOWN]){
+                    translate(*self->get("triangle")->get_dynamic_data().tranform,
+                              glm::vec3(0.f, -.05f, 0.f));
+                }
+
+                if(keyboard[SDL_SCANCODE_RIGHT]){
+                    translate(*self->get("triangle")->get_dynamic_data().tranform,
+                              glm::vec3(.05f, 0.f, 0.f));
+                }
+
+                if(keyboard[SDL_SCANCODE_LEFT]){
+                    translate(*self->get("triangle")->get_dynamic_data().tranform,
+                              glm::vec3(-.05f, 0.f, 0.f));
+                }
+
+                if(keyboard[SDL_SCANCODE_S]){
+                    scale(*self->get("triangle")->get_dynamic_data().tranform,
+                              glm::vec3(0.97f, 1.f, 1.f));
+                }
+
+                if(keyboard[SDL_SCANCODE_D]){
+                    scale(*self->get("triangle")->get_dynamic_data().tranform,
+                          glm::vec3(1.03f, 1.f, 1.f));
                 }
 
                 if(keyboard[SDL_SCANCODE_E]){
@@ -72,7 +103,6 @@ int main() {
     Engine::add_states(&test, &pause);
 
     Engine::start();
-
 
     delete c;
     delete t;

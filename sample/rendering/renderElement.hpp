@@ -22,11 +22,13 @@ public:
 
     ~RenderElement() = default;
 
-    void operator()() override;
+    void operator()( DynamicData const& dd ) override;
 
 private:
     GLuint          vao;
     GLuint          vbos[3];
+
+    GLint           transform_loc;
 };
 
 
