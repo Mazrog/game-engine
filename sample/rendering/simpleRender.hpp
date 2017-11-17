@@ -11,14 +11,15 @@
 class SimpleRender : public Renderer {
 public:
     static void init();
+    static ShaderProgram    prog;
 
 public:
-    SimpleRender() = default;
+    SimpleRender();
     explicit SimpleRender(SGL_Node * node);
     void operator() ( DynamicData const& dd ) override;
 
 private:
-    glm::mat4 *       transform;
+//    glm::mat4 *       transform;
 
     GLuint          vao;
     GLuint          vbos[2];

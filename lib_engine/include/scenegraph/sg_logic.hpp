@@ -8,13 +8,16 @@
 #include <set>
 
 #include "scenegraph.hpp"
-#include "rendering/camera.hpp"
 
-/*  */
+/* Forward declarations */
+class Camera;
+
+
+/* --------------------- */
 
 class SGL_Node {
 public:
-    SGL_Node() = default;
+    SGL_Node();
     virtual ~SGL_Node() = default;
 
     virtual void render() = 0;
@@ -25,7 +28,7 @@ public:
     bool operator<(SGL_Node && b);
 
 protected:
-    unsigned        draw_order; /* Draw order for the rendering */
+    int             draw_order; /* Draw order for the rendering */
     RenderingData   renderingData;
     DynamicData     dynamicData;
 };

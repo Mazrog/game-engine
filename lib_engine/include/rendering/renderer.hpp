@@ -11,9 +11,6 @@
 #include "program.hpp"
 
 class Renderer {
-public:
-    static ShaderProgram        prog;
-
 protected:
     virtual void operator() ( DynamicData const& dd ) = 0;
 };

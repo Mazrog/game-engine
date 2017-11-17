@@ -33,13 +33,13 @@ void Engine::start() {
     engine.controller.start();
 
     while(engine.data.running){
-        /* Controller */
-        engine.controller.control();
-
         /* Display */
         engine.display.cls();
         engine.display.render_sgv(engine.data.sgv);
         engine.display.frame();
+
+        /* Controller */
+        engine.controller.control();
         delay();
     }
 

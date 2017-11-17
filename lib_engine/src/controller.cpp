@@ -49,7 +49,7 @@ void Controller::load_sgl_from_state() {
 void Controller::build_sgv_from_sgl() {
     SGV * sgv = new SGV();
 
-    for(auto& it : sgl->rendering_order){
+    for(auto const& it : sgl->rendering_order){
         sgv->nodes.push_back(it);
     }
 
@@ -96,6 +96,7 @@ void Controller::control() {
 }
 
 void Controller::end() {
+    states.at(current_state)->exit();
     sgl = nullptr;
     Engine::engine.data.running = false;
 }

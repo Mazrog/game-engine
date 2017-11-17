@@ -7,9 +7,16 @@
 #include "rendering/program.hpp"
 #include "display.hpp"
 
+ShaderProgram SimpleRender::prog;
+
 void SimpleRender::init() {
-    Renderer::prog = ShaderProgram("sample/shaders/vert.glsl", "sample/shaders/frag.glsl");
+    std::cout << "simple render " << prog.getProgId() << std::endl;
+    if(!prog.getProgId()) {
+        prog = ShaderProgram("sample/shaders/vert.glsl", "sample/shaders/frag.glsl");
+    }
 }
+
+SimpleRender::SimpleRender() : vao(), vbos(), transform_loc() {}
 
 SimpleRender::SimpleRender(SGL_Node * node) {
     RenderingData& rd = node->get_rendering_data();
@@ -29,15 +36,15 @@ SimpleRender::SimpleRender(SGL_Node * node) {
 
 
     /* TO BE WRAPPED */
-    transform_loc = glGetUniformLocation(prog.getProgId(), "transform"); get_error();
+    transform_loc = glGetUniformLocation(prog.getProgId(), "transform"); get_error("k");
 }
 
 void SimpleRender::operator()(DynamicData const& dd) {
-    prog.useProgram();
-    glBindVertexArray(vao);     get_error();
-
-    /* Sending uniforms if they have changed */
-    glUniformMatrix4fv(transform_loc, 1, GL_FALSE, glm::value_ptr(*dd.tranform)); get_error();
-
-    glDrawArrays(GL_TRIANGLES, 0, 3); get_error("rendering");
+//    prog.useProgram();
+//    glBindVertexArray(vao);     get_error();
+//
+//    /* Sending uniforms if they have changed */
+//    glUniformMatrix4fv(transform_loc, 1, GL_FALSE, glm::value_ptr(*dd.tranform)); get_error();
+//
+//    glDrawArrays(GL_TRIANGLES, 0, 3); get_error("rendering");
 }

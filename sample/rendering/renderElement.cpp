@@ -8,9 +8,16 @@
 #include "display.hpp"
 #include "renderElement.hpp"
 
+ShaderProgram RenderElement::prog;
+
 void RenderElement::init() {
-    prog = ShaderProgram("sample/shaders/vert.glsl", "sample/shaders/frag.glsl");
+    std::cout << "Render element " << prog.getProgId() << std::endl;
+    if(!prog.getProgId()) {
+        prog = ShaderProgram("sample/shaders/vert.glsl", "sample/shaders/frag.glsl");
+    }
 }
+
+RenderElement::RenderElement() : vao(), vbos(), transform_loc() {}
 
 RenderElement::RenderElement(SGL_Node * node) {
     RenderingData& rd = node->get_rendering_data();
@@ -62,5 +69,5 @@ void RenderElement::operator()(DynamicData const& dd) {
 
     glUniformMatrix4fv(transform_loc, 1, GL_FALSE, glm::value_ptr(*dd.tranform)); get_error();
 
-    glDrawElements(GL_TRIANGLES, 12, GL_UNSIGNED_INT, (void *) 0); get_error();
+    glDrawElements(GL_TRIANGLES, 12, GL_UNSIGNED_INT, (void *) 0); get_error("rendering..");
 }

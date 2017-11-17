@@ -15,7 +15,7 @@ public:
             std::function<void(GameState * self)> const&  exit = [] (GameState *) {}
     );
 
-    ~SampleState() = default;
+    ~SampleState() override = default;
 
     void init() override;
     void main() override;

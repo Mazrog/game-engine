@@ -30,6 +30,7 @@ public:
     /* static getters */
     static Controller& get_controller() { return engine.controller; }
     static Display&    get_display() { return engine.display; }
+    
 
     /* Attributes */
     Display      display;
@@ -57,6 +58,14 @@ private:
     void onQuit();
 
 };
+
+
+/* DEBUG SHIT */
+
+template < class ...Args >
+void pretty(Args...){
+    std::cout << __PRETTY_FUNCTION__ << std::endl;
+}
 
 
 #endif //ENGINE_ENGINE_HPP

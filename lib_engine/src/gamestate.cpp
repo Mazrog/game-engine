@@ -35,6 +35,8 @@ void GameState::main() { main(this); }
 
 void GameState::init() { init(this); }
 
+void GameState::exit() { exit(this); }
+
 void GameState::bind(SG_NODE_TYPE type, const char * name, SGL_Node *node) {
     sgl->bind(type, name, node);
 }

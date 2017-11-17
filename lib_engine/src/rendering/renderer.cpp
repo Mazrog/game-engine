@@ -3,5 +3,3 @@
 //
 
 #include "rendering/renderer.hpp"
-
-ShaderProgram Renderer::prog;

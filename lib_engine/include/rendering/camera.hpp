@@ -6,12 +6,19 @@
 #define ENGINE_CAMERA_HPP
 
 #include <glm/glm.hpp>
+#include <GL/glew.h>
+#include "scenegraph/sg_logic.hpp"
 
-class Camera {
+
+class Camera : public SGL_Node {
 public:
     Camera();
 
+    void render();
+
 private:
+    GLint  transform_loc;
+
     glm::vec3 pos;
     glm::vec3 aim;
     glm::vec3 normal;

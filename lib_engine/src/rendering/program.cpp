@@ -114,5 +114,6 @@ GLuint ShaderProgram::getProgId() const {
 }
 
 void ShaderProgram::useProgram() {
-    glUseProgram(_progId); get_error();
+    std::cerr << _progId << std::endl;
+    glUseProgram(_progId); get_error("l");
 }

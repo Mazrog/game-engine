@@ -20,13 +20,13 @@ public:
 
     virtual ~GameState();
 
-    virtual void init() = 0;
+    virtual void init();
     virtual void init(GameState * self);
 
-    virtual void main() = 0;
+    virtual void main();
     virtual void main(GameState * self);
 
-    virtual void exit() = 0;
+    virtual void exit();
     virtual void exit(GameState * self);
 
     /* FONCTIONS EXPOSURE */

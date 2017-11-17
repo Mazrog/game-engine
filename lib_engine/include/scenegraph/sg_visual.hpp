@@ -10,7 +10,7 @@
 
 class SGV {
 public:
-    SGV();
+    SGV() = default;
 
     void render();
 

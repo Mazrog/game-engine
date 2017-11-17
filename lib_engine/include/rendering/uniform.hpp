@@ -5,9 +5,12 @@
 #ifndef ENGINE_UNIFORM_HPP
 #define ENGINE_UNIFORM_HPP
 
+#include <GL/glew.h>
 
 struct Uniform {
+    Uniform(GLuint progid, const char * name);
 
+    GLuint progid;
 };
 
 

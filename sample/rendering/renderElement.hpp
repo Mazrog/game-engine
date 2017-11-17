@@ -15,9 +15,10 @@
 class RenderElement : public Renderer {
 public:
     static void init();
+    static ShaderProgram    prog;
 
 public:
-    RenderElement() = default;
+    RenderElement();
     explicit RenderElement(SGL_Node * node);
 
     ~RenderElement() = default;
