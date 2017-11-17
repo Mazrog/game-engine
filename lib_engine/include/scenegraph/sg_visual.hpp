@@ -10,12 +10,14 @@
 
 class SGV {
 public:
-    SGV() = default;
+    SGV(SGL * & sgl);
 
     void render();
 
     /* Attributs */
-    std::vector<SGL_Node *>     nodes;
+    std::vector<SGL_Node *>      nodes;
+    unsigned                     current_camera;
+    std::vector<Camera *>      * cameras;
 };
 
 

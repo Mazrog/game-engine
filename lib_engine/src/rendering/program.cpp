@@ -27,6 +27,8 @@ char * filetobuf(const char *file) {
     return buf;
 }
 
+ShaderProgram::ShaderProgram() : _progId(0) {}
+
 ShaderProgram::ShaderProgram(const char *vertexPath, const char *fragmentPath) {
     /* Shaders id */
     GLuint vertexShader, fragmentShader;
@@ -36,7 +38,7 @@ ShaderProgram::ShaderProgram(const char *vertexPath, const char *fragmentPath) {
     /* Fragment Shader creation */
     fragmentShader = makeShader(fragmentPath, GL_FRAGMENT_SHADER);
     /* Linking to the program */
-    linkProgram(_progId, vertexShader, fragmentShader);
+    linkProgram(vertexShader, fragmentShader);
 }
 
 ShaderProgram::~ShaderProgram() {
@@ -73,7 +75,7 @@ GLuint ShaderProgram::makeShader(std::string const& file, GLenum type) {
     return shader;
 }
 
-void ShaderProgram::linkProgram(GLuint& _progId, GLuint vertexShader, GLuint fragmentShader) {
+void ShaderProgram::linkProgram(GLuint vertexShader, GLuint fragmentShader) {
     /* Variables */
     int isLinked; // result of linking shaders to program
     int maxLength;
@@ -114,6 +116,5 @@ GLuint ShaderProgram::getProgId() const {
 }
 
 void ShaderProgram::useProgram() {
-    std::cerr << _progId << std::endl;
-    glUseProgram(_progId); get_error("l");
+    glUseProgram(_progId); get_error();
 }

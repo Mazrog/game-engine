@@ -10,9 +10,8 @@
 ShaderProgram SimpleRender::prog;
 
 void SimpleRender::init() {
-    std::cout << "simple render " << prog.getProgId() << std::endl;
-    if(!prog.getProgId()) {
-        prog = ShaderProgram("sample/shaders/vert.glsl", "sample/shaders/frag.glsl");
+    if(!SimpleRender::prog.getProgId()) {
+        SimpleRender::prog = ShaderProgram("sample/shaders/vert.glsl", "sample/shaders/frag.glsl");
     }
 }
 
@@ -40,11 +39,11 @@ SimpleRender::SimpleRender(SGL_Node * node) {
 }
 
 void SimpleRender::operator()(DynamicData const& dd) {
-//    prog.useProgram();
-//    glBindVertexArray(vao);     get_error();
-//
-//    /* Sending uniforms if they have changed */
-//    glUniformMatrix4fv(transform_loc, 1, GL_FALSE, glm::value_ptr(*dd.tranform)); get_error();
-//
-//    glDrawArrays(GL_TRIANGLES, 0, 3); get_error("rendering");
+    prog.useProgram();
+    glBindVertexArray(vao);     get_error();
+
+    /* Sending uniforms if they have changed */
+    glUniformMatrix4fv(transform_loc, 1, GL_FALSE, glm::value_ptr(*dd.tranform)); get_error();
+
+    glDrawArrays(GL_TRIANGLES, 0, 3); get_error("rendering");
 }

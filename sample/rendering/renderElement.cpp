@@ -11,9 +11,8 @@
 ShaderProgram RenderElement::prog;
 
 void RenderElement::init() {
-    std::cout << "Render element " << prog.getProgId() << std::endl;
-    if(!prog.getProgId()) {
-        prog = ShaderProgram("sample/shaders/vert.glsl", "sample/shaders/frag.glsl");
+    if(!RenderElement::prog.getProgId()) {
+        RenderElement::prog = ShaderProgram("sample/shaders/vert.glsl", "sample/shaders/frag.glsl");
     }
 }
 

@@ -17,7 +17,7 @@ class Camera;
 
 class SGL_Node {
 public:
-    SGL_Node();
+    SGL_Node(unsigned dr_order = 0);
     virtual ~SGL_Node() = default;
 
     virtual void render() = 0;
@@ -42,6 +42,8 @@ public:
     void bind(SG_NODE_TYPE type, const char * name, SGL_Node * node);
 
     /* Attributs */
+    unsigned                                        current_camera;
+
     std::vector<Camera *>                           cameras;
     std::map<const char *, SGL_Node *>              graph;
     std::map<SG_NODE_TYPE, std::vector<SGL_Node *>> nodes;

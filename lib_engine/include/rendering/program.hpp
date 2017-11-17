@@ -10,14 +10,32 @@
 
 class ShaderProgram {
 public:
-    ShaderProgram() = default;
+    ShaderProgram();
     ShaderProgram(const char *vertexPath, const char *fragmentPath);
+
+    /* Deleting the copy operators */
+    ShaderProgram(ShaderProgram const&) = delete;
+    ShaderProgram& operator=(ShaderProgram const&) = delete;
+
+    /* Move constructors + move operators */
+    ShaderProgram(ShaderProgram && program) : _progId(std::move(program.getProgId())) {
+        program.setProgId(0);
+    }
+
+    ShaderProgram& operator=(ShaderProgram && program) {
+        _progId = std::move(program.getProgId());
+        program.setProgId(0);
+        return *this;
+    }
+
     ~ShaderProgram();
 
 
     GLuint makeShader(std::string const& file, GLenum type);
-    void linkProgram(GLuint& _progId, GLuint vertexShader, GLuint fragmentShader);
+    void linkProgram(GLuint vertexShader, GLuint fragmentShader);
+
     GLuint getProgId() const;
+    void setProgId(GLuint val) { _progId = val; }
 
     void useProgram();
 

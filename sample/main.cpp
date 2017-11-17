@@ -89,19 +89,16 @@ int main() {
                 return -1;
             },
             [] (GameState * self) {
-                std::cout << "init" << std::endl;
                 Cube<RenderElement> * c = new Cube<RenderElement>();
                 self->bind(SG_NODE_TYPE::SG_STATIC, "cube", c);
 
 
                 Triangle<SimpleRender> * t =  new Triangle<SimpleRender>();
-//                std::shared_ptr<Triangle<SimpleRender>> t =  std::make_shared<Triangle<SimpleRender>>();
                 self->bind(SG_NODE_TYPE::SG_STATIC, "triangle", t);
 
 
                 Camera * camera = new Camera();
                 self->bind(SG_NODE_TYPE::SG_CAMERA, "main_camera", camera);
-
             },
             [] (GameState * self) {
                 delete self->get("cube");
