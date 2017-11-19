@@ -59,7 +59,13 @@ Cube< Render >::Cube() {
         renderingData.links->push_back(linking[i]);
     }
 
-    dynamicData.tranform = std::make_unique<glm::mat4>();
+    glm::vec3 scale(1.f);
+
+    dynamicData.tranform = std::make_unique<glm::mat4>(
+            scale.x, 0, 0, 0,
+            0, scale.y, 0, 0,
+            0, 0, scale.z, 0,
+            0, 0, 0, 1.f);
 
     Render::init();
     renderer = Render(this);

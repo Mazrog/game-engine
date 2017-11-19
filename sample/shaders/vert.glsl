@@ -7,11 +7,13 @@ layout (location = 10) in vec3 in_uvs;
 
 uniform mat4 transform;
 
+uniform mat4 viewpoint_camera;
+
 out vec3 move_color;
 out vec3 move_uvs;
 
 void main() {
-    gl_Position = transform * vec4(in_pos, 1.0);
+    gl_Position = viewpoint_camera * transform * vec4(in_pos, 1.0);
 
     move_color = in_col;
     move_uvs = in_uvs;

@@ -17,8 +17,8 @@ class Camera;
 
 class SGL_Node {
 public:
-    SGL_Node(unsigned dr_order = 0);
-    virtual ~SGL_Node() = default;
+    SGL_Node(int dr_order = 0);
+    virtual ~SGL_Node();
 
     virtual void render() = 0;
     RenderingData&  get_rendering_data() { return renderingData; }
@@ -38,8 +38,11 @@ protected:
 class SGL {
 public:
     SGL();
+    ~SGL();
 
     void bind(SG_NODE_TYPE type, const char * name, SGL_Node * node);
+
+    void clear();
 
     /* Attributs */
     unsigned                                        current_camera;

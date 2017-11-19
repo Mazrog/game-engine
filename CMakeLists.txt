@@ -22,6 +22,7 @@ set(LIB_SRC
         lib_engine/src/display.cpp
         lib_engine/src/controller.cpp
         lib_engine/src/gamestate.cpp
+        lib_engine/src/utils.cpp
 
         lib_engine/src/scenegraph/scenegraph.cpp
         lib_engine/src/scenegraph/sg_logic.cpp
@@ -30,6 +31,7 @@ set(LIB_SRC
         lib_engine/src/rendering/renderer.cpp
         lib_engine/src/rendering/camera.cpp
         lib_engine/src/rendering/program.cpp
+        lib_engine/src/rendering/uniform.cpp
 )
 
 add_library(

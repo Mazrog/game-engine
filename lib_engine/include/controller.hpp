@@ -12,12 +12,15 @@
 #include "gamestate.hpp"
 #include "scenegraph/scenegraph.hpp"
 
+/* Reading the event queue */
 int poll_event(SDL_Event * event);
+
 
 class Controller {
 public:
     Controller();
 
+    /* Startup functions to init the context */
     void init();
     void start();
 
@@ -27,8 +30,8 @@ public:
 
     /* Add States ---------------------------------------------------- */
     template <typename ...Trail>
-    void add_states(GameState * s, Trail... ts){
-        states.push_back(s);
+    void add_states(GameState & s, Trail && ... ts){
+        states.push_back(std::make_shared<GameState>(std::move(s)));
         add_states(ts...);
     }
     template <typename ...Trail> void add_states() {}
@@ -53,11 +56,11 @@ public:
     }               eventContext;
     /* ------------------------------------------ */
 private:
-    SGL             * sgl;
+    s_sgl                                       sgl;
 
     /* States */
-    std::vector<GameState *>    states;
-    unsigned int                current_state;
+    std::vector<std::shared_ptr<GameState>>     states;
+    unsigned int                                current_state;
 };
 
 

@@ -3,29 +3,28 @@
 //
 
 #include <chrono>
+#include <SDL2/SDL_image.h>
 
 #include "engine.hpp"
 #include "display.hpp"
-
-void get_error(const char * t){
-    GLenum err;
-    if((err = glGetError()) != GLEW_OK){
-        std::cerr << t << std::endl;
-        std::cerr << "Erreur OpenGL (" << err << ") : " << glewGetErrorString(err) << " -- " << gluErrorString(err) << std::endl;
-    }
-}
 
 Display::Display() {
     if(SDL_Init(SDL_INIT_VIDEO)){
         std::cerr << "Erreur init SDL : " << SDL_GetError() << std::endl;
     }
 
+    if(IMG_Init(IMG_INIT_JPG | IMG_INIT_PNG) < 0){
+        std::cerr << "Erreur init SDL IMG : " << IMG_GetError() << std::endl;
+    }
+
     SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 3);
     SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 3);
     SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER, 1);
-    SDL_GL_SetAttribute(SDL_GL_DEPTH_SIZE, 24);
+    SDL_GL_SetAttribute(SDL_GL_DEPTH_SIZE, 8);
+}
 
-    glEnable(GL_DEPTH_TEST);
+Display::~Display() {
+    quit(nullptr, nullptr);
 }
 
 void Display::init(SDL_Window *&win, SDL_GLContext &ctx) {
@@ -46,8 +45,7 @@ void Display::init(SDL_Window *&win, SDL_GLContext &ctx) {
 
     if(!ctx){
         std::cerr << "Context creation error : " << SDL_GetError() << std::endl;
-        SDL_DestroyWindow(win);
-        SDL_Quit();
+        quit(win, ctx);
         exit(EXIT_FAILURE);
     }
 
@@ -56,13 +54,20 @@ void Display::init(SDL_Window *&win, SDL_GLContext &ctx) {
     if(glewInit() != GLEW_OK){
         std::cerr << "Glew initialisation error !" << std::endl;
         get_error();
-        SDL_GL_DeleteContext(ctx);
-        SDL_DestroyWindow(win);
-        SDL_Quit();
+        quit(win, ctx);
         return;
     }
     glGetError();
+
+    glEnable(GL_DEPTH_TEST); get_error();
     SDL_GL_SetSwapInterval(1);
+}
+
+void Display::quit(SDL_Window * win, SDL_GLContext ctx) {
+    SDL_GL_DeleteContext(ctx);
+    SDL_DestroyWindow(win);
+    IMG_Quit();
+    SDL_Quit();
 }
 
 void Display::cls() {
@@ -76,5 +81,5 @@ void Display::frame() {
 }
 
 void Display::render_sgv(SGV * sgv) {
-    sgv->render();
+    if(sgv) { sgv->render(); }
 }

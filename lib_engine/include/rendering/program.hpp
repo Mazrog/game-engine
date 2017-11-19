@@ -6,9 +6,13 @@
 #define ENGINE_PROGRAM_HPP
 
 #include <GL/glew.h>
-
+#include <string>
 
 class ShaderProgram {
+public:
+    static int id_current_prog;
+    static void useProgram(GLuint const& progId);
+
 public:
     ShaderProgram();
     ShaderProgram(const char *vertexPath, const char *fragmentPath);

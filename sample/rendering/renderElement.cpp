@@ -34,8 +34,7 @@ RenderElement::RenderElement(SGL_Node * node) {
 
     glEnableVertexAttribArray(0); get_error();
     glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, (void *) 0); get_error();
-    glEnableVertexAttribArray(3); get_error();
-    glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 0, (void *) 0); get_error();
+
 
     glBindBuffer(GL_ARRAY_BUFFER, vbos[2]); get_error();
     glBufferData(GL_ARRAY_BUFFER, sizeof(glm::vec3) * rd.uvs->size(), rd.uvs->data(), GL_STATIC_DRAW); get_error();
@@ -44,6 +43,7 @@ RenderElement::RenderElement(SGL_Node * node) {
     glVertexAttribPointer(10, 3, GL_FLOAT, GL_FALSE, 0, (void *) 0); get_error();
 
 
+    /* TODO : WRAP TEXTURE ! */
     GLuint faceCube;
     SDL_Surface * surf = IMG_Load("sample/img/crate.jpg");
 
@@ -68,5 +68,5 @@ void RenderElement::operator()(DynamicData const& dd) {
 
     glUniformMatrix4fv(transform_loc, 1, GL_FALSE, glm::value_ptr(*dd.tranform)); get_error();
 
-    glDrawElements(GL_TRIANGLES, 12, GL_UNSIGNED_INT, (void *) 0); get_error("rendering..");
+    glDrawElements(GL_TRIANGLES, 36, GL_UNSIGNED_INT, (void *) 0); get_error();
 }

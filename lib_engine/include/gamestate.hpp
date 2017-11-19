@@ -10,6 +10,15 @@
 
 #include "scenegraph/sg_logic.hpp"
 
+/* Forward declaration */
+class GameState;
+
+/* Types rewriting */
+using s_sgl         = std::shared_ptr<SGL>;
+using s_game_state  = std::shared_ptr<GameState>;
+
+
+/* Class GameState */
 class GameState{
 public:
     GameState(
@@ -17,8 +26,13 @@ public:
             std::function<void(GameState * self)> const&  init,
             std::function<void(GameState * self)> const&  exit
     );
-
     virtual ~GameState();
+
+    /* No copy constructor */
+    GameState(GameState const&) = delete;
+
+    /* But a move one */
+    GameState(GameState && gs);
 
     virtual void init();
     virtual void init(GameState * self);
@@ -36,14 +50,15 @@ public:
     SGL_Node * get(const char * name);
 
     /* GETTERS */
-    SGL * get_sgl() const { return sgl; }
+    s_sgl const& get_sgl() const { return sgl; }
+
 
 protected:
     std::function<void(GameState * self)>   onInit;
     std::function<int(GameState * self)>    logic;
     std::function<void(GameState * self)>   onExit;
 
-    SGL         * sgl;
+    s_sgl        sgl;
 };
 
 /* ---------------------------------------------------------------- */

@@ -8,9 +8,12 @@
 #include "sg_logic.hpp"
 #include "rendering/camera.hpp"
 
+using s_sgl = std::shared_ptr<SGL>;
+
+
 class SGV {
 public:
-    SGV(SGL * & sgl);
+    SGV(s_sgl const& sgl);
 
     void render();
 

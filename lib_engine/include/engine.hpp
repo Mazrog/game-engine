@@ -8,24 +8,30 @@
 #include "display.hpp"
 #include "controller.hpp"
 
+/* Engine is a singleton class handling the whole game              */
+/* Two bricks : a controller    -> game logic, game state, events   */
+/*              a display       -> rendering the current scene      */
 class Engine {
 public:
+    /* Deleting unused constructors */
     Engine(Engine const&) = delete;
     Engine(Engine &&) = delete;
 
+    /* Singleton instance */
     static Engine engine;
 
-    /*  */
+    /* Static functions handling the state of the engine */
     static void init();
     static void start();
 
+    /* Waiting function -> frequency of the game loop */
     static void delay();
 
-    template <typename ...States>
-    static void add_states(States... ts){
-        engine.controller.add_states(ts...);
+    /* Exposing the adding states functions from the controller */
+    template <typename... S>
+    static void add_states(S && ... ts){
+        engine.controller.add_states(std::forward<S>(ts)...);
     }
-
 
     /* static getters */
     static Controller& get_controller() { return engine.controller; }
@@ -36,25 +42,30 @@ public:
     Display      display;
     Controller   controller;
 
+    /* Structure that will contain global info about the game context */
     struct Data{
-        SDL_Window      * win;
-        SDL_GLContext     ctx;
-        SGV             * sgv;
+        /* Rendering context */
+        SDL_Window    * win;
+        SDL_GLContext   ctx;
 
+        /* Visual SceneGraph */
+        std::unique_ptr<SGV>   sgv;
+
+        /* Boolean handling the lifespan of the engine */
         bool              running;
 
-        /* Frequences */
+        /* Frequencies */
         unsigned short    freq_disp;
 
-        /* Destructeur */
+        /* Destructor */
         void clear();
     }                   data;
 
 private:
-    int    start_loop;
-
-    /*  */
+    /* private constructor */
     Engine();
+
+    /* Freeing the ressources at the end of the engine */
     void onQuit();
 
 };

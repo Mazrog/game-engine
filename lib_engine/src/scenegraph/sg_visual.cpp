@@ -4,7 +4,7 @@
 
 #include "scenegraph/sg_visual.hpp"
 
-SGV::SGV(SGL * & sgl) : nodes(),
+SGV::SGV(s_sgl const& sgl) : /* nodes(), */
                       current_camera(sgl->current_camera),
                       cameras(&sgl->cameras) {
     for(auto const& elem : sgl->rendering_order){ nodes.push_back(elem); }

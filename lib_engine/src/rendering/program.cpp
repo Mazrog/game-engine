@@ -27,6 +27,17 @@ char * filetobuf(const char *file) {
     return buf;
 }
 
+int ShaderProgram::id_current_prog = -1;
+
+void ShaderProgram::useProgram(GLuint const& progId) {
+    if(static_cast<int>(progId) != ShaderProgram::id_current_prog) {
+        glUseProgram(progId);
+        get_error();
+        ShaderProgram::id_current_prog = progId;
+    }
+}
+
+
 ShaderProgram::ShaderProgram() : _progId(0) {}
 
 ShaderProgram::ShaderProgram(const char *vertexPath, const char *fragmentPath) {
@@ -102,7 +113,7 @@ void ShaderProgram::linkProgram(GLuint vertexShader, GLuint fragmentShader) {
         return;
     }
 
-    glUseProgram(_progId); get_error();
+    useProgram(_progId);
 
     /* Program is ok, we can detach, free and delete shaders */
     glDetachShader(_progId, vertexShader); get_error();
@@ -116,5 +127,5 @@ GLuint ShaderProgram::getProgId() const {
 }
 
 void ShaderProgram::useProgram() {
-    glUseProgram(_progId); get_error();
+    useProgram(_progId);
 }

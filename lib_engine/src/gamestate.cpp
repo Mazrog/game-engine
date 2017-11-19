@@ -10,12 +10,17 @@ GameState::GameState(
         std::function<int(GameState * self)> const&    logic,
         std::function<void(GameState * self)> const&   init,
         std::function<void(GameState * self)>  const&  exit) :
-        onInit(init), logic(logic), onExit(exit) {
-    sgl = new SGL();
+        onInit(init), logic(logic), onExit(exit),
+        sgl(std::make_shared<SGL>()) {
+//    std::cout << "make game state" << std::endl;
 }
 
-GameState::~GameState() {
-    delete sgl;
+GameState::~GameState() {}
+
+GameState::GameState(GameState && gs) :
+        onInit(std::move(gs.onInit)), logic(std::move(gs.logic)),
+        onExit(std::move(gs.onExit)), sgl(std::move(gs.sgl)) {
+//    std::cout << "move game state" << std::endl;
 }
 
 void GameState::init(GameState * self) { onInit(self); }
@@ -26,7 +31,7 @@ void GameState::main(GameState * self) {
     int ns = logic(self);
 
     if(ns > -1) {
-        onExit(self);
+        exit();
         Engine::get_controller().set_state(static_cast<unsigned int>(ns));
     }
 }

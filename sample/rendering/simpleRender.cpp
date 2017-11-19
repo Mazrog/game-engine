@@ -35,7 +35,7 @@ SimpleRender::SimpleRender(SGL_Node * node) {
 
 
     /* TO BE WRAPPED */
-    transform_loc = glGetUniformLocation(prog.getProgId(), "transform"); get_error("k");
+    transform_loc = glGetUniformLocation(prog.getProgId(), "transform"); get_error();
 }
 
 void SimpleRender::operator()(DynamicData const& dd) {

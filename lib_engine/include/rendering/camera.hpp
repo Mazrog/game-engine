@@ -7,21 +7,65 @@
 
 #include <glm/glm.hpp>
 #include <GL/glew.h>
-#include "scenegraph/sg_logic.hpp"
 
+#include "rendering/uniform.hpp"
+#include "scenegraph/sg_logic.hpp"
+#include "utils.hpp"
+
+enum CAM_DIR : unsigned short {
+    UP,
+    RIGHT,
+    DOWN,
+    LEFT
+};
 
 class Camera : public SGL_Node {
 public:
     Camera();
+    Camera(crvec3 pos, crvec3 aim, crvec3 up);
 
+    /* Build characteristics */
+    void init();
+
+    void set_carac(cref<float> angle_rad = 55.f,
+                   cref<float> ratio = 12.f / 9.f,
+                   cref<float> near = 0.1f,
+                   cref<float> far = 1000.f);
+
+    /* Sending all the uniforms to the programs */
     void render();
 
-private:
-    GLint  transform_loc;
+    /* Binding function */
+    template < typename ...>
+    void bind_camera() {}
 
+    template < typename ... Ps >
+    void bind_camera(GLuint const& progId, Ps const&... progs) {
+        vec_uniform.emplace_back(progId, "viewpoint_camera");
+        bind_camera(progs...);
+    }
+    /* ########################################## */
+
+    /* Move functions */
+    void move_forward();
+    void move_backward();
+
+    void move_aim(cref<short> direction);
+
+    /* ------------------------------------------- */
+private:
     glm::vec3 pos;
     glm::vec3 aim;
-    glm::vec3 normal;
+    glm::vec3 up;
+
+    glm::mat4 perspective;
+
+    /* Vector of uniform saving the camera data for each program */
+    std::vector<Uniform>    vec_uniform;
+
+    /* Speeds */
+    float    move_speed;
+    float    look_speed;
 };
 
 

@@ -13,13 +13,14 @@
 
 #include "scenegraph/sg_visual.hpp"
 
-void get_error(const char * t = "");
-
 class Display {
 public:
     Display();
+    ~Display();
 
     void init(SDL_Window * & win, SDL_GLContext & ctx);
+
+    void quit(SDL_Window * win, SDL_GLContext ctx);
 
     void cls();
     void frame();
