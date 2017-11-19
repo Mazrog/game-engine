@@ -5,12 +5,7 @@
 #ifndef ENGINE_UTILS_HPP
 #define ENGINE_UTILS_HPP
 
-#include <glm/vec3.hpp>
-
-template < typename T >
-using cref = T const&;
-
-using crvec3 = cref<glm::vec3>;
+#include "vector_utils.hpp"
 
 void get_error(const char * t = "");
 

@@ -21,8 +21,8 @@ enum CAM_DIR : unsigned short {
 
 class Camera : public SGL_Node {
 public:
-    Camera();
-    Camera(crvec3 pos, crvec3 aim, crvec3 up);
+    Camera(const char * name = "viewpoint_camera");
+    Camera(crvec3 pos, crvec3 aim, crvec3 up, const char * name = "viewpoint_camera");
 
     /* Build characteristics */
     void init();
@@ -41,7 +41,7 @@ public:
 
     template < typename ... Ps >
     void bind_camera(GLuint const& progId, Ps const&... progs) {
-        vec_uniform.emplace_back(progId, "viewpoint_camera");
+        vec_uniform.emplace_back(progId, name);
         bind_camera(progs...);
     }
     /* ########################################## */
@@ -58,10 +58,17 @@ private:
     glm::vec3 aim;
     glm::vec3 up;
 
+    const char * name;
+
     glm::mat4 perspective;
 
     /* Vector of uniform saving the camera data for each program */
     std::vector<Uniform>    vec_uniform;
+
+    /* Angles */
+    float   yaw;
+    float   pitch;
+    float   roll;
 
     /* Speeds */
     float    move_speed;

@@ -5,17 +5,21 @@
 
 #include <glm/gtc/type_ptr.hpp>
 #include <glm/gtc/matrix_transform.hpp>
+#include <iostream>
 
 #include "rendering/camera.hpp"
 
-Camera::Camera() : SGL_Node(-1), pos(2.f, 0.f, 2.f), aim(0.f), up(0.f, 1.f, 0.f) {
+Camera::Camera(const char * name) : SGL_Node(-1),
+                                    pos(2.f, 0.f, 2.f), aim(0.f), up(0.f, 1.f, 0.f),
+                                    name(name) {
     init();
 }
 
-Camera::Camera(const glm::vec3 &pos, const glm::vec3 &aim, const glm::vec3 &up) :
+Camera::Camera(const glm::vec3 &pos, const glm::vec3 &aim, const glm::vec3 &up, const char * name) :
         pos(pos),
         aim(aim),
-        up(up) {
+        up(up),
+        name(name){
     init();
 }
 
@@ -23,6 +27,11 @@ void Camera::init() {
     dynamicData.tranform = nullptr;
     look_speed = .1f;
     move_speed = .01f;
+
+    angle_between(pos, aim, pitch, yaw);
+
+    std::cout << pitch << " ## " << yaw << std::endl;
+
     set_carac();
 }
 
@@ -49,8 +58,5 @@ void Camera::move_backward() {
 }
 
 void Camera::move_aim(const short &direction) {
-    int sign = (direction == CAM_DIR::UP || direction == CAM_DIR::RIGHT) ? 1 : -1,
-    vec = (direction == CAM_DIR::UP || direction == CAM_DIR::DOWN) ? 1 : 0;
 
-    aim[vec] += sign * look_speed;
 }

@@ -4,7 +4,6 @@
 #include "base.hpp"
 
 #include "rendering/renderElement.hpp"
-#include "rendering/simpleRender.hpp"
 #include "src/cube.hpp"
 #include "src/triangle.hpp"
 #include "state/samplestate.hpp"
@@ -117,9 +116,17 @@ int main() {
     ),
     pause ( paused_game );
 
+    glm::vec3 center(1.f, 0.f, 0.f), point(0.f, 0.f, -1.f);
 
-    Engine::add_states(test, pause);
-    Engine::start();
+    std::cout << "POINT " << point.x << " # " << point.y << " # " << point.z << std::endl;
+
+    apply_rot(center, point, M_PI, M_PI / 2.f);
+
+    std::cout << "POINT " << point.x << " # " << point.y << " # " << point.z << std::endl;
+
+
+//    Engine::add_states(test, pause);
+//    Engine::start();
 
     return 0;
 }

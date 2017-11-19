@@ -42,6 +42,7 @@ add_library(
 
 target_include_directories( ${project_name}
         PRIVATE lib_engine/include
+        PRIVATE lib_geom/include
 )
 
 target_link_libraries( ${project_name}
@@ -54,6 +55,7 @@ target_link_libraries( ${project_name}
 #                       GEOMETRY
 set(LIB_GEOM_SRC
         lib_geom/src/base.cpp
+        lib_geom/src/vector_utils.cpp
 )
 
 add_library(
@@ -65,8 +67,6 @@ add_library(
 target_include_directories( geom
         PRIVATE lib_geom/include
 )
-
-#target_link_libraries( geom )
 
 # #################################################################################################
 # Exec config
