@@ -35,6 +35,10 @@ public:
     /* Sending all the uniforms to the programs */
     void render();
 
+    void update();
+
+    void disp_state() const;
+
     /* Binding function */
     template < typename ...>
     void bind_camera() {}
@@ -59,16 +63,18 @@ private:
     glm::vec3 up;
 
     const char * name;
+    bool         updated;
 
     glm::mat4 perspective;
+    glm::mat4 cam_mat;
 
     /* Vector of uniform saving the camera data for each program */
     std::vector<Uniform>    vec_uniform;
 
     /* Angles */
-    float   yaw;
-    float   pitch;
-    float   roll;
+    float   d_yaw;
+    float   d_pitch;
+    float   d_roll;
 
     /* Speeds */
     float    move_speed;

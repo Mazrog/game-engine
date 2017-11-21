@@ -25,22 +25,48 @@ Camera::Camera(const glm::vec3 &pos, const glm::vec3 &aim, const glm::vec3 &up, 
 
 void Camera::init() {
     dynamicData.tranform = nullptr;
-    look_speed = .1f;
-    move_speed = .01f;
-
-    angle_between(pos, aim, pitch, yaw);
-
-    std::cout << pitch << " ## " << yaw << std::endl;
+    look_speed = .05f;
+    move_speed = .1f;
+    d_roll = d_yaw = d_pitch = 0.f;
+    d_roll = .001f;
 
     set_carac();
+    update();
+    updated = true;
 }
 
 void Camera::render() {
-    glm::mat4 cam_mat = perspective*glm::lookAt(pos, aim, up);
+    if(updated) {
+        update();
 
-    for(auto const& uniform : vec_uniform){
-        uniform.send(cam_mat);
+        for (auto const &uniform : vec_uniform) {
+            uniform.send(cam_mat);
+        }
     }
+}
+
+void Camera::update() {
+    glm::vec3 tengent = pdt_vec(aim - pos, up);
+    glm::vec3   tmp(aim - pos),
+                tmp_up(up);
+
+    /* Roll not considered yet */
+//    apply_rot(up , d_roll  , tmp );
+
+
+    apply_rot(up , d_pitch  , tengent );
+    apply_rot(tmp, d_pitch , tengent   );
+    apply_rot(tmp, d_yaw   , tmp_up    );
+    aim = (pos + tmp);
+
+    cam_mat = perspective * glm::lookAt(pos, aim, up);
+    d_pitch = d_yaw = d_roll = 0;
+
+    updated = false;
+}
+
+void Camera::disp_state() const {
+    std::cout << up.x << " # " << up.y << " # " << up.z << std::endl;
 }
 
 void Camera::set_carac(const float &angle_rad, const float &ratio, const float &near, const float &far) {
@@ -50,13 +76,40 @@ void Camera::set_carac(const float &angle_rad, const float &ratio, const float &
 /* Move functions */
 
 void Camera::move_forward() {
-    pos += move_speed * (aim - pos);
+    glm::vec3 qte =  move_speed * (aim - pos);
+    pos += qte;
+    aim += qte;
+    updated = true;
 }
 
 void Camera::move_backward() {
-    pos -= move_speed * (aim - pos);
+    glm::vec3 qte =  move_speed * (aim - pos);
+    pos -= qte;
+    aim -= qte;
+    updated = true;
 }
 
 void Camera::move_aim(const short &direction) {
+    /* Move yaw, pitch, roll */
+    int v_sign = 0,
+        h_sign = 0;
+    switch (direction) {
+        case CAM_DIR::UP:
+            v_sign = 1;
+            break;
+        case CAM_DIR::RIGHT:
+            h_sign = -1;
+            break;
+        case CAM_DIR::DOWN:
+            v_sign = -1;
+            break;
+        case CAM_DIR::LEFT:
+            h_sign = 1;
+            break;
+        default:;
+    }
 
+    d_pitch = v_sign * look_speed;
+    d_yaw = h_sign * look_speed;
+    updated = true;
 }

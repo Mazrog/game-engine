@@ -51,8 +51,8 @@ RenderElement::RenderElement(SGL_Node * node) {
     glBindTexture(GL_TEXTURE_2D, faceCube); get_error();
     glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, surf->w, surf->h, 0, GL_RGB, GL_UNSIGNED_BYTE, surf->pixels); get_error();
     SDL_FreeSurface(surf);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST); get_error();
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST); get_error();
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR); get_error();
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR); get_error();
 
     GLint textCubeLoc = glGetUniformLocation(prog.getProgId(), "textCube"); get_error();
     glActiveTexture(GL_TEXTURE0); get_error();

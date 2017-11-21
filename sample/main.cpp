@@ -46,6 +46,10 @@ int main() {
                                 std::cout << "Pausing the game" << std::endl;
                                 return 1;
                             }
+
+                            if( ev.key.keysym.scancode == SDL_SCANCODE_RETURN) {
+                                static_cast<Camera *>(self->get("main_camera"))->disp_state();
+                            }
                             break;
                         default:;
                     }
@@ -116,17 +120,9 @@ int main() {
     ),
     pause ( paused_game );
 
-    glm::vec3 center(1.f, 0.f, 0.f), point(0.f, 0.f, -1.f);
 
-    std::cout << "POINT " << point.x << " # " << point.y << " # " << point.z << std::endl;
-
-    apply_rot(center, point, M_PI, M_PI / 2.f);
-
-    std::cout << "POINT " << point.x << " # " << point.y << " # " << point.z << std::endl;
-
-
-//    Engine::add_states(test, pause);
-//    Engine::start();
+    Engine::add_states(test, pause);
+    Engine::start();
 
     return 0;
 }

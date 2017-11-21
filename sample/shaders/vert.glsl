@@ -12,6 +12,7 @@ uniform mat4 viewpoint_camera;
 out vec3 move_color;
 out vec3 move_uvs;
 
+
 void main() {
     gl_Position = viewpoint_camera * transform * vec4(in_pos, 1.0);
 

@@ -17,7 +17,10 @@ using crfloat = cref<float>;
 
 void angle_between(crvec3 u, crvec3 v, float & pitch, float & yaw);
 
-void apply_rot(crvec3 center, glm::vec3 & point, crfloat pitch, crfloat yaw);
+void apply_rot(glm::vec3 & point, crfloat angle, crvec3 axis);
+
+glm::vec3 pdt_vec(crvec3 u, crvec3 v);
+
 
 template < class T >
 float pdt_scalar(cref<T> u, cref<T> v) {

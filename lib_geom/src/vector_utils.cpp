@@ -19,10 +19,18 @@ void angle_between(crvec3 u, crvec3 v, float & pitch, float & yaw) {
     yaw   = std::atan2(xz.y, xz.x);
 }
 
-void apply_rot(crvec3 center, glm::vec3 & point, crfloat pitch, crfloat yaw) {
+void apply_rot(glm::vec3 & point, crfloat angle, crvec3 axis) {
     glm::mat4 rot;
-    rot = glm::rotate(rot, pitch, glm::vec3(0.f, 0.f, 1.f));
-    rot = glm::rotate(rot, yaw,   glm::vec3(0.f, 1.f, 0.f));
+    rot = glm::rotate(rot, angle, axis);
 
-    point = center + glm::vec3(rot * glm::vec4(point, 1.f));
+    point = glm::vec3(rot * glm::vec4(point, 1.f));
+}
+
+glm::vec3 pdt_vec(crvec3 u, crvec3 v) {
+    glm::vec3 res;
+    res.x = u.y*v.z - u.z*v.y;
+    res.y = u.z*v.x - u.x*v.z;
+    res.z = u.x*v.y - u.y*v.x;
+
+    return res;
 }
