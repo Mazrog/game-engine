@@ -28,7 +28,6 @@ void Camera::init() {
     look_speed = .05f;
     move_speed = .1f;
     d_roll = d_yaw = d_pitch = 0.f;
-    d_roll = .001f;
 
     set_carac();
     update();
@@ -50,11 +49,13 @@ void Camera::update() {
     glm::vec3   tmp(aim - pos),
                 tmp_up(up);
 
-    apply_rot(up , d_pitch  , tengent );
-    apply_rot(tmp, d_pitch ,  tengent );
-    apply_rot(tmp, d_yaw   ,  glm::vec3(0.f, 1.f, 0.f)  );
+    apply_rot(up , d_pitch  ,  tengent );
+    apply_rot(tmp, d_pitch  ,  tengent );
 
+    apply_rot(up , d_yaw   ,  glm::vec3(0.f, 1.f, 0.f) );
+    apply_rot(tmp, d_yaw   ,  glm::vec3(0.f, 1.f, 0.f) );
     aim = (pos + tmp);
+
 
     std::cout << aim.x << " # " << aim.y << " # " << aim.z << std::endl;
 

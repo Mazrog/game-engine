@@ -124,9 +124,9 @@ int main() {
 
     Engine::add_states(test, pause);
     Engine::start();
-
+//
 //    glm::vec3 pos(2.f, 0.f, 0.f);
-//    glm::vec3 aim(0.f, 0.f, 0.f);
+//    glm::vec3 aim(0.f, 1.f, 0.f);
 //
 //    glm::vec3 tmp(aim - pos);
 //
