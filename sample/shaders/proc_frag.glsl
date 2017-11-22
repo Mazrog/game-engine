@@ -1,9 +1,15 @@
 #version 330 core
 
-in vec3 move_color;
+in float pos_y;
+
+uniform float y_max;
 
 out vec4 color;
 
+float abs(float f) {
+    return ( f < 0 ) ? -f : f;
+}
+
 void main() {
-    color = vec4(move_color, 1.0);
+    color = vec4(.3f, .3f, 0.f, 1.0);
 }

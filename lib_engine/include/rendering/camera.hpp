@@ -12,6 +12,9 @@
 #include "scenegraph/sg_logic.hpp"
 #include "utils.hpp"
 
+constexpr int v_sensibility = 4;
+constexpr int h_sensibility = 0;
+
 enum CAM_DIR : unsigned short {
     UP,
     RIGHT,
@@ -36,8 +39,6 @@ public:
     void render();
 
     void update();
-
-    void disp_state() const;
 
     /* Binding function */
     template < typename ...>

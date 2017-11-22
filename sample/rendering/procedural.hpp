@@ -30,6 +30,7 @@ private:
     GLuint          vbos[2];
 
     Uniform         transform;
+    Uniform         y_max;
 };
 
 

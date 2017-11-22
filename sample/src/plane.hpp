@@ -10,7 +10,7 @@
 template < class Render >
 class Plane : public SGL_Node {
 public:
-    Plane();
+    Plane(int subx = 0, int suby = 0);
 
     void render() { renderer( dynamicData ); }
 
@@ -19,32 +19,33 @@ private:
 };
 
 template < class Render >
-Plane<Render>::Plane() {
-    renderingData.vertices = std::make_unique<vecord>();
+Plane<Render>::Plane(int subx, int suby) {
+    renderingData.vertices  = std::make_unique<vecord>();
+    renderingData.links     = std::make_unique<vecui>();
 
-    /* LEFT TOP */
-    renderingData.vertices->emplace_back(-.5f, 0.f, -.5f);
-    renderingData.vertices->emplace_back(1.f, .3f, 0.f);
+    int n_grid = 10;
+    int n_vertices = (n_grid + 1)*(n_grid + 1);
+    float x, z;
 
-    /* RIGHT TOP */
-    renderingData.vertices->emplace_back(.5f, 0.f, -.5f);
-    renderingData.vertices->emplace_back(.3f, .5f, 0.f);
+    for(int i = 0; i <= n_grid; ++i) {
+        z = -.5f + i * (1.f / n_grid);
+        for(int j = 0 ; j <= n_grid; ++j) {
+            x = -.5f + j * (1.f / n_grid);
+            renderingData.vertices->emplace_back(x, 0.f, z);
+        }
+    }
 
-    /* RIGHT BOTTOM */
-    renderingData.vertices->emplace_back(.5f, .0f, .5f);
-    renderingData.vertices->emplace_back(0.f, .4f, .3f);
+    for(int i = 0; i < n_vertices; ++i) {
+        if( !i || (i % (n_grid + 1) != n_grid) ) {
+            renderingData.links->push_back(i);
+            renderingData.links->push_back(i + 1);
+            renderingData.links->push_back(i + n_grid + 1);
 
-    /* RIGHT BOTTOM */
-    renderingData.vertices->emplace_back(.5f, .0f, .5f);
-    renderingData.vertices->emplace_back(0.f, .4f, .3f);
-
-    /* LEFT BOTTOM */
-    renderingData.vertices->emplace_back(-.5f, .0f, .5f);
-    renderingData.vertices->emplace_back(0.f, .4f, .3f);
-
-    /* LEFT TOP */
-    renderingData.vertices->emplace_back(-.5f, 0.f, -.5f);
-    renderingData.vertices->emplace_back(1.f, .3f, 0.f);
+            renderingData.links->push_back(i + 1);
+            renderingData.links->push_back(i + n_grid + 1);
+            renderingData.links->push_back(i + n_grid + 2);
+        }
+    }
 
     glm::vec3 scale(15.f);
 

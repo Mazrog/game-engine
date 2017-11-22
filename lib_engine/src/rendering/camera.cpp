@@ -56,17 +56,10 @@ void Camera::update() {
     apply_rot(tmp, d_yaw   ,  glm::vec3(0.f, 1.f, 0.f) );
     aim = (pos + tmp);
 
-
-    std::cout << aim.x << " # " << aim.y << " # " << aim.z << std::endl;
-
     cam_mat = perspective * glm::lookAt(pos, aim, up);
     d_pitch = d_yaw = d_roll = 0;
 
     updated = false;
-}
-
-void Camera::disp_state() const {
-    std::cout << up.x << " # " << up.y << " # " << up.z << std::endl;
 }
 
 void Camera::set_carac(const float &angle_rad, const float &ratio, const float &near, const float &far) {
