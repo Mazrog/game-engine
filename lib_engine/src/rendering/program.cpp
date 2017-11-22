@@ -31,8 +31,7 @@ int ShaderProgram::id_current_prog = -1;
 
 void ShaderProgram::useProgram(GLuint const& progId) {
     if(static_cast<int>(progId) != ShaderProgram::id_current_prog) {
-        glUseProgram(progId);
-        get_error();
+        glUseProgram(progId); get_error("using prog");
         ShaderProgram::id_current_prog = progId;
     }
 }
@@ -41,22 +40,20 @@ void ShaderProgram::useProgram(GLuint const& progId) {
 ShaderProgram::ShaderProgram() : _progId(0) {}
 
 ShaderProgram::ShaderProgram(const char *vertexPath, const char *fragmentPath) {
-    /* Shaders id */
-    GLuint vertexShader, fragmentShader;
-
     /* Vertex Shader creation */
-    vertexShader = makeShader(vertexPath, GL_VERTEX_SHADER);
+    makeShader(vertexPath, GL_VERTEX_SHADER);
     /* Fragment Shader creation */
-    fragmentShader = makeShader(fragmentPath, GL_FRAGMENT_SHADER);
+    makeShader(fragmentPath, GL_FRAGMENT_SHADER);
+
     /* Linking to the program */
-    linkProgram(vertexShader, fragmentShader);
+    linkProgram();
 }
 
 ShaderProgram::~ShaderProgram() {
-    glDeleteProgram(_progId); get_error();
+    glDeleteProgram(_progId); get_error("s");
 }
 
-GLuint ShaderProgram::makeShader(std::string const& file, GLenum type) {
+void ShaderProgram::makeShader(std::string const& file, GLenum type) {
     /* Variables */
     int isCompiled; // results of shader compilation
     int maxLength; //Length of the log
@@ -65,28 +62,28 @@ GLuint ShaderProgram::makeShader(std::string const& file, GLenum type) {
     GLuint shader; // Shader id
 
     /* Reading source code */
-    shaderSource = filetobuf(file.c_str()); get_error();
+    shaderSource = filetobuf(file.c_str());
 
     /* Shader creation */
-    shader = glCreateShader(type); get_error();
-    glShaderSource(shader, 1, (const GLchar**)&shaderSource, nullptr); get_error();
-    glCompileShader(shader); get_error();
+    shader = glCreateShader(type); get_error("create shader");
+    glShaderSource(shader, 1, (const GLchar**)&shaderSource, nullptr); get_error("source");
+    glCompileShader(shader); get_error("compile");
 
     /* Compilation errors test */
-    glGetShaderiv(shader, GL_COMPILE_STATUS, &isCompiled); get_error();
+    glGetShaderiv(shader, GL_COMPILE_STATUS, &isCompiled); get_error("log - 1");
     if(!isCompiled){
-        glGetShaderiv(shader, GL_INFO_LOG_LENGTH, &maxLength); get_error();
+        glGetShaderiv(shader, GL_INFO_LOG_LENGTH, &maxLength); get_error("log - 2");
         shaderLog = new char[maxLength];
-        glGetShaderInfoLog(shader, maxLength, &maxLength, shaderLog); get_error();
+        glGetShaderInfoLog(shader, maxLength, &maxLength, shaderLog); get_error("log - 3");
         std::cerr << "Compilation : " << type << " Shader Error => " << shaderLog << std::endl;
         delete shaderLog;
-        return 0;
+        return;
     }
     delete shaderSource;
-    return shader;
+    shaders.push_back(shader);
 }
 
-void ShaderProgram::linkProgram(GLuint vertexShader, GLuint fragmentShader) {
+void ShaderProgram::linkProgram() {
     /* Variables */
     int isLinked; // result of linking shaders to program
     int maxLength;
@@ -95,17 +92,19 @@ void ShaderProgram::linkProgram(GLuint vertexShader, GLuint fragmentShader) {
     char * shaderProgLog;
 
     /* Program creation */
-    _progId = glCreateProgram(); get_error();
+    _progId = glCreateProgram(); get_error("create prog");
 
     /* Shaders attachment */
-    glAttachShader(_progId, vertexShader); get_error();
-    glAttachShader(_progId, fragmentShader); get_error();
-    glLinkProgram(_progId); get_error();
+    for(auto const& shader : shaders) {
+        glAttachShader(_progId, shader); get_error("attach");
+    }
+
+    glLinkProgram(_progId); get_error("link prog");
 
     /* Linking errors test */
-    glGetProgramiv(_progId, GL_LINK_STATUS, &isLinked); get_error();
+    glGetProgramiv(_progId, GL_LINK_STATUS, &isLinked); get_error("prog log - 1");
     if(!isLinked){
-        glGetProgramiv(_progId, GL_INFO_LOG_LENGTH, &maxLength); get_error();
+        glGetProgramiv(_progId, GL_INFO_LOG_LENGTH, &maxLength); get_error("prog log - 1");
         shaderProgLog = new char[maxLength];
         glGetProgramInfoLog(_progId, maxLength, &maxLength, shaderProgLog);
         std::cerr << "Linking : Program Error => " << shaderProgLog << std::endl;
@@ -116,10 +115,11 @@ void ShaderProgram::linkProgram(GLuint vertexShader, GLuint fragmentShader) {
     useProgram(_progId);
 
     /* Program is ok, we can detach, free and delete shaders */
-    glDetachShader(_progId, vertexShader); get_error();
-    glDetachShader(_progId, fragmentShader); get_error();
-    glDeleteShader(vertexShader); get_error();
-    glDeleteShader(fragmentShader); get_error();
+    for(auto const& shader : shaders) {
+        glDetachShader(_progId, shader); get_error("detach shader");
+        glDeleteShader(shader); get_error("delete shader");
+    }
+    shaders.clear();
 }
 
 GLuint ShaderProgram::getProgId() const {

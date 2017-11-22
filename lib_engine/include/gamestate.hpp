@@ -48,6 +48,7 @@ public:
 
     /* Element getters */
     SGL_Node * get(const char * name);
+    Camera   * get_as_camera(const char * name);
 
     /* GETTERS */
     s_sgl const& get_sgl() const { return sgl; }

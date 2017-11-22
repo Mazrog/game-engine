@@ -10,7 +10,7 @@
 #include "rendering/camera.hpp"
 
 Camera::Camera(const char * name) : SGL_Node(-1),
-                                    pos(2.f, 0.f, 2.f), aim(0.f), up(0.f, 1.f, 0.f),
+                                    pos(2.f, 1.f, 2.f), aim(0.f), up(0.f, 1.f, 0.f),
                                     name(name) {
     init();
 }
@@ -46,18 +46,17 @@ void Camera::render() {
 }
 
 void Camera::update() {
-    glm::vec3 tengent = pdt_vec(aim - pos, up);
+    glm::vec3 tengent = glm::normalize(pdt_vec(aim - pos, up));
     glm::vec3   tmp(aim - pos),
                 tmp_up(up);
 
-    /* Roll not considered yet */
-//    apply_rot(up , d_roll  , tmp );
-
-
     apply_rot(up , d_pitch  , tengent );
-    apply_rot(tmp, d_pitch , tengent   );
-    apply_rot(tmp, d_yaw   , tmp_up    );
+    apply_rot(tmp, d_pitch ,  tengent );
+    apply_rot(tmp, d_yaw   ,  glm::vec3(0.f, 1.f, 0.f)  );
+
     aim = (pos + tmp);
+
+    std::cout << aim.x << " # " << aim.y << " # " << aim.z << std::endl;
 
     cam_mat = perspective * glm::lookAt(pos, aim, up);
     d_pitch = d_yaw = d_roll = 0;

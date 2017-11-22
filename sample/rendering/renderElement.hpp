@@ -29,7 +29,8 @@ private:
     GLuint          vao;
     GLuint          vbos[3];
 
-    GLint           transform_loc;
+    Uniform         transform;
+    Uniform         texture;
 };
 
 

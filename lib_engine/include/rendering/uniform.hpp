@@ -17,18 +17,24 @@ template <typename T>
 inline void send_uniform(GLint const& loc, T const&);
 
 template <>
+inline void send_uniform<int>(GLint const& loc, int const& f) {
+    glUniform1i(loc, f); get_error("send int");
+}
+
+template <>
 inline void send_uniform<float>(GLint const& loc, float const& f) {
-    glUniform1f(loc, f); get_error();
+    glUniform1f(loc, f); get_error("send float");
 }
 
 template <>
 inline void send_uniform<glm::mat4>(GLint const& loc, glm::mat4 const& m) {
-    glUniformMatrix4fv(loc, 1, GL_FALSE, glm::value_ptr(m)); get_error();
+    glUniformMatrix4fv(loc, 1, GL_FALSE, glm::value_ptr(m)); get_error("send mat");
 }
 
 /* ################################################################################## */
 
 struct Uniform {
+    Uniform() = default;
     Uniform(GLuint progid, const char * name);
 
     template < typename T >

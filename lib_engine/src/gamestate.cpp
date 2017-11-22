@@ -49,3 +49,7 @@ void GameState::bind(SG_NODE_TYPE type, const char * name, SGL_Node *node) {
 SGL_Node * GameState::get(const char *name) {
     return sgl->graph.at(name);
 }
+
+Camera * GameState::get_as_camera(const char *name) {
+    return dynamic_cast<Camera *>(sgl->graph.at(name));
+}

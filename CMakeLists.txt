@@ -77,6 +77,7 @@ set(EXEC_SRC_FILES
 
         sample/rendering/simpleRender.cpp
         sample/rendering/renderElement.cpp
+        sample/rendering/procedural.cpp
 )
 
 add_executable(

@@ -15,9 +15,10 @@ void SimpleRender::init() {
     }
 }
 
-SimpleRender::SimpleRender() : vao(), vbos(), transform_loc() {}
+SimpleRender::SimpleRender() : vao(), vbos(), transform() {}
 
-SimpleRender::SimpleRender(SGL_Node * node) {
+SimpleRender::SimpleRender(SGL_Node * node) :
+        transform(prog.getProgId(), "tranform") {
     RenderingData& rd = node->get_rendering_data();
 
     glGenVertexArrays(1, &vao); get_error();
@@ -32,10 +33,6 @@ SimpleRender::SimpleRender(SGL_Node * node) {
 
     glEnableVertexAttribArray(1); get_error();
     glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void *) (3*sizeof(float))); get_error();
-
-
-    /* TO BE WRAPPED */
-    transform_loc = glGetUniformLocation(prog.getProgId(), "transform"); get_error();
 }
 
 void SimpleRender::operator()(DynamicData const& dd) {
@@ -43,7 +40,7 @@ void SimpleRender::operator()(DynamicData const& dd) {
     glBindVertexArray(vao);     get_error();
 
     /* Sending uniforms if they have changed */
-    glUniformMatrix4fv(transform_loc, 1, GL_FALSE, glm::value_ptr(*dd.tranform)); get_error();
+    transform.send(*dd.tranform);
 
     glDrawArrays(GL_TRIANGLES, 0, 3); get_error("rendering");
 }

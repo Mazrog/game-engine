@@ -23,7 +23,7 @@ private:
 
     GLuint          vao;
     GLuint          vbos[2];
-    GLint           transform_loc;
+    Uniform         transform;
 };
 
 
