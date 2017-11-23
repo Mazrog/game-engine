@@ -27,7 +27,7 @@ char * filetobuf(const char *file) {
     return buf;
 }
 
-int ShaderProgram::id_current_prog = -1;
+int ShaderProgram::id_current_prog = 0;
 
 void ShaderProgram::useProgram(GLuint const& progId) {
     if(static_cast<int>(progId) != ShaderProgram::id_current_prog) {
@@ -50,7 +50,10 @@ ShaderProgram::ShaderProgram(const char *vertexPath, const char *fragmentPath) {
 }
 
 ShaderProgram::~ShaderProgram() {
-    glDeleteProgram(_progId); get_error("s");
+    if(_progId) {
+        glDeleteProgram(_progId);
+        get_error("s");
+    }
 }
 
 void ShaderProgram::makeShader(std::string const& file, GLenum type) {

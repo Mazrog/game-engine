@@ -8,7 +8,7 @@
 #include <glm/glm.hpp>
 #include <GL/glew.h>
 
-#include "rendering/uniform.hpp"
+#include "rendering/structs/uniform.hpp"
 #include "scenegraph/sg_logic.hpp"
 #include "utils.hpp"
 

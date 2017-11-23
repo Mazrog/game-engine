@@ -19,8 +19,6 @@ public:
     void operator() ( DynamicData const& dd ) override;
 
 private:
-//    glm::mat4 *       transform;
-
     GLuint          vao;
     GLuint          vbos[2];
     Uniform         transform;

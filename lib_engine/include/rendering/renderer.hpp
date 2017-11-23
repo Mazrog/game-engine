@@ -9,7 +9,7 @@
 
 #include "scenegraph/sg_logic.hpp"
 #include "program.hpp"
-#include "uniform.hpp"
+#include "rendering/structs/uniform.hpp"
 
 class Renderer {
 protected:

@@ -10,7 +10,7 @@
 #include "rendering/camera.hpp"
 
 Camera::Camera(const char * name) : SGL_Node(-1),
-                                    pos(2.f, 1.f, 2.f), aim(0.f), up(0.f, 1.f, 0.f),
+                                    pos(5.f, 2.f, 5.f), aim(0.f), up(0.f, 1.f, 0.f),
                                     name(name) {
     init();
 }
@@ -26,7 +26,7 @@ Camera::Camera(const glm::vec3 &pos, const glm::vec3 &aim, const glm::vec3 &up, 
 void Camera::init() {
     dynamicData.tranform = nullptr;
     look_speed = .05f;
-    move_speed = .1f;
+    move_speed = .01f;
     d_roll = d_yaw = d_pitch = 0.f;
 
     set_carac();

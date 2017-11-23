@@ -5,7 +5,7 @@
 #ifndef ENGINE_TEXTURE_HPP
 #define ENGINE_TEXTURE_HPP
 
-#include "uniform.hpp"
+#include "rendering/structs/uniform.hpp"
 
 class Texture {
 public:

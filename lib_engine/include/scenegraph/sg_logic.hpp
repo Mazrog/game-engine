@@ -48,6 +48,7 @@ public:
     unsigned                                        current_camera;
 
     std::vector<Camera *>                           cameras;
+
     std::map<const char *, SGL_Node *>              graph;
     std::map<SG_NODE_TYPE, std::vector<SGL_Node *>> nodes;
     std::set<SGL_Node *>                            rendering_order;

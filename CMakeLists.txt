@@ -31,7 +31,9 @@ set(LIB_SRC
         lib_engine/src/rendering/renderer.cpp
         lib_engine/src/rendering/camera.cpp
         lib_engine/src/rendering/program.cpp
-        lib_engine/src/rendering/uniform.cpp
+
+        lib_engine/src/rendering/structs/uniform.cpp
+        lib_engine/src/rendering/structs/ssbuffer.cpp
 )
 
 add_library(

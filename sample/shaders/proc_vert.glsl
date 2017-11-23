@@ -10,7 +10,9 @@ out float pos_y;
 
 
 void main() {
-    gl_Position = viewpoint_camera * transform * vec4(in_pos, 1.0);
+    vec4 tmp = transform * vec4(in_pos, 1.0);
 
-    pos_y = in_pos.y;
+    gl_Position = viewpoint_camera * tmp;
+
+    pos_y = tmp.y;
 }

@@ -3,7 +3,7 @@
 //
 
 
-#include "rendering/uniform.hpp"
+#include "rendering/structs/uniform.hpp"
 
 Uniform::Uniform(GLuint progid, const char *name) : progid(progid), location(), name(name) {
     if(progid) {

@@ -9,7 +9,8 @@
 
 #include "scenegraph/sg_logic.hpp"
 #include "rendering/renderer.hpp"
-#include "rendering/uniform.hpp"
+#include "rendering/structs/uniform.hpp"
+#include "rendering/structs/ssbuffer.hpp"
 
 class Procedural : public Renderer {
 public:
@@ -31,6 +32,8 @@ private:
 
     Uniform         transform;
     Uniform         y_max;
+
+    SSBuffer        vertices;
 };
 
 

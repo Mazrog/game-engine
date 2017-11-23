@@ -1,4 +1,5 @@
 #include <iostream>
+#include <array>
 
 #include "engine.hpp"
 #include "base.hpp"
@@ -8,6 +9,7 @@
 #include "procedural.hpp"
 #include "plane.hpp"
 #include "state/samplestate.hpp"
+
 
 int paused_game(GameState *){
     auto keyboard   = Engine::get_controller().eventContext.keyboard;
@@ -118,6 +120,7 @@ void main_game_init(GameState * self) {
 //    compute.makeShader("sample/shaders/compute.glsl", GL_COMPUTE_SHADER);
 //    compute.linkProgram();
 //
+//    glDispatchCompute(16, 16, 1); get_error("dispatch compute");
 //
 //
 //    glMemoryBarrier(GL_SHADER_STORAGE_BARRIER_BIT); get_error("memory barrier");
@@ -131,8 +134,7 @@ int main() {
 
     SampleState test(
             main_game_loop,
-            main_game_init,
-            [] (GameState *) {}
+            main_game_init
     ),
     pause ( paused_game );
 

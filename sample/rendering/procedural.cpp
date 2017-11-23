@@ -28,10 +28,13 @@ Procedural::Procedural(SGL_Node *node) :
 
     glGenBuffers(2, vbos);      get_error("gen buffer");
 //    glBindBuffer(GL_SHADER_STORAGE_BUFFER, vbos[0]); get_error("bind storage buffer");
-//    glBufferData(GL_SHADER_STORAGE_BUFFER, 100 * sizeof(glm::vec3), nullptr, GL_STATIC_DRAW); get_error("buffer storage data");
 
-    glBindBuffer(GL_ARRAY_BUFFER, vbos[0]); get_error("bind buffer vertices");
-    glBufferData(GL_ARRAY_BUFFER, sizeof(glm::vec3) * rd.vertices->size(), rd.vertices->data(), GL_STATIC_DRAW); get_error("buffer data vertices");
+//    glBindBuffer(GL_ARRAY_BUFFER, vbos[0]); get_error("bind buffer vertices");
+//    glBufferData(GL_ARRAY_BUFFER, sizeof(glm::vec3) * rd.vertices->size(), rd.vertices->data(), GL_STATIC_DRAW); get_error("buffer data vertices");
+
+    vertices.map_data<glm::vec3>(rd.vertices->data(), rd.vertices->size());
+
+    glBindBuffer(GL_ARRAY_BUFFER, vertices.get_id());
 
     glEnableVertexAttribArray(0); get_error("enable pointer 0");
     glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, (void *) 0); get_error("set pointer 0");
@@ -50,5 +53,5 @@ void Procedural::operator()(DynamicData const &dd, GLenum primitive) {
     glBindVertexArray(vao); get_error("bind vao render");
     transform.send(*dd.tranform);
 
-    glDrawElements(primitive, 600, GL_UNSIGNED_INT, (void *) 0); get_error("rendering_procedural");
+    glDrawElements(primitive, 2400, GL_UNSIGNED_INT, (void *) 0); get_error("rendering_procedural");
 }
