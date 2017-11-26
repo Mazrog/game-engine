@@ -43,8 +43,11 @@ public:
     virtual void exit();
     virtual void exit(GameState * self);
 
+    void save_state();
+
     /* FONCTIONS EXPOSURE */
     void bind(SG_NODE_TYPE type, const char * name, SGL_Node * node);
+    void clear();
 
     /* Element getters */
     SGL_Node * get(const char * name);
@@ -60,6 +63,10 @@ protected:
     std::function<void(GameState * self)>   onExit;
 
     s_sgl        sgl;
+
+    /* Properties */
+    bool        hasBeenInit;
+    bool        saved;
 };
 
 /* ---------------------------------------------------------------- */

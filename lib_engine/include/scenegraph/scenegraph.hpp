@@ -10,30 +10,30 @@
 #include <memory>
 #include <glm/glm.hpp>
 
-using vecord = std::vector<glm::vec3>;
-using vecui  = std::vector<unsigned>;
+#include "utils.hpp"
 
 enum class SG_NODE_TYPE : unsigned {
     SG_STATIC,
     SG_DYNAMIC,
     SG_CAMERA,
+    SG_LIGHT,
     SG_FORCE
 };
 
 
 struct RenderingData {
     std::unique_ptr<vecord> vertices;
-    std::unique_ptr<vecord> uvs;
+    std::unique_ptr<vecuvs> uvs;
     std::unique_ptr<vecord> normals;
     std::unique_ptr<vecui>  links;
 
-    RenderingData() = default;
+    RenderingData();
 };
 
 struct DynamicData{
     std::unique_ptr<glm::mat4>  tranform;
 
-    DynamicData() = default;
+    DynamicData();
 };
 
 #endif //ENGINE_SG_HPP

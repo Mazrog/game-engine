@@ -6,6 +6,7 @@
 #include <glm/gtc/type_ptr.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 #include <iostream>
+#include <base.hpp>
 
 #include "rendering/camera.hpp"
 
@@ -39,7 +40,7 @@ void Camera::render() {
         update();
 
         for (auto const &uniform : vec_uniform) {
-            uniform.send(cam_mat);
+            uniform.send(pos, cam_mat);
         }
     }
 }
@@ -56,7 +57,10 @@ void Camera::update() {
     apply_rot(tmp, d_yaw   ,  glm::vec3(0.f, 1.f, 0.f) );
     aim = (pos + tmp);
 
-    cam_mat = perspective * glm::lookAt(pos, aim, up);
+    glm::mat4 lookat = glm::lookAt(pos, aim, up);
+    cam_mat = perspective * lookat;
+
+
     d_pitch = d_yaw = d_roll = 0;
 
     updated = false;

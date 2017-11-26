@@ -23,7 +23,7 @@ SGL::SGL() : current_camera(0) {
 }
 
 SGL::~SGL() {
-//    std::cout << "delete sgl" << std::endl;
+    clear();
 }
 
 void SGL::bind(SG_NODE_TYPE type, const char * name, SGL_Node * node) {
@@ -31,6 +31,7 @@ void SGL::bind(SG_NODE_TYPE type, const char * name, SGL_Node * node) {
         switch (type) {
             case SG_NODE_TYPE::SG_CAMERA:
                 cameras.push_back(static_cast<Camera *>(node));
+            case SG_NODE_TYPE::SG_LIGHT:
             case SG_NODE_TYPE::SG_STATIC:
             case SG_NODE_TYPE::SG_DYNAMIC:
                 graph[name] = node;

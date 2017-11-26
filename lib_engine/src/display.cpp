@@ -59,7 +59,9 @@ void Display::init(SDL_Window *&win, SDL_GLContext &ctx) {
     }
     glGetError();
 
-    glEnable(GL_DEPTH_TEST); get_error();
+    glEnable(GL_DEPTH_TEST); get_error("enable depth");
+//    glEnable(GL_CULL_FACE); get_error("enable cull");
+//    glCullFace(GL_BACK); get_error("cull both");
     SDL_GL_SetSwapInterval(1);
 }
 

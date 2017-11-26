@@ -5,9 +5,10 @@
 #include "base.hpp"
 
 #include "rendering/renderElement.hpp"
+#include "rendering/light.hpp"
 #include "src/cube.hpp"
-#include "procedural.hpp"
-#include "plane.hpp"
+#include "terrainRender.hpp"
+#include "terrain.hpp"
 #include "state/samplestate.hpp"
 
 
@@ -43,17 +44,15 @@ int main_game_loop(GameState * self) {
             case SDL_KEYDOWN:
                 if (ev.key.keysym.scancode == SDL_SCANCODE_P) {
                     std::cout << "Pausing the game" << std::endl;
+                    self->save_state();
                     return 1;
                 }
                 break;
-//            case SDL_MOUSEMOTION:
-//                if(ev.motion.xrel > h_sensibility) { self->get_as_camera("main_camera")->move_aim(CAM_DIR::RIGHT); }
-//                if(ev.motion.xrel < - h_sensibility) { self->get_as_camera("main_camera")->move_aim(CAM_DIR::LEFT); }
-//                if(ev.motion.yrel < - v_sensibility) { self->get_as_camera("main_camera")->move_aim(CAM_DIR::UP); }
-//                if(ev.motion.yrel > v_sensibility) { self->get_as_camera("main_camera")->move_aim(CAM_DIR::DOWN); }
             default:;
         }
     }
+
+//    rotate(*self->get("cube")->get_dynamic_data().tranform, 1, glm::vec3(0.0, 1.0, 0.0));
 
     if (keyboard[SDL_SCANCODE_UP]) {
         translate(*self->get("cube")->get_dynamic_data().tranform,
@@ -104,28 +103,19 @@ int main_game_loop(GameState * self) {
 
 void main_game_init(GameState * self) {
     Cube<RenderElement> * c = new Cube<RenderElement>();
-    Plane<Procedural>   * plane = new Plane<Procedural>();
+
+    Terrain<TerrainRenderer>   * terrain = new Terrain<TerrainRenderer>();
 
     Camera * camera = new Camera();
-    camera->bind_camera(Procedural::prog.getProgId(), RenderElement::prog.getProgId());
+    camera->bind_camera(TerrainRenderer::prog.getProgId(), RenderElement::prog.getProgId());
+
+    Light * sun = new Light(glm::vec3(2.f, 10.f, -3.f), glm::vec3(1.f));
+    sun->bind_light(TerrainRenderer::prog.getProgId(), RenderElement::prog.getProgId());
 
     self->bind(SG_NODE_TYPE::SG_CAMERA, "main_camera", camera);
-
+    self->bind(SG_NODE_TYPE::SG_LIGHT, "sun", sun);
     self->bind(SG_NODE_TYPE::SG_STATIC, "cube", c);
-
-    self->bind(SG_NODE_TYPE::SG_STATIC, "terrain", plane);
-
-    /* Compute shader */
-//    ShaderProgram compute;
-//    compute.makeShader("sample/shaders/compute.glsl", GL_COMPUTE_SHADER);
-//    compute.linkProgram();
-//
-//    glDispatchCompute(16, 16, 1); get_error("dispatch compute");
-//
-//
-//    glMemoryBarrier(GL_SHADER_STORAGE_BARRIER_BIT); get_error("memory barrier");
-
-//    SDL_SetRelativeMouseMode(SDL_TRUE);
+    self->bind(SG_NODE_TYPE::SG_STATIC, "terrain", terrain);
 }
 
 

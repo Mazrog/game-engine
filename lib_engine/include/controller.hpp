@@ -19,6 +19,7 @@ int poll_event(SDL_Event * event);
 class Controller {
 public:
     Controller();
+    ~Controller();
 
     /* Startup functions to init the context */
     void init();

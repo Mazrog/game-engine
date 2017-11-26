@@ -6,6 +6,8 @@
 #define ENGINE_VECTOR_UTILS_HPP
 
 #include <cmath>
+#include <vector>
+
 #include <glm/vec2.hpp>
 #include <glm/vec3.hpp>
 

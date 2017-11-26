@@ -15,6 +15,8 @@ void translate(mat4 & transform, vec3 && delta);
 
 void scale(mat4 & transform, vec3 && factor);
 
+void rotate(mat4 & transform, float angle, vec3 && axis);
+
 template < class T >
 void debug(T const& m){
     for(int i = 0; i < m.length(); ++i){

@@ -26,6 +26,12 @@ int poll_event(SDL_Event *event) {
 
 Controller::Controller() : sgl(nullptr) {}
 
+Controller::~Controller() {
+    for(auto & state : states) {
+        state->exit();
+    }
+}
+
 void Controller::init() {
     /* Initialisation of the event Context */
     eventContext = Controller::EventContext{

@@ -31,6 +31,11 @@ inline void send_uniform<glm::mat4>(GLint const& loc, glm::mat4 const& m) {
     glUniformMatrix4fv(loc, 1, GL_FALSE, glm::value_ptr(m)); get_error("send mat");
 }
 
+template <>
+inline void send_uniform<glm::vec3>(GLint const& loc, glm::vec3 const& v) {
+    glUniform3f(loc, v.x, v.y, v.z); get_error("send vec3");
+}
+
 /* ################################################################################## */
 
 struct Uniform {

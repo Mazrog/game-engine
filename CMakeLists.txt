@@ -30,6 +30,7 @@ set(LIB_SRC
 
         lib_engine/src/rendering/renderer.cpp
         lib_engine/src/rendering/camera.cpp
+        lib_engine/src/rendering/light.cpp
         lib_engine/src/rendering/program.cpp
 
         lib_engine/src/rendering/structs/uniform.cpp
@@ -77,9 +78,8 @@ set(EXEC_SRC_FILES
 
         sample/state/samplestate.cpp
 
-        sample/rendering/simpleRender.cpp
         sample/rendering/renderElement.cpp
-        sample/rendering/procedural.cpp
+        sample/rendering/terrainRender.cpp
 )
 
 add_executable(

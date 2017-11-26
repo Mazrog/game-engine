@@ -12,9 +12,6 @@
 #include "scenegraph/sg_logic.hpp"
 #include "utils.hpp"
 
-constexpr int v_sensibility = 4;
-constexpr int h_sensibility = 0;
-
 enum CAM_DIR : unsigned short {
     UP,
     RIGHT,
@@ -22,10 +19,24 @@ enum CAM_DIR : unsigned short {
     LEFT
 };
 
+struct Uniform_camera {
+    Uniform_camera(cref<GLuint> id1, const char * name1,
+                  cref<GLuint> id2, const char * name2) :
+            camera_pos(id1, name1), camera_viewpoint(id2, name2) {}
+
+    Uniform camera_pos;
+    Uniform camera_viewpoint;
+
+    void send(crvec3 pos, cref<glm::mat4> viewpoint) const {
+        camera_pos.send(pos);
+        camera_viewpoint.send(viewpoint);
+    }
+};
+
 class Camera : public SGL_Node {
 public:
-    Camera(const char * name = "viewpoint_camera");
-    Camera(crvec3 pos, crvec3 aim, crvec3 up, const char * name = "viewpoint_camera");
+    Camera(const char * name = "main_camera");
+    Camera(crvec3 pos, crvec3 aim, crvec3 up, const char * name = "main_camera");
 
     /* Build characteristics */
     void init();
@@ -46,7 +57,10 @@ public:
 
     template < typename ... Ps >
     void bind_camera(GLuint const& progId, Ps const&... progs) {
-        vec_uniform.emplace_back(progId, name);
+        vec_uniform.emplace_back(
+                progId, (std::string(name) + std::string("_pos")).c_str(),
+                progId, name
+        );
         bind_camera(progs...);
     }
     /* ########################################## */
@@ -70,7 +84,7 @@ private:
     glm::mat4 cam_mat;
 
     /* Vector of uniform saving the camera data for each program */
-    std::vector<Uniform>    vec_uniform;
+    std::vector<Uniform_camera>    vec_uniform;
 
     /* Angles */
     float   d_yaw;

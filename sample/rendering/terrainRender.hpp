@@ -10,30 +10,25 @@
 #include "scenegraph/sg_logic.hpp"
 #include "rendering/renderer.hpp"
 #include "rendering/structs/uniform.hpp"
-#include "rendering/structs/ssbuffer.hpp"
 
-class Procedural : public Renderer {
+class TerrainRenderer : public Renderer {
 public:
     static void init();
     static ShaderProgram    prog;
 
 public:
-    Procedural();
-    explicit Procedural(SGL_Node * node);
+    TerrainRenderer();
+    explicit TerrainRenderer(SGL_Node * node);
 
-    ~Procedural() = default;
+    ~TerrainRenderer() = default;
 
     void operator()( DynamicData const& dd ) override;
-    void operator()(DynamicData const& dd, GLenum primitive);
 
 private:
     GLuint          vao;
-    GLuint          vbos[2];
+    GLuint          vbos[4];
 
     Uniform         transform;
-    Uniform         y_max;
-
-    SSBuffer        vertices;
 };
 
 

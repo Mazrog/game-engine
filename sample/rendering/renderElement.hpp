@@ -27,7 +27,7 @@ public:
 
 private:
     GLuint          vao;
-    GLuint          vbos[3];
+    GLuint          vbos[4];
 
     Uniform         transform;
     Uniform         texture;

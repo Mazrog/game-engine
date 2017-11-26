@@ -26,23 +26,30 @@ RenderElement::RenderElement(SGL_Node * node) :
     glGenVertexArrays(1, &vao); get_error("gen vao");
     glBindVertexArray(vao);     get_error("bind vao");
 
-    glGenBuffers(3, vbos);      get_error("gen buffer");
+    glGenBuffers(4, vbos);      get_error("gen buffer");
 
-    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, vbos[1]); get_error("bind buffer element");
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, vbos[3]); get_error("bind buffer element");
     glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(unsigned) * rd.links->size(), rd.links->data(), GL_STATIC_DRAW); get_error("buffer data element");
 
+    /* Coordinates */
     glBindBuffer(GL_ARRAY_BUFFER, vbos[0]); get_error("bind buffer");
     glBufferData(GL_ARRAY_BUFFER, sizeof(glm::vec3) * rd.vertices->size(), rd.vertices->data(), GL_STATIC_DRAW); get_error("buffer data");
-
     glEnableVertexAttribArray(0); get_error("enable pointer 0");
     glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, (void *) 0); get_error("set pointer 0");
 
 
-    glBindBuffer(GL_ARRAY_BUFFER, vbos[2]); get_error("bind buffer uvs");
-    glBufferData(GL_ARRAY_BUFFER, sizeof(glm::vec3) * rd.uvs->size(), rd.uvs->data(), GL_STATIC_DRAW); get_error("buffer data uvs");
+    /* UVS */
+    glBindBuffer(GL_ARRAY_BUFFER, vbos[1]); get_error("bind buffer uvs");
+    glBufferData(GL_ARRAY_BUFFER, sizeof(glm::vec2) * rd.uvs->size(), rd.uvs->data(), GL_STATIC_DRAW); get_error("buffer data uvs");
+    glEnableVertexAttribArray(1); get_error("enable pointer 1");
+    glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 0, (void *) 0); get_error("set pointer 1");
 
-    glEnableVertexAttribArray(10); get_error("enable pointer 10");
-    glVertexAttribPointer(10, 3, GL_FLOAT, GL_FALSE, 0, (void *) 0); get_error("set pointer 10");
+    /* Normals */
+    glBindBuffer(GL_ARRAY_BUFFER, vbos[2]); get_error("bind buffer normals");
+    glBufferData(GL_ARRAY_BUFFER, sizeof(glm::vec3) * rd.normals->size(), rd.normals->data(), GL_STATIC_DRAW); get_error("buffer data normals");
+    glEnableVertexAttribArray(2); get_error("enable pointer 2");
+    glVertexAttribPointer(2, 3, GL_FLOAT, GL_FALSE, 0, (void *) 0); get_error("set pointer 2");
+
 
 
     /* TODO : WRAP TEXTURE ! */
@@ -53,8 +60,11 @@ RenderElement::RenderElement(SGL_Node * node) :
     glBindTexture(GL_TEXTURE_2D, faceCube); get_error("bind texture");
     glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, surf->w, surf->h, 0, GL_RGB, GL_UNSIGNED_BYTE, surf->pixels); get_error("tex image 2D");
     SDL_FreeSurface(surf);
+    glGenerateMipmap(GL_TEXTURE_2D); get_error("mipmap");
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR); get_error("mipmap linear");
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR); get_error("texture param MAG");
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR); get_error("texture param MIN");
+    glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_LOD_BIAS, -.4f); get_error("mipmap bias");
+
 
     glActiveTexture(GL_TEXTURE0); get_error("active texture 0");
     texture.send(0);

@@ -11,21 +11,28 @@ GameState::GameState(
         std::function<void(GameState * self)> const&   init,
         std::function<void(GameState * self)>  const&  exit) :
         onInit(init), logic(logic), onExit(exit),
-        sgl(std::make_shared<SGL>()) {
-//    std::cout << "make game state" << std::endl;
-}
+        sgl(std::make_shared<SGL>()), hasBeenInit(false), saved(false){}
 
 GameState::~GameState() {}
 
 GameState::GameState(GameState && gs) :
         onInit(std::move(gs.onInit)), logic(std::move(gs.logic)),
-        onExit(std::move(gs.onExit)), sgl(std::move(gs.sgl)) {
-//    std::cout << "move game state" << std::endl;
+        onExit(std::move(gs.onExit)), sgl(std::move(gs.sgl)) {}
+
+void GameState::init(GameState * self) {
+    if(!hasBeenInit) {
+        onInit(self);
+        hasBeenInit = true;
+    }
+    saved = false;
 }
 
-void GameState::init(GameState * self) { onInit(self); }
-
-void GameState::exit(GameState * self) { onExit(self); }
+void GameState::exit(GameState * self){
+    if(!saved) {
+        onExit(self);
+        hasBeenInit = false;
+    }
+}
 
 void GameState::main(GameState * self) {
     int ns = logic(self);
@@ -41,6 +48,14 @@ void GameState::main() { main(this); }
 void GameState::init() { init(this); }
 
 void GameState::exit() { exit(this); }
+
+void GameState::save_state() {
+    saved = true;
+}
+
+void GameState::clear() {
+    sgl->clear();
+}
 
 void GameState::bind(SG_NODE_TYPE type, const char * name, SGL_Node *node) {
     sgl->bind(type, name, node);
