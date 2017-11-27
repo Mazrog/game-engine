@@ -1,5 +1,6 @@
 #include <iostream>
 #include <array>
+#include <sstream>
 
 #include "engine.hpp"
 #include "base.hpp"
@@ -52,25 +53,25 @@ int main_game_loop(GameState * self) {
         }
     }
 
-//    rotate(*self->get("cube")->get_dynamic_data().tranform, 1, glm::vec3(0.0, 1.0, 0.0));
+    rotate(self->get("cube")->get_dynamic_data().tranform, 1, glm::vec3(0.0, 1.0, 0.0));
 
     if (keyboard[SDL_SCANCODE_UP]) {
-        translate(*self->get("cube")->get_dynamic_data().tranform,
+        translate(self->get("cube")->get_dynamic_data().tranform,
                   glm::vec3(0.f, .05f, 0.f));
     }
 
     if (keyboard[SDL_SCANCODE_DOWN]) {
-        translate(*self->get("cube")->get_dynamic_data().tranform,
+        translate(self->get("cube")->get_dynamic_data().tranform,
                   glm::vec3(0.f, -.05f, 0.f));
     }
 
     if (keyboard[SDL_SCANCODE_RIGHT]) {
-        translate(*self->get("cube")->get_dynamic_data().tranform,
+        translate(self->get("cube")->get_dynamic_data().tranform,
                   glm::vec3(.05f, 0.f, 0.f));
     }
 
     if (keyboard[SDL_SCANCODE_LEFT]) {
-        translate(*self->get("cube")->get_dynamic_data().tranform,
+        translate(self->get("cube")->get_dynamic_data().tranform,
                   glm::vec3(-.05f, 0.f, 0.f));
     }
 
@@ -109,7 +110,7 @@ void main_game_init(GameState * self) {
     Camera * camera = new Camera();
     camera->bind_camera(TerrainRenderer::prog.getProgId(), RenderElement::prog.getProgId());
 
-    Light * sun = new Light(glm::vec3(2.f, 10.f, -3.f), glm::vec3(1.f));
+    Light * sun = new Light(glm::vec3(2.f, 10.f, 10.f), glm::vec3(1.f));
     sun->bind_light(TerrainRenderer::prog.getProgId(), RenderElement::prog.getProgId());
 
     self->bind(SG_NODE_TYPE::SG_CAMERA, "main_camera", camera);
@@ -131,6 +132,11 @@ int main() {
 
     Engine::add_states(test, pause);
     Engine::start();
+
+
+//    Model model;
+//    Loader::load_obj("sample/obj/cube.obj", model);
+
 
     return 0;
 }

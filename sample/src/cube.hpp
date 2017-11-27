@@ -24,112 +24,49 @@ private:
 template < class Render >
 Cube< Render >::Cube() {
     /* temporaire, prévoir chargement OBJ */
-    renderingData.normals->emplace_back(0.0, 0.0, 1.0);
-    renderingData.normals->emplace_back(0.0, 1.0, 0.0);
-    renderingData.normals->emplace_back(-1.0, 0.0, 0.0);
+    model.vertices.emplace_back(-0.5, 0.5, 0.5);
+    model.vertices.emplace_back(0.5, 0.5, 0.5);
+    model.vertices.emplace_back(0.5, -0.5, 0.5);
+    model.vertices.emplace_back(-0.5, -0.5, 0.5);
+    model.vertices.emplace_back(-0.5, -0.5, -0.5);
+    model.vertices.emplace_back(-0.5, 0.5, -0.5);
+    model.vertices.emplace_back(0.5, 0.5, -0.5);
+    model.vertices.emplace_back(0.5, -0.5, -0.5);
 
-    renderingData.normals->emplace_back(0.0, 0.0, 1.0);
-    renderingData.normals->emplace_back(0.0, 1.0, 0.0);
-    renderingData.normals->emplace_back(1.0, 0.0, 0.0);
+    model.uvs.emplace_back(0.0, 0.0);
+    model.uvs.emplace_back(0.0, 1.0);
+    model.uvs.emplace_back(1.0, 1.0);
+    model.uvs.emplace_back(1.0, 0.0);
+    model.uvs.emplace_back(1.0, 1.0);
+    model.uvs.emplace_back(1.0, 0.0);
+    model.uvs.emplace_back(0.0, 0.0);
+    model.uvs.emplace_back(0.0, 1.0);
 
-    renderingData.normals->emplace_back(0.0, 0.0, 1.0);
-    renderingData.normals->emplace_back(0.0, -1.0, 0.0);
-    renderingData.normals->emplace_back(1.0, 0.0, 0.0);
-
-    renderingData.normals->emplace_back(0.0, 0.0, 1.0);
-    renderingData.normals->emplace_back(0.0, -1.0, 0.0);
-    renderingData.normals->emplace_back(-1.0, 0.0, 0.0);
-
-    renderingData.normals->emplace_back(0.0, 0.0, -1.0);
-    renderingData.normals->emplace_back(0.0, -1.0, 0.0);
-    renderingData.normals->emplace_back(-1.0, 0.0, 0.0);
-
-    renderingData.normals->emplace_back(0.0, 0.0, -1.0);
-    renderingData.normals->emplace_back(0.0, 1.0, 0.0);
-    renderingData.normals->emplace_back(-1.0, 0.0, 0.0);
-
-    renderingData.normals->emplace_back(0.0, 0.0, -1.0);
-    renderingData.normals->emplace_back(0.0, 1.0, 0.0);
-    renderingData.normals->emplace_back(1.0, 0.0, 0.0);
-
-    renderingData.normals->emplace_back(0.0, 0.0, -1.0);
-    renderingData.normals->emplace_back(0.0, -1.0, 0.0);
-    renderingData.normals->emplace_back(1.0, 0.0, 0.0);
-
-    renderingData.uvs->emplace_back(0.0, 0.0);
-    renderingData.uvs->emplace_back(0.0, 0.0);
-    renderingData.uvs->emplace_back(0.0, 0.0);
-    renderingData.uvs->emplace_back(0.0, 1.0);
-    renderingData.uvs->emplace_back(0.0, 1.0);
-    renderingData.uvs->emplace_back(0.0, 1.0);
-    renderingData.uvs->emplace_back(1.0, 1.0);
-    renderingData.uvs->emplace_back(1.0, 1.0);
-    renderingData.uvs->emplace_back(1.0, 1.0);
-    renderingData.uvs->emplace_back(1.0, 0.0);
-    renderingData.uvs->emplace_back(1.0, 0.0);
-    renderingData.uvs->emplace_back(1.0, 0.0);
-    renderingData.uvs->emplace_back(1.0, 1.0);
-    renderingData.uvs->emplace_back(1.0, 1.0);
-    renderingData.uvs->emplace_back(1.0, 1.0);
-    renderingData.uvs->emplace_back(1.0, 0.0);
-    renderingData.uvs->emplace_back(1.0, 0.0);
-    renderingData.uvs->emplace_back(1.0, 0.0);
-    renderingData.uvs->emplace_back(0.0, 0.0);
-    renderingData.uvs->emplace_back(0.0, 0.0);
-    renderingData.uvs->emplace_back(0.0, 0.0);
-    renderingData.uvs->emplace_back(0.0, 1.0);
-    renderingData.uvs->emplace_back(0.0, 1.0);
-    renderingData.uvs->emplace_back(0.0, 1.0);
-
-    renderingData.vertices->emplace_back(-0.5, 0.5, 0.5); // Face avant     0
-    renderingData.vertices->emplace_back(-0.5, 0.5, 0.5); // Face haut      1
-    renderingData.vertices->emplace_back(-0.5, 0.5, 0.5); // Face gauche    2
-
-    renderingData.vertices->emplace_back(0.5, 0.5, 0.5); // Face avant      3
-    renderingData.vertices->emplace_back(0.5, 0.5, 0.5); // Face haut       4
-    renderingData.vertices->emplace_back(0.5, 0.5, 0.5); // Face droite     5
-
-    renderingData.vertices->emplace_back(0.5, -0.5, 0.5); // Face avant     6
-    renderingData.vertices->emplace_back(0.5, -0.5, 0.5); // Face dessous   7
-    renderingData.vertices->emplace_back(0.5, -0.5, 0.5); // Face droite    8
-
-    renderingData.vertices->emplace_back(-0.5, -0.5, 0.5); // Face avant    9
-    renderingData.vertices->emplace_back(-0.5, -0.5, 0.5); // Face dessous  10
-    renderingData.vertices->emplace_back(-0.5, -0.5, 0.5); // Face gauche   11
-
-    renderingData.vertices->emplace_back(-0.5, -0.5, -0.5); // Face arrière 12
-    renderingData.vertices->emplace_back(-0.5, -0.5, -0.5); // Face dessous 13
-    renderingData.vertices->emplace_back(-0.5, -0.5, -0.5); // Face gauche  14
-
-    renderingData.vertices->emplace_back(-0.5, 0.5, -0.5); // Face arrière  15
-    renderingData.vertices->emplace_back(-0.5, 0.5, -0.5); // Face haut     16
-    renderingData.vertices->emplace_back(-0.5, 0.5, -0.5); // Face gauche   17
-
-    renderingData.vertices->emplace_back(0.5, 0.5, -0.5); // Face arrière   18
-    renderingData.vertices->emplace_back(0.5, 0.5, -0.5); // Face haut      19
-    renderingData.vertices->emplace_back(0.5, 0.5, -0.5); // Face droite    20
-
-    renderingData.vertices->emplace_back(0.5, -0.5, -0.5); // Face arrière  21
-    renderingData.vertices->emplace_back(0.5, -0.5, -0.5); // Face dessous  22
-    renderingData.vertices->emplace_back(0.5, -0.5, -0.5); // Face droite   23
+    model.normals.emplace_back(0.0, 0.0, 1.0);
+    model.normals.emplace_back(0.0, 0.0, 1.0);
+    model.normals.emplace_back(0.0, 0.0, 1.0);
+    model.normals.emplace_back(0.0, 0.0, 1.0);
+    model.normals.emplace_back(0.0, 0.0, -1.0);
+    model.normals.emplace_back(0.0, 0.0, -1.0);
+    model.normals.emplace_back(0.0, 0.0, -1.0);
+    model.normals.emplace_back(0.0, 0.0, -1.0);
 
     int linking[] = {
-            0, 3, 6, 6, 9, 0, //Face avant
-            12, 15, 18, 18, 21, 12, //Face arrière
-            1, 4, 16, 16, 19, 1, //Face haut
-
-            5, 8, 20, 20, 23, 8, //Face droite
-            7, 10, 13, 13, 22, 7, //Face bas
-            2, 11, 14, 14, 17, 2 //Face gauche
+            0, 1, 2, 2, 3, 0, //Face avant
+            6, 5, 4, 4, 7, 6, //Face arrière
+            5, 6, 1, 1, 0, 5, //Face haut
+            6, 7, 2, 2, 1, 6, //Face droite
+            3, 2, 7, 7, 4, 3, //Face bas
+            0, 3, 4, 4, 5, 0 //Face gauche
     };
 
     for(unsigned i = 0; i < 36; ++i){
-        renderingData.links->push_back(linking[i]);
+        model.links.push_back(linking[i]);
     }
 
     glm::vec3 scale(1.f);
 
-    dynamicData.tranform = std::make_unique<glm::mat4>(
+    dynamicData.tranform = glm::mat4(
             scale.x, 0, 0, 0,
             0, scale.y, 0, 0,
             0, 0, scale.z, 0,

@@ -25,7 +25,6 @@ Camera::Camera(const glm::vec3 &pos, const glm::vec3 &aim, const glm::vec3 &up, 
 }
 
 void Camera::init() {
-    dynamicData.tranform = nullptr;
     look_speed = .05f;
     move_speed = .01f;
     d_roll = d_yaw = d_pitch = 0.f;

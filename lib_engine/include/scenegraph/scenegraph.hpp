@@ -10,7 +10,9 @@
 #include <memory>
 #include <glm/glm.hpp>
 
-#include "utils.hpp"
+using vecord = std::vector<glm::vec3>;
+using vecuvs = std::vector<glm::vec2>;
+using vecui  = std::vector<unsigned>;
 
 enum class SG_NODE_TYPE : unsigned {
     SG_STATIC,
@@ -20,18 +22,25 @@ enum class SG_NODE_TYPE : unsigned {
     SG_FORCE
 };
 
+struct Material {
+    float ka;
+    float kd;
+    float ks;
+};
 
-struct RenderingData {
-    std::unique_ptr<vecord> vertices;
-    std::unique_ptr<vecuvs> uvs;
-    std::unique_ptr<vecord> normals;
-    std::unique_ptr<vecui>  links;
+struct Model {
+    vecord  vertices;
+    vecuvs  uvs;
+    vecord  normals;
+    vecui   links;
 
-    RenderingData();
+    Material material;
+
+    Model();
 };
 
 struct DynamicData{
-    std::unique_ptr<glm::mat4>  tranform;
+    glm::mat4  tranform;
 
     DynamicData();
 };

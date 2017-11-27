@@ -21,7 +21,7 @@ public:
     virtual ~SGL_Node();
 
     virtual void render() = 0;
-    RenderingData&  get_rendering_data() { return renderingData; }
+    Model&  get_model() { return model; }
     DynamicData&    get_dynamic_data() { return dynamicData; }
 
 
@@ -29,7 +29,7 @@ public:
 
 protected:
     int             draw_order; /* Draw order for the rendering */
-    RenderingData   renderingData;
+    Model           model;
     DynamicData     dynamicData;
 };
 
