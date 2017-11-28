@@ -14,6 +14,12 @@
 class Renderer {
 protected:
     virtual void operator() ( DynamicData const& dd ) = 0;
+
+    struct RenderConfig {
+        GLenum  primitive;
+        int     count;
+
+    }               renderConfig;
 };
 
 

@@ -53,7 +53,8 @@ int main_game_loop(GameState * self) {
         }
     }
 
-    rotate(self->get("cube")->get_dynamic_data().tranform, 1, glm::vec3(0.0, 1.0, 0.0));
+//    rotate(self->get("cube")->get_dynamic_data().tranform, 1, glm::vec3(0.0, 1.0, 0.0));
+    rotate(self->get("sun")->get_dynamic_data().tranform, -1, glm::vec3(0.0, 1.0, 0.0));
 
     if (keyboard[SDL_SCANCODE_UP]) {
         translate(self->get("cube")->get_dynamic_data().tranform,
@@ -110,7 +111,7 @@ void main_game_init(GameState * self) {
     Camera * camera = new Camera();
     camera->bind_camera(TerrainRenderer::prog.getProgId(), RenderElement::prog.getProgId());
 
-    Light * sun = new Light(glm::vec3(2.f, 10.f, 10.f), glm::vec3(1.f));
+    Light * sun = new Light(glm::vec3(10.f, 5.f, 0.f), glm::vec3(.8f, 0.f, 0.f));
     sun->bind_light(TerrainRenderer::prog.getProgId(), RenderElement::prog.getProgId());
 
     self->bind(SG_NODE_TYPE::SG_CAMERA, "main_camera", camera);
