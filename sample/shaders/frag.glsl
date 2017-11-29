@@ -1,7 +1,7 @@
 #version 330 core
 
 
-in vec3 pass_uvs;
+in vec2 pass_uvs;
 in vec3 surface_normal;
 in vec3 to_light_vector;
 
@@ -20,5 +20,6 @@ void main() {
     /* Ajout d'une lumière ambiante (.2f et non 0) */
     brightness = max(brightness, .2f);
 
-    color = texture(textCube, pass_uvs.xy) + (brightness * vec4(sun_color, 0.0));
+//    color = texture(textCube, pass_uvs) + (brightness * vec4(sun_color, 0.0));
+    color = vec4(.7, .7, .7, 1.) * (brightness * vec4(sun_color, 0.0));
 }

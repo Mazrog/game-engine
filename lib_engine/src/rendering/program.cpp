@@ -50,9 +50,14 @@ ShaderProgram::ShaderProgram(const char *vertexPath, const char *fragmentPath) {
 }
 
 ShaderProgram::~ShaderProgram() {
+    destroy();
+}
+
+void ShaderProgram::destroy() {
     if(_progId) {
         glDeleteProgram(_progId);
         get_error("s");
+        _progId = 0;
     }
 }
 

@@ -63,7 +63,7 @@ RenderElement::RenderElement(SGL_Node * node) :
     glGenerateMipmap(GL_TEXTURE_2D); get_error("mipmap");
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR); get_error("mipmap linear");
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR); get_error("texture param MAG");
-    glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_LOD_BIAS, -.4f); get_error("mipmap bias");
+//    glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_LOD_BIAS, -.4f); get_error("mipmap bias");
 
 
     glActiveTexture(GL_TEXTURE0); get_error("active texture 0");
@@ -77,5 +77,5 @@ void RenderElement::operator()(DynamicData const& dd) {
     glBindVertexArray(vao);     get_error("bind vao render");
     transform.send(dd.tranform);
 
-    glDrawElements(renderConfig.primitive, renderConfig.count, GL_UNSIGNED_INT, (void *) 0); get_error("render element");
+    glDrawElements(GL_TRIANGLES, renderConfig.count, GL_UNSIGNED_INT, (void *) 0); get_error("render element");
 }

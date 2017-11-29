@@ -41,6 +41,7 @@ public:
 
     void useProgram();
 
+    void destroy();
 
     /* Getters and Setters */
     GLuint getProgId() const;

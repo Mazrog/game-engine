@@ -24,15 +24,15 @@ private:
 
 template < class Render >
 Cube< Render >::Cube() {
-    Loader::load_obj("sample/obj/cube.obj", model);
+    Loader::load_obj("sample/obj/person.obj", model);
 
-    glm::vec3 scale(1.f);
+    glm::vec3 scale(.2f);
 
     dynamicData.tranform = glm::mat4(
             scale.x, 0, 0, 0,
             0, scale.y, 0, 0,
             0, 0, scale.z, 0,
-            0, -2.f, 0, 1.f);
+            0, 0.f, 0, 1.f);
 
     Render::init();
     renderer = Render(this);

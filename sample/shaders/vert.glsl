@@ -1,7 +1,7 @@
 #version 330 core
 
 layout (location = 0) in vec3 in_pos;
-layout (location = 1) in vec3 in_uv;
+layout (location = 1) in vec2 in_uv;
 layout (location = 2) in vec3 in_normal;
 
 uniform mat4 transform;
@@ -12,7 +12,7 @@ uniform vec3 main_camera_pos;
 uniform vec3 sun_pos;
 
 
-out vec3 pass_uvs;
+out vec2 pass_uvs;
 out vec3 surface_normal;
 out vec3 to_light_vector;
 
