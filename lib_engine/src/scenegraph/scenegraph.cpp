@@ -11,6 +11,13 @@ Model::Model() {
     links     = vecui();
 }
 
+void Model::clear() {
+    vertices.clear();
+    uvs.clear();
+    normals.clear();
+    links.clear();
+}
+
 DynamicData::DynamicData() {
     tranform = glm::mat4();
 }

@@ -5,6 +5,8 @@ in vec2 pass_uvs;
 in vec3 surface_normal;
 in vec3 to_light_vector;
 
+in float pos_y;
+
 
 uniform sampler2D textCube;
 uniform vec3 sun_color;

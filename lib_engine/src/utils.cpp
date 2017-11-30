@@ -50,17 +50,15 @@ namespace Loader {
     void processVertLink(glm::ivec3 & vec, Model & model, vert_map & vmap) {
         Vertex cur(vec.x - 1, vec.y - 1, vec.z - 1);
 
-        auto it = vmap.find(cur);
+        unsigned & val = vmap[cur];
+        unsigned ind;
 
-        int ind = vmap.size();
-        if( it == vmap.end() ) {
+        if( !val ) {
             /* New Vertex */
-            vmap[cur] = ind;
-        } else {
-            /* Existing vertex */
-            ind = it->second;
+            val = vmap.size();
         }
-        model.links.push_back(ind);
+        ind = val;
+        model.links.push_back(ind - 1);
     }
 
     void processFace(std::istringstream & sstr, Model & model, vert_map & vmap) {
@@ -128,12 +126,13 @@ namespace Loader {
 
             /* Filling up with the map information */
             for(auto const& pair : vmap) {
-                model.vertices[pair.second] = vertices.at(pair.first.vertex_index);
+                unsigned indice = pair.second - 1;
+                model.vertices[indice] = vertices.at(pair.first.vertex_index);
                 if(pair.first.texture_index >= 0) {
-                    model.uvs[pair.second] = uvs.at(pair.first.texture_index);
+                    model.uvs[indice] = uvs.at(pair.first.texture_index);
                 }
                 if(pair.first.normal_index >= 0) {
-                    model.normals[pair.second] = normals.at(pair.first.normal_index);
+                    model.normals[indice] = normals.at(pair.first.normal_index);
                 }
             }
 

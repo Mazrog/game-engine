@@ -29,6 +29,7 @@ private:
     GLuint          vbos[4];
 
     Uniform         transform;
+    Uniform         texture;
 };
 
 

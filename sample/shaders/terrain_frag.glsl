@@ -2,6 +2,10 @@
 
 out vec4 color;
 
+in vec2 pass_uvs;
+
+uniform sampler2D terrain_texture;
+
 void main() {
-    color = vec4(.2f, .3f, .1f, 1.f);
+    color = texture(terrain_texture, pass_uvs);
 }

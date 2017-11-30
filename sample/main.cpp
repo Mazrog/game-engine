@@ -106,7 +106,7 @@ int main_game_loop(GameState * self) {
 void main_game_init(GameState * self) {
     Cube<RenderElement> * c = new Cube<RenderElement>();
 
-    Terrain<TerrainRenderer>   * terrain = new Terrain<TerrainRenderer>();
+    Terrain<TerrainRenderer>   * terrain = new Terrain<TerrainRenderer>(300, 300);
 
     Camera * camera = new Camera();
     camera->bind_camera(TerrainRenderer::prog.getProgId(), RenderElement::prog.getProgId());

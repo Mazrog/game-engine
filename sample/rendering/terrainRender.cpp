@@ -3,6 +3,7 @@
 //
 
 #include <iostream>
+#include <SDL2/SDL_image.h>
 #include "utils.hpp"
 #include "terrainRender.hpp"
 
@@ -17,7 +18,7 @@ void TerrainRenderer::init() {
 TerrainRenderer::TerrainRenderer() : vao(), vbos(), transform() {}
 
 TerrainRenderer::TerrainRenderer(SGL_Node *node) :
-        transform(prog.getProgId(), "transform") {
+        transform(prog.getProgId(), "transform"), texture(prog.getProgId(), "terrain_texture") {
     Model& rd = node->get_model();
 
     glGenVertexArrays(1, &vao); get_error("gen vao");
@@ -49,11 +50,31 @@ TerrainRenderer::TerrainRenderer(SGL_Node *node) :
     /* Normals */
     glEnableVertexAttribArray(2); get_error("enable pointer 2");
     glVertexAttribPointer(2, 3, GL_FLOAT, GL_FALSE, 0, (void *) 0); get_error("set pointer 2");
+
+
+
+    /* TODO : WRAP TEXTURE ! */
+    GLuint terrain_texture;
+    SDL_Surface * surf = IMG_Load("sample/img/terrain.png");
+
+    glGenTextures(1, &terrain_texture); get_error("gen texture");
+    glBindTexture(GL_TEXTURE_2D, terrain_texture); get_error("bind texture");
+    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, surf->w, surf->h, 0, GL_RGB, GL_UNSIGNED_BYTE, surf->pixels); get_error("tex image 2D");
+    SDL_FreeSurface(surf);
+    glGenerateMipmap(GL_TEXTURE_2D); get_error("mipmap");
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR); get_error("mipmap linear");
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR); get_error("texture param MAG");
+
+
+    glActiveTexture(GL_TEXTURE0); get_error("active texture 0");
+    texture.send(0);
 }
 
 void TerrainRenderer::operator()(DynamicData const &dd) {
     glBindVertexArray(vao); get_error("bind vao render");
     transform.send(dd.tranform);
+    glCullFace(GL_FRONT);
 
-    glDrawElements(GL_TRIANGLES, 2400, GL_UNSIGNED_INT, (void *) 0); get_error("rendering terrain");
+    glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, (void *) 0); get_error("rendering terrain");
+    glCullFace(GL_BACK); get_error("cull back");
 }

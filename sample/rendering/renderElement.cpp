@@ -71,6 +71,8 @@ RenderElement::RenderElement(SGL_Node * node) :
 
     renderConfig.count = model.links.size();
     renderConfig.primitive = GL_TRIANGLES;
+
+    model.clear();
 }
 
 void RenderElement::operator()(DynamicData const& dd) {

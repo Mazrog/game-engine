@@ -37,6 +37,7 @@ struct Model {
     Material material;
 
     Model();
+    void clear();
 };
 
 struct DynamicData{

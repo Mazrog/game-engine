@@ -60,8 +60,8 @@ void Display::init(SDL_Window *&win, SDL_GLContext &ctx) {
     glGetError();
 
     glEnable(GL_DEPTH_TEST); get_error("enable depth");
-//    glEnable(GL_CULL_FACE); get_error("enable cull");
-//    glCullFace(GL_BACK); get_error("cull both");
+    glEnable(GL_CULL_FACE); get_error("enable cull");
+    glCullFace(GL_BACK); get_error("cull both");
     SDL_GL_SetSwapInterval(1);
 }
 
@@ -73,7 +73,7 @@ void Display::quit(SDL_Window * win, SDL_GLContext ctx) {
 }
 
 void Display::cls() {
-    glClearColor(0.0f, 0.0f, 0.0f, 1.0f); get_error();
+    glClearColor(.4f, .4f, .4f, 1.f); get_error();
     GLbitfield mask = GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT;
     glClear(mask); get_error();
 }

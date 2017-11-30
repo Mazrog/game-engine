@@ -10,7 +10,7 @@
 template < class Render >
 class Terrain : public SGL_Node {
 public:
-    Terrain(int length = 20, int width = 20);
+    Terrain(int width, int length, glm::vec3 const& position = glm::vec3(0.f));
 
     void render() { renderer( dynamicData ); }
 
@@ -20,41 +20,38 @@ private:
 
 
 template < class Render >
-Terrain<Render>::Terrain(int length, int width) {
+Terrain<Render>::Terrain(int width, int length, glm::vec3 const& position) {
+    model.vertices.emplace_back(-length/2.f, 0.f, -width/2.f);
+    model.vertices.emplace_back( length/2.f, 0.f, -width/2.f);
+    model.vertices.emplace_back( length/2.f, 0.f,  width/2.f);
+    model.vertices.emplace_back(-length/2.f, 0.f,  width/2.f);
 
-    int n_vertices = length*width;
-    float x, z;
+    model.uvs.emplace_back(0, 0);
+    model.uvs.emplace_back(1, 0);
+    model.uvs.emplace_back(1, 1);
+    model.uvs.emplace_back(0, 1);
 
-    for(int i = 0; i < width; ++i) {
-        z = -.5f + i * (1.f / width);
-        for(int j = 0 ; j < length; ++j) {
-            x = -.5f + j * (1.f / length);
-            model.vertices.emplace_back(x, 0.f, z);
-        }
+    model.normals.emplace_back(0, 1.f, 0);
+    model.normals.emplace_back(0, 1.f, 0);
+    model.normals.emplace_back(0, 1.f, 0);
+    model.normals.emplace_back(0, 1.f, 0);
 
-//        std::cout << std::endl;
+    GLuint links[] = {
+            0, 1, 2,
+            2, 3, 0
+    };
+
+    for(int i = 0; i < 6; ++i) {
+        model.links.emplace_back(links[i]);
     }
 
-    for(int i = 0; i < n_vertices; ++i) {
-        if( !i || (i % length  != (length - 1)) ) {
-            model.links.push_back(i);
-            model.links.push_back(i + 1);
-            model.links.push_back(i + length);
-
-            model.links.push_back(i + 1);
-            model.links.push_back(i + length);
-            model.links.push_back(i + length + 1);
-        }
-        model.normals.emplace_back(0.f, 1.f, 0.f);
-    }
-
-    glm::vec3 scale(5.f, 1.f, 5.f);
+    glm::vec3 scale(1.f);
 
     dynamicData.tranform = glm::mat4(
             scale.x, 0, 0, 0,
             0, scale.y, 0, 0,
             0, 0, scale.z, 0,
-            0, 0.f, 0, 1.f
+            position.x, position.y, position.z, 1.f
     );
 
 

@@ -16,6 +16,8 @@ out vec2 pass_uvs;
 out vec3 surface_normal;
 out vec3 to_light_vector;
 
+out float pos_y;
+
 void main() {
     vec4 world_position = transform * vec4(in_pos, 1.0);
 
@@ -25,4 +27,5 @@ void main() {
     to_light_vector = sun_pos - world_position.xyz;
 
     pass_uvs = in_uv;
+    pos_y = world_position.y;
 }
