@@ -50,7 +50,9 @@ namespace Loader {
                 (v1.texture_index != v2.texture_index) || (v1.normal_index != v2.normal_index);
     }
 
-    void load_obj(const char * file, Model & model);
+    void load_obj_element(const char * obj_file, Model & model);
+
+    void load_obj_array(const char * obj_file, Model & model);
 }
 
 #endif //ENGINE_UTILS_HPP

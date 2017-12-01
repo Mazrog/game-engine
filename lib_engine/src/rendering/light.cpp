@@ -10,14 +10,14 @@ Light::Light(crvec3 pos, crvec3 color, const char * name) :
         pos(pos), color(color), name(name), updated(true){}
 
 void Light::render() {
-    if(updated) {
+//    if(updated) {
         glm::vec4 new_pos = dynamicData.tranform * glm::vec4(pos, 1.f);
         pos = glm::vec3(new_pos);
 
         for (auto const & unif_light : vec_uniforms) {
             unif_light.send(pos, color);
         }
-        updated = false;
-    }
+//        updated = false;
+//    }
 }
 

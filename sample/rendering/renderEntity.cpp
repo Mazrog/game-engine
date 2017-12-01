@@ -6,20 +6,20 @@
 #include <rendering/program.hpp>
 
 #include "display.hpp"
-#include "renderElement.hpp"
+#include "renderEntity.hpp"
 
-ShaderProgram RenderElement::prog;
+ShaderProgram RenderEntity::prog;
 
-void RenderElement::init() {
-    if(!RenderElement::prog.getProgId()) {
-        RenderElement::prog = ShaderProgram("sample/shaders/vert.glsl", "sample/shaders/frag.glsl");
+void RenderEntity::init() {
+    if(!RenderEntity::prog.getProgId()) {
+        RenderEntity::prog = ShaderProgram("sample/shaders/vert.glsl", "sample/shaders/frag.glsl");
     }
 }
 
-RenderElement::RenderElement() :
+RenderEntity::RenderEntity() :
         vao(), vbos(), transform(), texture() {}
 
-RenderElement::RenderElement(SGL_Node * node) :
+RenderEntity::RenderEntity(SGL_Node * node) :
         transform(prog.getProgId(), "transform"), texture(prog.getProgId(), "textCube") {
     Model& model = node->get_model();
 
@@ -28,8 +28,14 @@ RenderElement::RenderElement(SGL_Node * node) :
 
     glGenBuffers(4, vbos);      get_error("gen buffer");
 
-    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, vbos[3]); get_error("bind buffer element");
-    glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(unsigned) * model.links.size(), model.links.data(), GL_STATIC_DRAW); get_error("buffer data element");
+    if(model.links.size()) {
+        glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, vbos[3]);
+        get_error("bind buffer element");
+        glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(unsigned) * model.links.size(), model.links.data(),
+                     GL_STATIC_DRAW);
+        get_error("buffer data element");
+        renderConfig.is_element = true;
+    }
 
     /* Coordinates */
     glBindBuffer(GL_ARRAY_BUFFER, vbos[0]); get_error("bind buffer");
@@ -69,15 +75,21 @@ RenderElement::RenderElement(SGL_Node * node) :
     glActiveTexture(GL_TEXTURE0); get_error("active texture 0");
     texture.send(0);
 
-    renderConfig.count = model.links.size();
-    renderConfig.primitive = GL_TRIANGLES;
+    unsigned long count = model.links.size();
+    renderConfig.count = count ? count : model.vertices.size();
 
     model.clear();
 }
 
-void RenderElement::operator()(DynamicData const& dd) {
+void RenderEntity::operator()(DynamicData const& dd) {
     glBindVertexArray(vao);     get_error("bind vao render");
     transform.send(dd.tranform);
 
-    glDrawElements(GL_TRIANGLES, renderConfig.count, GL_UNSIGNED_INT, (void *) 0); get_error("render element");
+    if(renderConfig.is_element) {
+        glDrawElements(renderConfig.primitive, renderConfig.count, GL_UNSIGNED_INT, (void *) 0);
+        get_error("render entity");
+    } else {
+        glDrawArrays(renderConfig.primitive, 0, renderConfig.count);
+        get_error("render entity");
+    }
 }

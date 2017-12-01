@@ -75,7 +75,7 @@ namespace Loader {
         processVertLink(v3, model, vmap);
     }
 
-    void load_obj(const char * obj_file, Model & model) {
+    void load_obj_element(const char * obj_file, Model & model) {
         std::ifstream file(obj_file);
         std::string line, word;
 
@@ -135,6 +135,70 @@ namespace Loader {
                     model.normals[indice] = normals.at(pair.first.normal_index);
                 }
             }
+
+        } else {
+            std::cerr << "Error : Could not open OBJ file " << obj_file << std::endl;
+        }
+    }
+
+    void processFaceArray(std::istringstream & sstr, Model & model,
+                          vecord const& vertices, vecuvs const& uvs, vecord const& normals) {
+        glm::ivec3  verts[3];
+        std::string split[3];
+        sstr >> split[0] >> split[1] >> split[2];
+
+        for(unsigned i = 0; i < 3; ++i) {
+            parseVec(split[i], verts[i]);
+
+            model.vertices.emplace_back(vertices[verts[i].x]);
+            if(!uvs.empty()) {
+                model.uvs.emplace_back(uvs[verts[i].y]);
+            }
+            if(!normals.empty()) {
+                model.normals.emplace_back(normals[verts[i].z]);
+            }
+        }
+    }
+
+    void load_obj_array(const char * obj_file, Model & model) {
+        std::ifstream file(obj_file);
+        std::string line, word;
+
+        if(file) {
+
+            vecord vertices;
+            vecord normals;
+            vecuvs uvs;
+
+            do {
+                line.clear();
+                std::getline(file, line, '\n');
+
+                if(!line.empty()) {
+                    std::istringstream sstr(line);
+                    sstr >> word;
+
+                    switch (line[0]) {
+                        case 'v':
+                            switch (line[1]) {
+                                case 't':
+                                    processVertex2f(sstr, uvs);
+                                    break;
+                                case 'n':
+                                    processVertex3f(sstr, normals);
+                                    break;
+                                default:
+                                    processVertex3f(sstr, vertices);
+                                    break;
+                            }
+                            break;
+                        case 'f':
+                            processFaceArray(sstr, model, vertices, uvs, normals);
+                            break;
+                        default:;
+                    }
+                }
+            } while(!file.eof());
 
         } else {
             std::cerr << "Error : Could not open OBJ file " << obj_file << std::endl;

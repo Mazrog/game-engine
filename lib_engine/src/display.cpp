@@ -32,7 +32,7 @@ void Display::init(SDL_Window *&win, SDL_GLContext &ctx) {
             "Plop Engine",
             SDL_WINDOWPOS_CENTERED,
             SDL_WINDOWPOS_CENTERED,
-            1200,
+            1600,
             900,
             SDL_WINDOW_OPENGL
     );

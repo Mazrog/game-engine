@@ -18,6 +18,9 @@ protected:
     struct RenderConfig {
         GLenum  primitive;
         int     count;
+        bool    is_element;
+
+        RenderConfig();
 
     }               renderConfig;
 };

@@ -26,7 +26,7 @@ Camera::Camera(const glm::vec3 &pos, const glm::vec3 &aim, const glm::vec3 &up, 
 
 void Camera::init() {
     look_speed = .05f;
-    move_speed = .01f;
+    move_speed = .1f;
     d_roll = d_yaw = d_pitch = 0.f;
 
     set_carac();

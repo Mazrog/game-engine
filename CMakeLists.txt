@@ -53,6 +53,7 @@ target_link_libraries( ${project_name}
         SDL2_image
         ${OPENGL_LIBRARIES}
         ${GLEW_LIBRARIES}
+        IL
 )
 # ####################################################
 #                       GEOMETRY
@@ -78,7 +79,7 @@ set(EXEC_SRC_FILES
 
         sample/state/samplestate.cpp
 
-        sample/rendering/renderElement.cpp
+        sample/rendering/renderEntity.cpp
         sample/rendering/terrainRender.cpp
 )
 

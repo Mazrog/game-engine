@@ -24,7 +24,8 @@ private:
 
 template < class Render >
 Cube< Render >::Cube() {
-    Loader::load_obj("sample/obj/suzanneHybrid.obj", model);
+    Loader::load_obj_element("sample/obj/drag.obj", model);
+//    Loader::load_obj_array("sample/obj/drag.obj", model);
 
     glm::vec3 scale(2.f);
 

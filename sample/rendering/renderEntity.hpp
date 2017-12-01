@@ -12,16 +12,16 @@
 #include "rendering/program.hpp"
 
 
-class RenderElement : public Renderer {
+class RenderEntity : public Renderer {
 public:
     static void init();
     static ShaderProgram    prog;
 
 public:
-    RenderElement();
-    explicit RenderElement(SGL_Node * node);
+    RenderEntity();
+    explicit RenderEntity(SGL_Node * node);
 
-    ~RenderElement() = default;
+    ~RenderEntity() = default;
 
     void operator()( DynamicData const& dd ) override;
 

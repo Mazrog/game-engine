@@ -23,5 +23,5 @@ void main() {
     brightness = max(brightness, .2f);
 
 //    color = texture(textCube, pass_uvs) + (brightness * vec4(sun_color, 0.0));
-    color = vec4(.7, .7, .7, 1.) * (brightness * vec4(sun_color, 0.0));
+    color = 0.3 * vec4(surface_normal, 1.) * (brightness * vec4(sun_color, 0.0));
 }

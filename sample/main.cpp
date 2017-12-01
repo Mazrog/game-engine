@@ -1,11 +1,12 @@
 #include <iostream>
 #include <array>
 #include <sstream>
+#include <IL/il.h>
 
 #include "engine.hpp"
 #include "base.hpp"
 
-#include "rendering/renderElement.hpp"
+#include "renderEntity.hpp"
 #include "rendering/light.hpp"
 #include "src/cube.hpp"
 #include "terrainRender.hpp"
@@ -53,8 +54,11 @@ int main_game_loop(GameState * self) {
         }
     }
 
-    rotate(self->get("cube")->get_dynamic_data().tranform, 1, glm::vec3(0.0, 1.0, 0.0));
-//    rotate(self->get("sun")->get_dynamic_data().tranform, -1, glm::vec3(0.0, 1.0, 0.0));
+//    rotate(self->get("cube")->get_dynamic_data().tranform, 1, glm::vec3(0.0, 1.0, 0.0));
+
+    if(keyboard[SDL_SCANCODE_5]) {
+        rotate(self->get("sun")->get_dynamic_data().tranform, 1, glm::vec3(0, 1.f, 0));
+    }
 
     if (keyboard[SDL_SCANCODE_UP]) {
         translate(self->get("cube")->get_dynamic_data().tranform,
@@ -104,19 +108,19 @@ int main_game_loop(GameState * self) {
 }
 
 void main_game_init(GameState * self) {
-    Cube<RenderElement> * c = new Cube<RenderElement>();
+//    Cube<RenderEntity> * c = new Cube<RenderEntity>();
 
-    Terrain<TerrainRenderer>   * terrain = new Terrain<TerrainRenderer>(300, 300);
+    Terrain<TerrainRenderer>   * terrain = new Terrain<TerrainRenderer>("sample/img/thin_height_map.png");
 
-    Camera * camera = new Camera();
-    camera->bind_camera(TerrainRenderer::prog.getProgId(), RenderElement::prog.getProgId());
+    Camera * camera = new Camera(glm::vec3(10, 10, 10));
+    camera->bind_camera(TerrainRenderer::prog.getProgId());//, RenderEntity::prog.getProgId());
 
-    Light * sun = new Light(glm::vec3(10.f, 5.f, 10.f), glm::vec3(.788f, .886f, 1.f));
-    sun->bind_light(TerrainRenderer::prog.getProgId(), RenderElement::prog.getProgId());
+    Light * sun = new Light(glm::vec3(0.f, 50.f, 0.f), glm::vec3(.788f, .886f, 1.f));
+    sun->bind_light(TerrainRenderer::prog.getProgId() );//, RenderEntity::prog.getProgId());
 
     self->bind(SG_NODE_TYPE::SG_CAMERA, "main_camera", camera);
     self->bind(SG_NODE_TYPE::SG_LIGHT, "sun", sun);
-    self->bind(SG_NODE_TYPE::SG_STATIC, "cube", c);
+//    self->bind(SG_NODE_TYPE::SG_STATIC, "cube", c);
     self->bind(SG_NODE_TYPE::SG_STATIC, "terrain", terrain);
 }
 

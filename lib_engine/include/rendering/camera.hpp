@@ -36,13 +36,13 @@ struct Uniform_camera {
 class Camera : public SGL_Node {
 public:
     Camera(const char * name = "main_camera");
-    Camera(crvec3 pos, crvec3 aim, crvec3 up, const char * name = "main_camera");
+    Camera(crvec3 pos, crvec3 aim = glm::vec3(0), crvec3 up = glm::vec3(0, 1.f, 0), const char * name = "main_camera");
 
     /* Build characteristics */
     void init();
 
     void set_carac(cref<float> angle_rad = 55.f,
-                   cref<float> ratio = 12.f / 9.f,
+                   cref<float> ratio = 16.f / 9.f,
                    cref<float> near = 0.1f,
                    cref<float> far = 1000.f);
 
