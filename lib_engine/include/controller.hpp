@@ -11,9 +11,8 @@
 
 #include "gamestate.hpp"
 #include "scenegraph/scenegraph.hpp"
-
-/* Reading the event queue */
-//int poll_event(SDL_Event * event);
+#include "events/mouse.hpp"
+#include "events/keyboard.hpp"
 
 
 class Controller {
@@ -49,12 +48,6 @@ public:
     /* -------------------- */
 
 
-    /* Event structure to be accessed from States */
-    struct EventContext {
-//        Mouse       mouse;
-
-    }               eventContext;
-    /* ------------------------------------------ */
 private:
     s_sgl                                       sgl;
 

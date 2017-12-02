@@ -6,20 +6,6 @@
 #include "controller.hpp"
 
 /* ######################################################## */
-/* Dequeuing the events saved in the event Context */
-//int poll_event(SDL_Event *event) {
-//    std::queue<SDL_Event> & queue = Engine::get_controller().eventContext.events;
-//
-//    if(queue.empty()){
-//        return 0;
-//    } else {
-//        *event = queue.front();
-//        queue.pop();
-//        return 1;
-//    }
-//}
-
-/* ######################################################## */
 /* Begin of controller class */
 
 Controller::Controller() : sgl(nullptr) {}
@@ -31,6 +17,8 @@ Controller::~Controller() {
 }
 
 void Controller::init() {
+    /* Setting the events callback */
+    glfwSetKeyCallback(Engine::engine.data.win, key_callback);
 
 }
 
@@ -78,7 +66,15 @@ void Controller::set_state(unsigned int next_state) {
 
 /* Root main function handling events before the current state */
 void Controller::control() {
+    /* Getting the events polled */
+    glfwPollEvents();
 
+    /* If the window should close (QUIT BUTTTON) */
+    if(glfwWindowShouldClose(Engine::engine.data.win)) {
+        /* Then close it */
+        Engine::engine.data.running = false;
+        end();
+    }
 
     /* If the engine is still running, starting the main loop of the state */
     if(Engine::engine.data.running) {

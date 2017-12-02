@@ -69,6 +69,7 @@ RenderEntity::RenderEntity(SGL_Node * node) :
     glBindTexture(GL_TEXTURE_2D, faceCube); get_error("bind texture");
     glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, ilGetInteger(IL_IMAGE_WIDTH),
                  ilGetInteger(IL_IMAGE_HEIGHT), 0, GL_RGB, GL_UNSIGNED_BYTE, surf); get_error("tex image 2D");
+
     ilClearImage();
 
     glGenerateMipmap(GL_TEXTURE_2D); get_error("mipmap");

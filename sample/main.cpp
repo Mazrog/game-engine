@@ -16,11 +16,12 @@
 
 
 int paused_game(GameState *){
-
     return -1;
 }
 
 int main_game_loop(GameState * self) {
+
+    Keyboard keyboard = Keyboard::keyboard;
 
 //    if (keyboard[SDL_SCANCODE_UP]) {
 //        translate(self->get("cube")->get_dynamic_data().tranform,
@@ -58,13 +59,13 @@ int main_game_loop(GameState * self) {
 //        self->get_as_camera("main_camera")->move_aim(CAM_DIR::LEFT);
 //    }
 //
-//    if (keyboard[SDL_SCANCODE_W]) {
-//        self->get_as_camera("main_camera")->move_forward();
-//    }
-//
-//    if (keyboard[SDL_SCANCODE_S]) {
-//        self->get_as_camera("main_camera")->move_backward();
-//    }
+    if (keyboard.key == GLFW_KEY_W && keyboard.action == GLFW_PRESS) {
+        self->get_as_camera("main_camera")->move_forward();
+    }
+
+    if (keyboard.key == GLFW_KEY_S && keyboard.action == GLFW_PRESS) {
+        self->get_as_camera("main_camera")->move_backward();
+    }
 
     return -1;
 }
