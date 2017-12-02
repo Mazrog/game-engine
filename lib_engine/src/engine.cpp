@@ -22,6 +22,7 @@ Engine::Engine() {
 
 void Engine::Data::clear() {
     glfwDestroyWindow(win);
+    sgv = nullptr;
 }
 
 void Engine::init() {

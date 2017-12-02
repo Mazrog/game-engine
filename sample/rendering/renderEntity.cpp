@@ -62,6 +62,8 @@ RenderEntity::RenderEntity(SGL_Node * node) :
     /* TODO : WRAP TEXTURE ! */
     GLuint faceCube;
     ilInit();
+    ILuint src = ilGenImage();
+    ilBindImage(src);
     ilLoadImage("sample/img/crate.png");
     ILubyte * surf = ilGetData();
 
@@ -70,7 +72,7 @@ RenderEntity::RenderEntity(SGL_Node * node) :
     glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, ilGetInteger(IL_IMAGE_WIDTH),
                  ilGetInteger(IL_IMAGE_HEIGHT), 0, GL_RGB, GL_UNSIGNED_BYTE, surf); get_error("tex image 2D");
 
-    ilClearImage();
+    ilDeleteImage(src);
 
     glGenerateMipmap(GL_TEXTURE_2D); get_error("mipmap");
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR); get_error("mipmap linear");

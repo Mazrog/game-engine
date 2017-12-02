@@ -12,67 +12,40 @@
 #include "src/cube.hpp"
 #include "terrainRender.hpp"
 #include "terrain.hpp"
-#include "state/samplestate.hpp"
 
 
 int paused_game(GameState *){
+    Keyboard keyboard = Keyboard::keyboard;
+
+    if(keyboard.key == GLFW_KEY_R && keyboard.action == GLFW_PRESS) {
+        std::cout << "Resuming the game" << std::endl;
+        return 0;
+    }
+
     return -1;
 }
 
 int main_game_loop(GameState * self) {
-
     Keyboard keyboard = Keyboard::keyboard;
 
-//    if (keyboard[SDL_SCANCODE_UP]) {
-//        translate(self->get("cube")->get_dynamic_data().tranform,
-//                  glm::vec3(0.f, .05f, 0.f));
-//    }
-//
-//    if (keyboard[SDL_SCANCODE_DOWN]) {
-//        translate(self->get("cube")->get_dynamic_data().tranform,
-//                  glm::vec3(0.f, -.05f, 0.f));
-//    }
-//
-//    if (keyboard[SDL_SCANCODE_RIGHT]) {
-//        translate(self->get("cube")->get_dynamic_data().tranform,
-//                  glm::vec3(.05f, 0.f, 0.f));
-//    }
-//
-//    if (keyboard[SDL_SCANCODE_LEFT]) {
-//        translate(self->get("cube")->get_dynamic_data().tranform,
-//                  glm::vec3(-.05f, 0.f, 0.f));
-//    }
-//
-//    if (keyboard[SDL_SCANCODE_I]) {
-//        self->get_as_camera("main_camera")->move_aim(CAM_DIR::UP);
-//    }
-//
-//    if (keyboard[SDL_SCANCODE_L]) {
-//        self->get_as_camera("main_camera")->move_aim(CAM_DIR::RIGHT);
-//    }
-//
-//    if (keyboard[SDL_SCANCODE_K]) {
-//        self->get_as_camera("main_camera")->move_aim(CAM_DIR::DOWN);
-//    }
-//
-//    if (keyboard[SDL_SCANCODE_J]) {
-//        self->get_as_camera("main_camera")->move_aim(CAM_DIR::LEFT);
-//    }
-//
-    if (keyboard.key == GLFW_KEY_W && keyboard.action == GLFW_PRESS) {
-        self->get_as_camera("main_camera")->move_forward();
+    if(keyboard.key == GLFW_KEY_ESCAPE && keyboard.action == GLFW_PRESS) {
+        /* Exiting the game */
+        Engine::engine.get_controller().end();
+        return -1;
     }
 
-    if (keyboard.key == GLFW_KEY_S && keyboard.action == GLFW_PRESS) {
-        self->get_as_camera("main_camera")->move_backward();
+    if(keyboard.key == GLFW_KEY_P && keyboard.action == GLFW_PRESS) {
+        std::cout << "pausing the game" << std::endl;
+        self->save_state();
+        return 1;
     }
+
+    self->get_as_camera("main_camera")->move();
 
     return -1;
 }
 
 void main_game_init(GameState * self) {
-//    Cube<RenderEntity> * c = new Cube<RenderEntity>();
-
     Terrain<TerrainRenderer>   * terrain = new Terrain<TerrainRenderer>("sample/img/thin_height_map.png");
 
     Camera * camera = new Camera(glm::vec3(10, 10, 10));
@@ -83,7 +56,6 @@ void main_game_init(GameState * self) {
 
     self->bind(SG_NODE_TYPE::SG_CAMERA, "main_camera", camera);
     self->bind(SG_NODE_TYPE::SG_LIGHT, "sun", sun);
-//    self->bind(SG_NODE_TYPE::SG_STATIC, "cube", c);
     self->bind(SG_NODE_TYPE::SG_STATIC, "terrain", terrain);
 }
 
@@ -91,11 +63,12 @@ void main_game_init(GameState * self) {
 int main() {
     Engine::init();
 
-    SampleState test(
+    GameState test(
             main_game_loop,
-            main_game_init
+            main_game_init,
+            [] (GameState *) {}
     ),
-    pause ( paused_game );
+    pause ( paused_game, [] (GameState *) {}, [] (GameState *) {} );
 
 
     Engine::add_states(test, pause);

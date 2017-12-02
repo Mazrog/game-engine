@@ -72,7 +72,6 @@ void Controller::control() {
     /* If the window should close (QUIT BUTTTON) */
     if(glfwWindowShouldClose(Engine::engine.data.win)) {
         /* Then close it */
-        Engine::engine.data.running = false;
         end();
     }
 

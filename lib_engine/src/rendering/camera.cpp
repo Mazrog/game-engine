@@ -3,12 +3,14 @@
 //
 
 
+#include <iostream>
 #include <glm/gtc/type_ptr.hpp>
 #include <glm/gtc/matrix_transform.hpp>
-#include <iostream>
 #include <base.hpp>
 
 #include "rendering/camera.hpp"
+#include "events/keyboard.hpp"
+#include "events/mouse.hpp"
 
 Camera::Camera(const char * name) : SGL_Node(-1),
                                     pos(5.f, 2.f, 5.f), aim(0.f), up(0.f, 1.f, 0.f),
@@ -45,23 +47,28 @@ void Camera::render() {
 }
 
 void Camera::update() {
-    glm::vec3 tengent = glm::normalize(pdt_vec(aim - pos, up));
-    glm::vec3   tmp(aim - pos),
-                tmp_up(up);
+    if( target ) {
+        glm::mat4 target_transform = target->get_dynamic_data().tranform;
+        glm::vec4 target_pos = target_transform[0];
 
-    apply_rot(up , d_pitch  ,  tengent );
-    apply_rot(tmp, d_pitch  ,  tengent );
+        std::cout << target_pos.x << " # " << target_pos.y << " # " << target_pos.z << std::endl;
 
-    apply_rot(up , d_yaw   ,  glm::vec3(0.f, 1.f, 0.f) );
-    apply_rot(tmp, d_yaw   ,  glm::vec3(0.f, 1.f, 0.f) );
-    aim = (pos + tmp);
+    } else {
+        glm::vec3 tengent = glm::normalize(pdt_vec(aim - pos, up));
+        glm::vec3 tmp(aim - pos), tmp_up(up);
+
+        apply_rot(up, d_pitch, tengent);
+        apply_rot(tmp, d_pitch, tengent);
+        apply_rot(up, d_yaw, glm::vec3(0.f, 1.f, 0.f));
+        apply_rot(tmp, d_yaw, glm::vec3(0.f, 1.f, 0.f));
+        aim = (pos + tmp);
+    }
 
     glm::mat4 lookat = glm::lookAt(pos, aim, up);
     cam_mat = perspective * lookat;
 
 
     d_pitch = d_yaw = d_roll = 0;
-
     updated = false;
 }
 
@@ -108,4 +115,32 @@ void Camera::move_aim(const short &direction) {
     d_pitch = v_sign * look_speed;
     d_yaw = h_sign * look_speed;
     updated = true;
+}
+
+void Camera::move() {
+    Keyboard keyboard = Keyboard::keyboard;
+
+    if (keyboard.key == GLFW_KEY_I && keyboard.action == GLFW_PRESS) {
+        move_aim(CAM_DIR::UP);
+    }
+
+    if (keyboard.key == GLFW_KEY_L && keyboard.action == GLFW_PRESS) {
+        move_aim(CAM_DIR::RIGHT);
+    }
+
+    if (keyboard.key == GLFW_KEY_K && keyboard.action == GLFW_PRESS) {
+        move_aim(CAM_DIR::DOWN);
+    }
+
+    if (keyboard.key == GLFW_KEY_J && keyboard.action == GLFW_PRESS) {
+        move_aim(CAM_DIR::LEFT);
+    }
+
+    if (keyboard.key == GLFW_KEY_W && keyboard.action == GLFW_PRESS) {
+        move_forward();
+    }
+
+    if (keyboard.key == GLFW_KEY_S && keyboard.action == GLFW_PRESS) {
+        move_backward();
+    }
 }

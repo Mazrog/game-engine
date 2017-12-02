@@ -12,7 +12,7 @@
 template < class Render >
 class Terrain : public SGL_Node {
 public:
-    static constexpr int SIZE         = 350;
+    static constexpr int SIZE         = 300;
     static constexpr int MAX_COLOR    = 255 + 255 + 255;
     static constexpr int MAX_HEIGHT   = 40;
 
@@ -66,10 +66,10 @@ Terrain<Render>::Terrain(const char * pathheightmap,
 
     ilInit();
 
+    ILuint src = ilGenImage();
+    ilBindImage(src);
     ilLoadImage(pathheightmap);
-
     ILubyte * heightmap = ilGetData();
-
     ILuint VERT_COUNT = ilGetInteger(IL_IMAGE_WIDTH);
 
     heights = new float[VERT_COUNT*VERT_COUNT];
@@ -112,7 +112,7 @@ Terrain<Render>::Terrain(const char * pathheightmap,
         }
     }
 
-    ilClearImage();
+    ilDeleteImage(src);
 
 
     glm::vec3 scale(1.f);

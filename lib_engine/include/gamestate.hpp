@@ -21,6 +21,7 @@ using s_game_state  = std::shared_ptr<GameState>;
 /* Class GameState */
 class GameState{
 public:
+    GameState() = delete;
     GameState(
             std::function<int(GameState * self)> const&   main,
             std::function<void(GameState * self)> const&  init,

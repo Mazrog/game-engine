@@ -56,6 +56,8 @@ TerrainRenderer::TerrainRenderer(SGL_Node *node) :
     /* TODO : WRAP TEXTURE ! */
     GLuint terrain_texture;
     ilInit();
+    ILuint src = ilGenImage();
+    ilBindImage(src);
     ilLoadImage("sample/img/terrain.png");
     ILubyte * surf = ilGetData();
 
@@ -68,9 +70,8 @@ TerrainRenderer::TerrainRenderer(SGL_Node *node) :
                  GL_RGB, GL_UNSIGNED_BYTE, surf);
     get_error("tex image 2D");
 
-    std::cout << ilGetInteger(IL_ACTIVE_IMAGE) << " # " << ilGetInteger(IL_CUR_IMAGE) << std::endl;
+    ilDeleteImage(src);
 
-    ilClearImage();
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR); get_error("mipmap linear");
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR); get_error("texture param MAG");
 

@@ -14,7 +14,7 @@ char * filetobuf(const char *file) {
     char * buf;
 
     if(!(fptr = fopen(file, "rb"))){
-        return nullptr;
+        throw std::runtime_error("Shader source file not found !");
     }
     fseek(fptr, 0, SEEK_END);
     length = ftell(fptr);
@@ -84,10 +84,10 @@ void ShaderProgram::makeShader(std::string const& file, GLenum type) {
         shaderLog = new char[maxLength];
         glGetShaderInfoLog(shader, maxLength, &maxLength, shaderLog); get_error("log - 3");
         std::cerr << "Compilation : " << type << " Shader Error => " << shaderLog << std::endl;
-        delete shaderLog;
+        delete [] shaderLog;
         return;
     }
-    delete shaderSource;
+    delete [] shaderSource;
     shaders.push_back(shader);
 }
 
@@ -116,7 +116,7 @@ void ShaderProgram::linkProgram() {
         shaderProgLog = new char[maxLength];
         glGetProgramInfoLog(_progId, maxLength, &maxLength, shaderProgLog);
         std::cerr << "Linking : Program Error => " << shaderProgLog << std::endl;
-        delete shaderProgLog;
+        delete [] shaderProgLog;
         return;
     }
 

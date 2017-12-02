@@ -80,8 +80,6 @@ target_include_directories( geom
 set(EXEC_SRC_FILES
         sample/main.cpp
 
-        sample/state/samplestate.cpp
-
         sample/rendering/renderEntity.cpp
         sample/rendering/terrainRender.cpp
 )
@@ -97,7 +95,6 @@ target_include_directories( ${project_name}_sample
 
         PRIVATE sample/rendering
         PRIVATE sample/src
-        PRIVATE sample/state
 )
 
 target_link_libraries( ${project_name}_sample

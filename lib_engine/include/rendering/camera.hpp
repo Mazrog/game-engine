@@ -49,7 +49,13 @@ public:
     /* Sending all the uniforms to the programs */
     void render();
 
+    /* Update position */
     void update();
+    void center_on();
+    void follow(SGL_Node * target_elem) { target = target_elem; }
+
+    /* Events management */
+    void move();
 
     /* Binding function */
     template < typename ...>
@@ -94,6 +100,10 @@ private:
     /* Speeds */
     float    move_speed;
     float    look_speed;
+
+    /* Target and following options */
+    SGL_Node    * target;
+    float         dist_from_target;
 };
 
 
