@@ -5,8 +5,6 @@
 #ifndef ENGINE_PLANE_HPP
 #define ENGINE_PLANE_HPP
 
-#include <SDL2/SDL.h>
-#include <SDL2/SDL_image.h>
 #include <IL/il.h>
 
 #include "scenegraph/sg_logic.hpp"
@@ -14,7 +12,7 @@
 template < class Render >
 class Terrain : public SGL_Node {
 public:
-    static constexpr int SIZE         = 150;
+    static constexpr int SIZE         = 350;
     static constexpr int MAX_COLOR    = 255 + 255 + 255;
     static constexpr int MAX_HEIGHT   = 40;
 
@@ -22,27 +20,30 @@ public:
     Terrain(const char * pathheightmap = nullptr,
             glm::vec3 const& position = glm::vec3(0.f));
 
+    ~Terrain();
+
     void render() { renderer( dynamicData ); }
 
-    float get_height(int x, int z, ILubyte * heightmap);
+    float get_height(unsigned x, unsigned z, ILubyte * heightmap);
 
     glm::vec3 calculate_normal(int x, int z, ILubyte * heightmap);
 
 private:
     Render renderer;
+
+    float      * heights;
 };
 
 template < class Render >
-float Terrain<Render>::get_height(int x, int z, ILubyte * heightmap) {
+float Terrain<Render>::get_height(unsigned x, unsigned z, ILubyte * heightmap) {
     ILuint bpp = ilGetInteger(IL_IMAGE_BYTES_PER_PIXEL);
     ILuint width = ilGetInteger(IL_IMAGE_WIDTH);
 
-    if(x < 0 || z < 0) { return 0; }
+    if(x < 0 || x > width || z < 0 || z > width) { return 0; }
 
     ILubyte * pixel = heightmap + z * width * bpp + x * bpp;
 
-    float val = (Uint8) *pixel + (Uint8) *(pixel+1) + (Uint8) *(pixel+2);
-
+    float val = (uint8_t) *pixel + (uint8_t) *(pixel+1) + (uint8_t) *(pixel+2);
     val = (val * MAX_HEIGHT) / (float) MAX_COLOR;
 
     return val;
@@ -71,12 +72,16 @@ Terrain<Render>::Terrain(const char * pathheightmap,
 
     ILuint VERT_COUNT = ilGetInteger(IL_IMAGE_WIDTH);
 
+    heights = new float[VERT_COUNT*VERT_COUNT];
+
     glm::vec3 tmp;
     for(unsigned i = 0; i < VERT_COUNT; ++i) {
         for(unsigned j = 0; j < VERT_COUNT; ++j) {
             tmp.x = (float) j / ((float) VERT_COUNT - 1) * SIZE;
-            tmp.y = get_height(j, i, heightmap);
             tmp.z = (float) i / ((float) VERT_COUNT - 1) * SIZE;
+            float height = get_height(j, i, heightmap);
+            tmp.y = height;
+            heights[i*VERT_COUNT + j] = height;
 
             model.vertices.emplace_back(tmp.x, tmp.y, tmp.z);
 
@@ -122,6 +127,11 @@ Terrain<Render>::Terrain(const char * pathheightmap,
 
     Render::init();
     renderer = Render(this);
+}
+
+template < class Render >
+Terrain<Render>::~Terrain() {
+    delete [] heights;
 }
 
 #endif //ENGINE_PLANE_HPP

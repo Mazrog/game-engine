@@ -29,6 +29,8 @@ private:
     GLuint          vbos[4];
 
     Uniform         transform;
+
+    /* TO BE WRAPPED IN TEXTURE */
     Uniform         texture;
 };
 

@@ -3,6 +3,8 @@
 //
 
 #include <iostream>
+#include <chrono>
+#include <thread>
 
 #include "engine.hpp"
 
@@ -11,8 +13,7 @@ Engine Engine::engine;
 Engine::Engine() {
     /* Initialisation of the Data structure */
     data = Data{
-        nullptr,    // Window *
-        nullptr,    // GL Context
+        nullptr,    // GLFW Window *
         nullptr,    // Visual Scenegraph
         true,       // Engine is running
         60,         // Display loop frequency
@@ -20,13 +21,12 @@ Engine::Engine() {
 }
 
 void Engine::Data::clear() {
-    SDL_GL_DeleteContext(ctx);
-    SDL_DestroyWindow(win);
+    glfwDestroyWindow(win);
 }
 
 void Engine::init() {
     /* Initialisation of the display (window, context) */
-    engine.display.init(engine.data.win, engine.data.ctx);
+    engine.display.init(engine.data.win);
 
     /* Controller init */
     engine.controller.init();
@@ -63,8 +63,10 @@ void Engine::start() {
 
 void Engine::delay() {
     /* TODO : Calcul true duration */
+    /* glfwGetTime(); */
     unsigned int dt = static_cast<unsigned int>(1000 / Engine::engine.data.freq_disp);
-    SDL_Delay(dt);
+
+    std::this_thread::sleep_for(std::chrono::milliseconds(dt));
 }
 
 void Engine::onQuit() {

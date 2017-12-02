@@ -2,24 +2,22 @@
 // Created by mazrog on 10/11/17.
 //
 
-#include <SDL2/SDL.h>
-
 #include "engine.hpp"
 #include "controller.hpp"
 
 /* ######################################################## */
 /* Dequeuing the events saved in the event Context */
-int poll_event(SDL_Event *event) {
-    std::queue<SDL_Event> & queue = Engine::get_controller().eventContext.events;
-
-    if(queue.empty()){
-        return 0;
-    } else {
-        *event = queue.front();
-        queue.pop();
-        return 1;
-    }
-}
+//int poll_event(SDL_Event *event) {
+//    std::queue<SDL_Event> & queue = Engine::get_controller().eventContext.events;
+//
+//    if(queue.empty()){
+//        return 0;
+//    } else {
+//        *event = queue.front();
+//        queue.pop();
+//        return 1;
+//    }
+//}
 
 /* ######################################################## */
 /* Begin of controller class */
@@ -33,11 +31,7 @@ Controller::~Controller() {
 }
 
 void Controller::init() {
-    /* Initialisation of the event Context */
-    eventContext = Controller::EventContext{
-            SDL_GetKeyboardState(nullptr),
-            std::queue<SDL_Event>()
-    };
+
 }
 
 /* Loading the State at pos 0 if exists */
@@ -84,27 +78,7 @@ void Controller::set_state(unsigned int next_state) {
 
 /* Root main function handling events before the current state */
 void Controller::control() {
-    auto keyboard  = eventContext.keyboard;
-    SDL_Event ev;
 
-    while(SDL_PollEvent(&ev)){
-        /* Filling up the queue for later use */
-        eventContext.events.push(ev);
-
-        switch (ev.type){
-            /* Quit button on the window */
-            case SDL_QUIT:
-                /* Leaving the engine */
-                end();
-            default:;
-        }
-    }
-
-    /* Dev purpose -> escape key closes the engine */
-    if(keyboard[SDL_SCANCODE_ESCAPE]) {
-        std::cout << "exit" << std::endl;
-        end();
-    }
 
     /* If the engine is still running, starting the main loop of the state */
     if(Engine::engine.data.running) {

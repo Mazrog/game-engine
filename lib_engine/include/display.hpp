@@ -6,10 +6,8 @@
 #define ENGINE_DISPLAY_HPP
 
 #include <iostream>
-
-#include <SDL2/SDL.h>
-#include <SDL2/SDL_image.h>
 #include <GL/glew.h>
+#include <GLFW/glfw3.h>
 
 #include "scenegraph/sg_visual.hpp"
 
@@ -18,9 +16,9 @@ public:
     Display();
     ~Display();
 
-    void init(SDL_Window * & win, SDL_GLContext & ctx);
+    void init(GLFWwindow * & win);
 
-    void quit(SDL_Window * win, SDL_GLContext ctx);
+    void quit(GLFWwindow * win);
 
     void cls();
     void frame();

@@ -13,7 +13,7 @@
 #include "scenegraph/scenegraph.hpp"
 
 /* Reading the event queue */
-int poll_event(SDL_Event * event);
+//int poll_event(SDL_Event * event);
 
 
 class Controller {
@@ -51,8 +51,7 @@ public:
 
     /* Event structure to be accessed from States */
     struct EventContext {
-        const uint8_t           * keyboard;
-        std::queue<SDL_Event>     events;
+//        Mouse       mouse;
 
     }               eventContext;
     /* ------------------------------------------ */

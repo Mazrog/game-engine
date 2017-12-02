@@ -21,6 +21,7 @@ public:
     virtual ~SGL_Node();
 
     virtual void render() = 0;
+
     Model&  get_model() { return model; }
     DynamicData&    get_dynamic_data() { return dynamicData; }
 

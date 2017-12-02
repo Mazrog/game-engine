@@ -18,6 +18,10 @@ void get_error(const char * t){
     }
 }
 
+void glfw_error_callback(int error, const char * message) {
+    std::cerr << "GLFW Error ( " << error << " ) : " <<  message << std::endl;
+}
+
 namespace Loader {
     using vert_map = std::map<Vertex, unsigned>;
 

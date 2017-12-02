@@ -3,10 +3,11 @@
 //
 
 #include <iostream>
-#include <rendering/program.hpp>
+#include <IL/il.h>
 
 #include "display.hpp"
 #include "renderEntity.hpp"
+#include "rendering/program.hpp"
 
 ShaderProgram RenderEntity::prog;
 
@@ -60,12 +61,16 @@ RenderEntity::RenderEntity(SGL_Node * node) :
 
     /* TODO : WRAP TEXTURE ! */
     GLuint faceCube;
-    SDL_Surface * surf = IMG_Load("sample/img/crate.jpg");
+    ilInit();
+    ilLoadImage("sample/img/crate.png");
+    ILubyte * surf = ilGetData();
 
     glGenTextures(1, &faceCube); get_error("gen texture");
     glBindTexture(GL_TEXTURE_2D, faceCube); get_error("bind texture");
-    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, surf->w, surf->h, 0, GL_RGB, GL_UNSIGNED_BYTE, surf->pixels); get_error("tex image 2D");
-    SDL_FreeSurface(surf);
+    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, ilGetInteger(IL_IMAGE_WIDTH),
+                 ilGetInteger(IL_IMAGE_HEIGHT), 0, GL_RGB, GL_UNSIGNED_BYTE, surf); get_error("tex image 2D");
+    ilClearImage();
+
     glGenerateMipmap(GL_TEXTURE_2D); get_error("mipmap");
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR); get_error("mipmap linear");
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR); get_error("texture param MAG");

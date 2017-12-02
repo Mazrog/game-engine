@@ -12,6 +12,7 @@
 
 void get_error(const char * t = "");
 
+void glfw_error_callback(int error, const char * message);
 
 namespace Loader {
 

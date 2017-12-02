@@ -45,8 +45,7 @@ public:
     /* Structure that will contain global info about the game context */
     struct Data{
         /* Rendering context */
-        SDL_Window    * win;
-        SDL_GLContext   ctx;
+        GLFWwindow    * win;
 
         /* Visual SceneGraph */
         std::unique_ptr<SGV>   sgv;

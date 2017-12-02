@@ -7,6 +7,7 @@ project(${project_name})
 
 find_package( OpenGL )
 find_package( GLEW )
+find_package( glfw3 )
 
 set(CMAKE_CXX_STANDARD 14)
 set(CXX_FLAGS "-Wall -Wextra")
@@ -35,6 +36,9 @@ set(LIB_SRC
 
         lib_engine/src/rendering/structs/uniform.cpp
         lib_engine/src/rendering/structs/ssbuffer.cpp
+
+        lib_engine/src/events/mouse.cpp
+        lib_engine/src/events/keyboard.cpp
 )
 
 add_library(
@@ -49,8 +53,7 @@ target_include_directories( ${project_name}
 )
 
 target_link_libraries( ${project_name}
-        SDL2
-        SDL2_image
+        ${GLFW3_LIBRARY}
         ${OPENGL_LIBRARIES}
         ${GLEW_LIBRARIES}
         IL

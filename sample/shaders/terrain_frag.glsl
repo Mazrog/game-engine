@@ -18,5 +18,6 @@ void main() {
     float brightness = dot(unitNormal, unitToLight);
     brightness = max(brightness, 0.2f);
 
-    color = vec4(.2f, .7f, .4f, 1.f) * (brightness * vec4(.788f, .886f, 1.f, 1.f));
+//    color = vec4(.2f, .7f, .4f, 1.f) * (brightness * vec4(.788f, .886f, 1.f, 1.f));
+    color = max(texture(terrain_texture, pass_uvs), .2f) * (brightness * vec4(.788f, .886f, 1.f, 1.f));
 }

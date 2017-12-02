@@ -3,7 +3,7 @@
 //
 
 #include <iostream>
-#include <SDL2/SDL_image.h>
+#include <IL/il.h>
 #include "utils.hpp"
 #include "terrainRender.hpp"
 
@@ -55,14 +55,21 @@ TerrainRenderer::TerrainRenderer(SGL_Node *node) :
 
     /* TODO : WRAP TEXTURE ! */
     GLuint terrain_texture;
-    SDL_Surface * surf = IMG_Load("sample/img/terrain.png");
+    ilInit();
+    ilLoadImage("sample/img/terrain.png");
+    ILubyte * surf = ilGetData();
+
 
     glGenTextures(1, &terrain_texture); get_error("gen texture");
     glBindTexture(GL_TEXTURE_2D, terrain_texture); get_error("bind texture");
-    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, surf->w, surf->h, 0, GL_RGB, GL_UNSIGNED_BYTE, surf->pixels); get_error("tex image 2D");
-    SDL_FreeSurface(surf);
-    glGenerateMipmap(GL_TEXTURE_2D); get_error("mipmap");
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR); get_error("mipmap linear");
+    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB,
+                 ilGetInteger(IL_IMAGE_WIDTH),
+                 ilGetInteger(IL_IMAGE_HEIGHT), 0,
+                 GL_RGB, GL_UNSIGNED_BYTE, surf);
+    get_error("tex image 2D");
+
+    ilClearImage();
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR); get_error("mipmap linear");
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR); get_error("texture param MAG");
 
 
