@@ -10,6 +10,8 @@
 #include "scenegraph/sg_logic.hpp"
 #include "rendering/renderer.hpp"
 #include "rendering/structs/uniform.hpp"
+#include "rendering/structs/vao.hpp"
+#include "rendering/texture.hpp"
 
 class TerrainRenderer : public Renderer {
 public:
@@ -18,20 +20,27 @@ public:
 
 public:
     TerrainRenderer();
-    explicit TerrainRenderer(SGL_Node * node);
+    ~TerrainRenderer();
 
-    ~TerrainRenderer() = default;
+    void clean() override {};
+
+    void setData(SGL_Node * node);
+
+    /* No copy constructor */
+    TerrainRenderer(TerrainRenderer const&) = delete;
+    TerrainRenderer& operator=(TerrainRenderer const&) = delete;
+
+    /* But move ones */
+    TerrainRenderer(TerrainRenderer &&) = delete;
+    TerrainRenderer& operator=(TerrainRenderer && tr);
 
     void operator()( DynamicData const& dd ) override;
 
 private:
-    GLuint          vao;
-    GLuint          vbos[4];
+    Vao     vao;
 
     Uniform         transform;
-
-    /* TO BE WRAPPED IN TEXTURE */
-    Uniform         texture;
+    Texture         texture;
 };
 
 

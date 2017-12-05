@@ -42,6 +42,18 @@ struct Uniform {
     Uniform() = default;
     Uniform(GLuint progid, const char * name);
 
+    ~Uniform();
+
+    void loadUniform(GLuint progID, const char * var_name);
+
+    /* ---------- */
+    Uniform(Uniform const&) = delete;
+    Uniform& operator=(Uniform const&) = delete;
+
+    Uniform(Uniform && unif);
+    Uniform& operator=(Uniform && unif);
+    /* ------------ */
+
     template < typename T >
     void send(T const& t) const {
         /* Use the correct program */

@@ -22,7 +22,7 @@ public:
 
     ~Terrain();
 
-    void render() { renderer( dynamicData ); }
+    void render() override { renderer( dynamicData ); }
 
     float get_height(unsigned x, unsigned z, ILubyte * heightmap);
 
@@ -126,12 +126,14 @@ Terrain<Render>::Terrain(const char * pathheightmap,
 
 
     Render::init();
-    renderer = Render(this);
+    renderer.setData(this);
 }
 
 template < class Render >
 Terrain<Render>::~Terrain() {
+    std::cout << "delete terrain" << std::endl;
     delete [] heights;
+    renderer.clean();
 }
 
 #endif //ENGINE_PLANE_HPP

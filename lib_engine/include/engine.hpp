@@ -29,8 +29,8 @@ public:
 
     /* Exposing the adding states functions from the controller */
     template <typename... S>
-    static void add_states(S && ... ts){
-        engine.controller.add_states(std::forward<S>(ts)...);
+    static void add_states(S * ... ts){
+        engine.controller.add_states(ts...);
     }
 
     /* static getters */

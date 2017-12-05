@@ -9,13 +9,23 @@
 
 class Texture {
 public:
-    Texture();
+    Texture(GLenum type = GL_TEXTURE_2D);
     ~Texture();
 
+    Texture& operator=(Texture const&) = delete;
 
+    Texture& operator=(Texture && text);
+
+    void loadImageToVram(const char * image);
+    void loadUniform(GLuint progID, const char * var_name);
+
+    void bind() const;
+    void send(int slot) const;
 
 private:
-
+    Uniform     texture;
+    GLenum      type;
+    GLuint      id;
 };
 
 

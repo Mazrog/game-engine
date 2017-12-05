@@ -10,13 +10,6 @@
 
 #include "scenegraph/sg_logic.hpp"
 
-/* Forward declaration */
-class GameState;
-
-/* Types rewriting */
-using s_sgl         = std::shared_ptr<SGL>;
-using s_game_state  = std::shared_ptr<GameState>;
-
 
 /* Class GameState */
 class GameState{
@@ -55,7 +48,7 @@ public:
     Camera   * get_as_camera(const char * name);
 
     /* GETTERS */
-    s_sgl const& get_sgl() const { return sgl; }
+    SGL * const& get_sgl() const { return sgl; }
 
 
 protected:
@@ -63,7 +56,7 @@ protected:
     std::function<int(GameState * self)>    logic;
     std::function<void(GameState * self)>   onExit;
 
-    s_sgl        sgl;
+    SGL         * sgl;
 
     /* Properties */
     bool        hasBeenInit;

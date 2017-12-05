@@ -7,9 +7,11 @@
 
 #include <GL/glew.h>
 
-#include "scenegraph/sg_logic.hpp"
-#include "rendering/renderer.hpp"
-#include "rendering/program.hpp"
+#include <rendering/structs/vao.hpp>
+#include <scenegraph/sg_logic.hpp>
+#include <rendering/renderer.hpp>
+#include <rendering/program.hpp>
+#include <rendering/texture.hpp>
 
 
 class RenderEntity : public Renderer {
@@ -19,18 +21,17 @@ public:
 
 public:
     RenderEntity();
-    explicit RenderEntity(SGL_Node * node);
-
     ~RenderEntity() = default;
+
+    void setData(SGL_Node * node);
 
     void operator()( DynamicData const& dd ) override;
 
 private:
-    GLuint          vao;
-    GLuint          vbos[4];
+    Vao             vao;
 
     Uniform         transform;
-    Uniform         texture;
+    Texture         texture;
 };
 
 

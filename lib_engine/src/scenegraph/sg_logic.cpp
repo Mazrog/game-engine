@@ -14,12 +14,9 @@ SGL_Node::~SGL_Node() {}
 
 bool SGL_Node::operator<(SGL_Node && b) { return draw_order < b.draw_order; }
 
-
-
 /* SGL      class */
 
 SGL::SGL() : current_camera(0) {
-//    std::cout << "create sgl" << std::endl;
 }
 
 SGL::~SGL() {

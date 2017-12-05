@@ -13,13 +13,16 @@ Controller::Controller() : sgl(nullptr) {}
 Controller::~Controller() {
     for(auto & state : states) {
         state->exit();
+        delete state;
     }
+    states.clear();
 }
 
 void Controller::init() {
     /* Setting the events callback */
     glfwSetKeyCallback(Engine::engine.data.win, key_callback);
 
+    states.clear();
 }
 
 /* Loading the State at pos 0 if exists */
@@ -85,8 +88,9 @@ void Controller::control() {
 void Controller::end() {
     /* Ending the current state */
     states.at(current_state)->exit();
-    /* Un referencing the Logic Scenegraph */
-    sgl = nullptr;
+    states.at(current_state)->clear();
+
+    Engine::engine.data.sgv->clear();
     /* Telling the engine to stop */
     Engine::engine.data.running = false;
 }

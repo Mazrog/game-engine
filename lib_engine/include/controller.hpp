@@ -30,8 +30,8 @@ public:
 
     /* Add States ---------------------------------------------------- */
     template <typename ...Trail>
-    void add_states(GameState & s, Trail && ... ts){
-        states.push_back(std::make_shared<GameState>(std::move(s)));
+    void add_states(GameState * s, Trail && ... ts){
+        states.push_back(s);
         add_states(ts...);
     }
     template <typename ...Trail> void add_states() {}
@@ -49,10 +49,10 @@ public:
 
 
 private:
-    s_sgl                                       sgl;
+    SGL                                         * sgl;
 
     /* States */
-    std::vector<std::shared_ptr<GameState>>     states;
+    std::vector<GameState *>                    states;
     unsigned int                                current_state;
 };
 

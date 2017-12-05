@@ -27,8 +27,9 @@ Camera::Camera(const glm::vec3 &pos, const glm::vec3 &aim, const glm::vec3 &up, 
 }
 
 void Camera::init() {
+    target = nullptr;
     look_speed = .05f;
-    move_speed = .1f;
+    move_speed = .05f;
     d_roll = d_yaw = d_pitch = 0.f;
 
     set_carac();
@@ -120,27 +121,29 @@ void Camera::move_aim(const short &direction) {
 void Camera::move() {
     Keyboard keyboard = Keyboard::keyboard;
 
-    if (keyboard.key == GLFW_KEY_I && keyboard.action == GLFW_PRESS) {
+    int key_press = keyboard.action == GLFW_PRESS || keyboard.action == GLFW_REPEAT;
+
+    if (keyboard.key == GLFW_KEY_I && key_press) {
         move_aim(CAM_DIR::UP);
     }
 
-    if (keyboard.key == GLFW_KEY_L && keyboard.action == GLFW_PRESS) {
+    if (keyboard.key == GLFW_KEY_L && key_press) {
         move_aim(CAM_DIR::RIGHT);
     }
 
-    if (keyboard.key == GLFW_KEY_K && keyboard.action == GLFW_PRESS) {
+    if (keyboard.key == GLFW_KEY_K && key_press) {
         move_aim(CAM_DIR::DOWN);
     }
 
-    if (keyboard.key == GLFW_KEY_J && keyboard.action == GLFW_PRESS) {
+    if (keyboard.key == GLFW_KEY_J && key_press) {
         move_aim(CAM_DIR::LEFT);
     }
 
-    if (keyboard.key == GLFW_KEY_W && keyboard.action == GLFW_PRESS) {
+    if (keyboard.key == GLFW_KEY_W && key_press) {
         move_forward();
     }
 
-    if (keyboard.key == GLFW_KEY_S && keyboard.action == GLFW_PRESS) {
+    if (keyboard.key == GLFW_KEY_S && key_press) {
         move_backward();
     }
 }

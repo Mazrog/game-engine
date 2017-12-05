@@ -11,13 +11,15 @@ GameState::GameState(
         std::function<void(GameState * self)> const&   init,
         std::function<void(GameState * self)>  const&  exit) :
         onInit(init), logic(logic), onExit(exit),
-        sgl(std::make_shared<SGL>()), hasBeenInit(false), saved(false){}
+        sgl(nullptr), hasBeenInit(false), saved(false){
+    sgl = new SGL();
+}
 
-GameState::~GameState() {}
+GameState::~GameState() { delete sgl; }
 
 GameState::GameState(GameState && gs) :
         onInit(std::move(gs.onInit)), logic(std::move(gs.logic)),
-        onExit(std::move(gs.onExit)), sgl(std::move(gs.sgl)) {}
+        onExit(std::move(gs.onExit)), sgl(gs.sgl) {}
 
 void GameState::init(GameState * self) {
     if(!hasBeenInit) {
@@ -31,6 +33,7 @@ void GameState::exit(GameState * self){
     if(!saved) {
         onExit(self);
         hasBeenInit = false;
+        clear();
     }
 }
 
