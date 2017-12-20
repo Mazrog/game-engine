@@ -58,10 +58,19 @@ void GameState::save_state() {
 
 void GameState::clear() {
     sgl->clear();
+    models.clear();
 }
 
 void GameState::bind(SG_NODE_TYPE type, const char * name, SGL_Node *node) {
     sgl->bind(type, name, node);
+}
+
+void GameState::load_model(const char *tag, const char *file) {
+    Model * model = new Model(file);
+    auto it = models.find(tag);
+
+    if( it == models.end() ) { models[tag] = model; }
+    else { std::cerr << "Double model insertion for tag : " << tag << std::endl; }
 }
 
 SGL_Node * GameState::get(const char *name) {

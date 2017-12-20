@@ -67,6 +67,13 @@ void Controller::set_state(unsigned int next_state) {
     }
 }
 
+GameState* Controller::get_current_state() const {
+    if( current_state < states.size() ) {
+        return states.at(current_state);
+    }
+    return nullptr;
+}
+
 /* Root main function handling events before the current state */
 void Controller::control() {
     /* Getting the events polled */

@@ -32,25 +32,25 @@ TerrainRenderer& TerrainRenderer::operator=(TerrainRenderer && tr) {
 void TerrainRenderer::setData(SGL_Node *node) {
     transform.loadUniform(prog.getProgId(), "transform");
 
-    Model& model = node->get_model();
+    Model * model = node->get_model();
 
-    vao.linkElementDataAttribute(sizeof(GLuint) * model.links.size(), model.links.data());
+    vao.linkElementDataAttribute(sizeof(GLuint) * model->links.size(), model->links.data());
 
-    vao.linkDataAttribute(0, 3, sizeof(glm::vec3) * model.vertices.size(), model.vertices.data());
-    vao.linkDataAttribute(1, 2, sizeof(glm::vec2) * model.uvs.size(), model.uvs.data());
-    vao.linkDataAttribute(2, 3, sizeof(glm::vec3) * model.normals.size(), model.normals.data());
+    vao.linkDataAttribute(0, 3, sizeof(glm::vec3) * model->vertices.size(), model->vertices.data());
+    vao.linkDataAttribute(1, 2, sizeof(glm::vec2) * model->uvs.size(), model->uvs.data());
+    vao.linkDataAttribute(2, 3, sizeof(glm::vec3) * model->normals.size(), model->normals.data());
 
     texture.loadUniform(prog.getProgId(), "terrain_texture");
     texture.loadImageToVram("sample/img/terrain.png");
     texture.send(0);
 
-    renderConfig.count = model.links.size();
-    model.clear();
+    renderConfig.count = model->links.size();
+    model->clear();
 }
 
 void TerrainRenderer::operator()(DynamicData const &dd) {
     vao.bind();
-    transform.send(dd.tranform);
+    transform.send(dd.transform);
     texture.send(0);
 
     glDrawElements(GL_TRIANGLES, renderConfig.count, GL_UNSIGNED_INT, (void *) 0); get_error("rendering terrain");

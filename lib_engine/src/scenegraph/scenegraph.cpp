@@ -4,20 +4,19 @@
 
 #include "scenegraph/scenegraph.hpp"
 
-Model::Model() {
-    vertices  = vecord();
-    uvs       = vecuvs();
-    normals   = vecord();
-    links     = vecui();
-}
-
-void Model::clear() {
-    vertices.clear();
-    uvs.clear();
-    normals.clear();
-    links.clear();
-}
 
 DynamicData::DynamicData() {
-    tranform = glm::mat4();
+    transform = glm::mat4();
+    position = glm::vec3(0.0);
+    rotation = glm::vec3(0.0);
+    scale    = glm::vec3(1);
+}
+
+void DynamicData::update() {
+    transform = glm::mat4(
+            scale.x, 0, 0, 0,
+            0, scale.y, 0, 0,
+            0, 0, scale.z, 0,
+            position.x, position.y + 20, position.z, 1.f
+    );
 }

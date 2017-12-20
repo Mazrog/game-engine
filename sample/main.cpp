@@ -14,6 +14,10 @@
 #include "terrain.hpp"
 
 
+void main_menu_init(GameState *) {}
+
+int main_menu_loop(GameState *) { return  -1; }
+
 int paused_game(GameState *){
     Keyboard keyboard = Keyboard::keyboard;
 
@@ -40,19 +44,22 @@ int main_game_loop(GameState * self) {
         return 1;
     }
 
+    self->get("player")->move();
     self->get_as_camera("main_camera")->move();
 
     return -1;
 }
 
 void main_game_init(GameState * self) {
+    self->load_model("elf", "sample/obj/character/nightelffemale/nightelffemale.obj");
+
     auto terrain = new Terrain<TerrainRenderer>("sample/img/thin_height_map.png");
 
-    auto player = new Player<RenderEntity>();
+    auto player = new Player<RenderEntity>("elf");
 
-    Camera * camera = new Camera(glm::vec3(50, 50, 50), glm::vec3(150, 0, 150));
+    Camera * camera = new Camera(glm::vec3(50, 50, 50), glm::vec3(0, 50, 0));
     camera->bind_camera(TerrainRenderer::prog.getProgId(), RenderEntity::prog.getProgId());
-//    camera->follow(player);
+    camera->follow(player);
 
     Light * sun = new Light(glm::vec3(20.f, 100.f, 20.f), glm::vec3(.788f, .886f, 1.f));
     sun->bind_light(TerrainRenderer::prog.getProgId(), RenderEntity::prog.getProgId());
@@ -73,15 +80,16 @@ void main_game_exit(GameState * self) {
 int main() {
     Engine::init();
 
-    GameState * test = new GameState(
+    GameState * game = new GameState(
             main_game_loop,
             main_game_init,
             main_game_exit
     ),
-    *pause = new GameState( paused_game, [] (GameState *) {}, [] (GameState *) {} );
+    *pause = new GameState( paused_game, [] (GameState *) {}, [] (GameState *) {} ),
+    *main_menu = new GameState(main_menu_loop, main_menu_init, [] ( GameState * ) {});
 
 
-    Engine::add_states(test, pause);
+    Engine::add_states(game, pause, main_menu);
     Engine::start();
 
 

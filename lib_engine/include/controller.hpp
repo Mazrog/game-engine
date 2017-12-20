@@ -44,9 +44,11 @@ public:
 
     /* Automate functions */
     void set_state(unsigned int next_state);
+    GameState * get_current_state() const;
     void end();
     /* -------------------- */
 
+    SGL * get_sgl() const { return sgl; }
 
 private:
     SGL                                         * sgl;

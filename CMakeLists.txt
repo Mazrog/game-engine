@@ -34,6 +34,7 @@ set(LIB_SRC
         lib_engine/src/rendering/light.cpp
         lib_engine/src/rendering/program.cpp
         lib_engine/src/rendering/texture.cpp
+        lib_engine/src/rendering/model.cpp
 
         lib_engine/src/rendering/structs/uniform.cpp
         lib_engine/src/rendering/structs/ssbuffer.cpp

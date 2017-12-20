@@ -9,6 +9,7 @@
 
 #include "vector_utils.hpp"
 #include "scenegraph/scenegraph.hpp"
+#include "rendering/model.hpp"
 
 void get_error(const char * t = "");
 

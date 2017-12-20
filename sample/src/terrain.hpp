@@ -25,7 +25,6 @@ public:
     void render() override { renderer( dynamicData ); }
 
     float get_height(unsigned x, unsigned z, ILubyte * heightmap);
-
     glm::vec3 calculate_normal(int x, int z, ILubyte * heightmap);
 
 private:
@@ -83,15 +82,15 @@ Terrain<Render>::Terrain(const char * pathheightmap,
             tmp.y = height;
             heights[i*VERT_COUNT + j] = height;
 
-            model.vertices.emplace_back(tmp.x, tmp.y, tmp.z);
+            model->vertices.emplace_back(tmp.x, tmp.y, tmp.z);
 
             tmp = calculate_normal(j, i, heightmap);
 
-            model.normals.emplace_back(tmp.x, tmp.y, tmp.z);
+            model->normals.emplace_back(tmp.x, tmp.y, tmp.z);
 
             tmp.x = (float) j / ((float) VERT_COUNT - 1);
             tmp.y = (float) i / ((float) VERT_COUNT - 1);
-            model.uvs.emplace_back(tmp.x, tmp.y);
+            model->uvs.emplace_back(tmp.x, tmp.y);
         }
     }
 
@@ -102,13 +101,13 @@ Terrain<Render>::Terrain(const char * pathheightmap,
             int bottomLeft = ((gz + 1) * VERT_COUNT) + gx;
             int bottomRight = bottomLeft + 1;
 
-            model.links.push_back(topLeft);
-            model.links.push_back(bottomLeft);
-            model.links.push_back(topRight);
+            model->links.push_back(topLeft);
+            model->links.push_back(bottomLeft);
+            model->links.push_back(topRight);
 
-            model.links.push_back(topRight);
-            model.links.push_back(bottomLeft);
-            model.links.push_back(bottomRight);
+            model->links.push_back(topRight);
+            model->links.push_back(bottomLeft);
+            model->links.push_back(bottomRight);
         }
     }
 
@@ -117,11 +116,11 @@ Terrain<Render>::Terrain(const char * pathheightmap,
 
     glm::vec3 scale(1.f);
 
-    dynamicData.tranform = glm::mat4(
+    dynamicData.transform = glm::mat4(
             scale.x, 0, 0, 0,
             0, scale.y, 0, 0,
             0, 0, scale.z, 0,
-            position.x, position.y, position.z, 1.f
+            -SIZE/2.f + position.x, position.y, -SIZE/2.f + position.z, 1.f
     );
 
 

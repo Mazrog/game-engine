@@ -52,10 +52,10 @@ public:
     /* Update position */
     void update();
     void center_on();
-    void follow(SGL_Node * target_elem) { target = target_elem; }
+    void follow(SGL_Node * target_elem);
 
     /* Events management */
-    void move();
+    void move() override ;
 
     /* Binding function */
     template < typename ...>

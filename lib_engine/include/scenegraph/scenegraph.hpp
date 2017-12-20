@@ -22,28 +22,15 @@ enum class SG_NODE_TYPE : unsigned {
     SG_FORCE
 };
 
-struct Material {
-    float ka;
-    float kd;
-    float ks;
-};
-
-struct Model {
-    vecord  vertices;
-    vecuvs  uvs;
-    vecord  normals;
-    vecui   links;
-
-    Material material;
-
-    Model();
-    void clear();
-};
-
 struct DynamicData{
-    glm::mat4  tranform;
+    glm::mat4   transform;
+    glm::vec3   position;
+    glm::vec3   rotation;
+    glm::vec3   scale;
 
     DynamicData();
+
+    void update();
 };
 
 #endif //ENGINE_SG_HPP

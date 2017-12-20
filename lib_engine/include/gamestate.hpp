@@ -11,6 +11,8 @@
 #include "scenegraph/sg_logic.hpp"
 
 
+using MapModel = std::map<std::string, Model *>;
+
 /* Class GameState */
 class GameState{
 public:
@@ -42,6 +44,7 @@ public:
     /* FONCTIONS EXPOSURE */
     void bind(SG_NODE_TYPE type, const char * name, SGL_Node * node);
     void clear();
+    void load_model(const char * tag, const char * file);
 
     /* Element getters */
     SGL_Node * get(const char * name);
@@ -50,6 +53,7 @@ public:
     /* GETTERS */
     SGL * const& get_sgl() const { return sgl; }
 
+    MapModel& get_models() { return models; }
 
 protected:
     std::function<void(GameState * self)>   onInit;
@@ -57,6 +61,7 @@ protected:
     std::function<void(GameState * self)>   onExit;
 
     SGL         * sgl;
+    MapModel      models;
 
     /* Properties */
     bool        hasBeenInit;

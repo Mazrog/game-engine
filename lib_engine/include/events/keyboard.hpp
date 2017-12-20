@@ -16,6 +16,9 @@ public:
 public:
     ~Keyboard() = default;
 
+    /* -------- */
+//    int operator[](int key);
+    /*  */
 
     GLFWwindow  * window;
     int           key;

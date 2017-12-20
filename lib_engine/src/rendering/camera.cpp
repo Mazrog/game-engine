@@ -38,7 +38,7 @@ void Camera::init() {
 }
 
 void Camera::render() {
-    if(updated) {
+    if(updated || target) {
         update();
 
         for (auto const &uniform : vec_uniform) {
@@ -49,10 +49,10 @@ void Camera::render() {
 
 void Camera::update() {
     if( target ) {
-        glm::mat4 target_transform = target->get_dynamic_data().tranform;
-        glm::vec4 target_pos = target_transform[0];
+        glm::vec3 target_pos = target->get_dynamic_data().position;
 
-        std::cout << target_pos.x << " # " << target_pos.y << " # " << target_pos.z << std::endl;
+        aim = target_pos;
+        aim.y += 20;
 
     } else {
         glm::vec3 tengent = glm::normalize(pdt_vec(aim - pos, up));
@@ -118,6 +118,15 @@ void Camera::move_aim(const short &direction) {
     updated = true;
 }
 
+void Camera::follow(SGL_Node *target_elem) {
+    target = target_elem;
+    dist_from_target = 10;
+
+    pos = target_elem->get_dynamic_data().position - dist_from_target * glm::vec3(1, -5, 1);
+
+    update();
+}
+
 void Camera::move() {
     Keyboard keyboard = Keyboard::keyboard;
 
@@ -139,11 +148,11 @@ void Camera::move() {
         move_aim(CAM_DIR::LEFT);
     }
 
-    if (keyboard.key == GLFW_KEY_W && key_press) {
+    if (keyboard.key == GLFW_KEY_UP && key_press) {
         move_forward();
     }
 
-    if (keyboard.key == GLFW_KEY_S && key_press) {
+    if (keyboard.key == GLFW_KEY_DOWN && key_press) {
         move_backward();
     }
 }

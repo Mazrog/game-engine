@@ -5,10 +5,8 @@ in vec2 pass_uvs;
 in vec3 surface_normal;
 in vec3 to_light_vector;
 
-in float pos_y;
 
-
-uniform sampler2D textCube;
+uniform sampler2D texture_entity;
 uniform vec3 sun_color;
 
 out vec4 color;
@@ -22,6 +20,5 @@ void main() {
     /* Ajout d'une lumière ambiante (.2f et non 0) */
     brightness = max(brightness, .2f);
 
-//    color = texture(textCube, pass_uvs) + (brightness * vec4(sun_color, 0.0));
-    color = 0.3 * vec4(surface_normal, 1.) * (brightness * vec4(sun_color, 0.0));
+    color = 0.3f * texture(texture_entity, pass_uvs) + (brightness * vec4(sun_color, 0.0));
 }

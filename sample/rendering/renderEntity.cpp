@@ -23,32 +23,31 @@ RenderEntity::RenderEntity() :
 void RenderEntity::setData(SGL_Node * node) {
     transform.loadUniform(prog.getProgId(), "transform");
 
-    Model& model = node->get_model();
+    Model * model = node->get_model();
 
-    if(!model.links.empty()) {
-        vao.linkElementDataAttribute(sizeof(GLuint) * model.links.size(), model.links.data());
+    if(!model->links.empty()) {
+        vao.linkElementDataAttribute(sizeof(GLuint) * model->links.size(), model->links.data());
         renderConfig.is_element = true;
     }
 
-    vao.linkDataAttribute(0, 3, sizeof(glm::vec3) * model.vertices.size(), model.vertices.data());
-    vao.linkDataAttribute(1, 2, sizeof(glm::vec2) * model.uvs.size(), model.uvs.data());
-    vao.linkDataAttribute(2, 3, sizeof(glm::vec3) * model.normals.size(), model.normals.data());
+    vao.linkDataAttribute(0, 3, sizeof(glm::vec3) * model->vertices.size(), model->vertices.data());
+    vao.linkDataAttribute(1, 2, sizeof(glm::vec2) * model->uvs.size(), model->uvs.data());
+    vao.linkDataAttribute(2, 3, sizeof(glm::vec3) * model->normals.size(), model->normals.data());
 
 
     texture.loadUniform(prog.getProgId(), "texture_entity");
     texture.loadImageToVram("sample/img/terrain_texture.png");
     texture.send(0);
 
-    unsigned long count = model.links.size();
-    renderConfig.count = count ? count : model.vertices.size();
+    unsigned long count = model->links.size();
+    renderConfig.count = count ? count : model->vertices.size();
 
-    model.clear();
+    model->clear();
 }
 
 void RenderEntity::operator()(DynamicData const& dd) {
     vao.bind();
-
-    transform.send(dd.tranform);
+    transform.send(dd.transform);
     texture.send(0);
 
     if(renderConfig.is_element) {
