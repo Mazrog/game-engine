@@ -7,10 +7,14 @@
 
 #include <string>
 #include "rendering/model.hpp"
+#include "rendering/texture.hpp"
 
 class GUI {
 public:
-    GUI(std::string const& tag);
+    GUI(std::string const& tag,
+        const char * texturePath,
+        GLenum internal_format = GL_RGB,
+        GLenum format = GL_RGB);
     virtual ~GUI();
 
     virtual void show();
@@ -23,6 +27,7 @@ public:
     Model * get_model() { return model; }
 
     bool isVisible() const { return visible; }
+    TextureFormat const& get_textureFormat() const { return textureFormat; }
 
 public:
     std::string     tag;
@@ -32,6 +37,8 @@ protected:
 
     Model           * model;
     DynamicData       dynamicData;
+
+    TextureFormat     textureFormat;
 };
 
 

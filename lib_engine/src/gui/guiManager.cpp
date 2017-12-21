@@ -36,4 +36,12 @@ void GuiManager::spread_events() {
     if( keyboard.key == GLFW_KEY_N && keyboard.action == GLFW_PRESS ) {
         guis.at("inventory")->hide();
     }
+
+    if( keyboard.key == GLFW_KEY_C && keyboard.action == GLFW_PRESS ) {
+        guis.at("charInfo")->show();
+    }
+
+    if( keyboard.key == GLFW_KEY_X && keyboard.action == GLFW_PRESS ) {
+        guis.at("charInfo")->hide();
+    }
 }

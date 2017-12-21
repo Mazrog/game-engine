@@ -10,7 +10,9 @@
 
 class Guibox : public GUI {
 public:
-    Guibox(std::string const& tag);
+    Guibox(std::string const& tag, const char * texturePath,
+           GLenum format = GL_RGB, glm::vec2 position = glm::vec2(-1.f, 1.f),
+           glm::vec2 scale = glm::vec2(1.f));
     ~Guibox();
 
     void render() override {

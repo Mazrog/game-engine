@@ -7,6 +7,14 @@
 
 #include "rendering/structs/uniform.hpp"
 
+struct TextureFormat {
+    GLenum       internal_format;
+    GLenum       format;
+    const char * texturePath;
+
+    TextureFormat(const char * texturePath, GLenum internal_format = GL_RGB, GLenum format = GL_RGB);
+};
+
 class Texture {
 public:
     Texture(GLenum type = GL_TEXTURE_2D);
@@ -16,7 +24,8 @@ public:
 
     Texture& operator=(Texture && text);
 
-    void loadImageToVram(const char * image);
+    void loadImageToVram(const char * image,
+                         GLenum internal_format = GL_RGB, GLenum format = GL_RGB);
     void loadUniform(GLuint progID, const char * var_name);
 
     void bind() const;

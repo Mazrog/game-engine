@@ -29,8 +29,9 @@ void GuiRender::setData(GUI * gui) {
     vao.linkDataAttribute(0, 3, sizeof(glm::vec3) * model->vertices.size(), model->vertices.data());
     vao.linkDataAttribute(1, 2, sizeof(glm::vec2) * model->uvs.size(), model->uvs.data());
 
+    TextureFormat const& tf = gui->get_textureFormat();
     texture.loadUniform(prog.getProgId(), "gui_texture");
-    texture.loadImageToVram("sample/img/gui/box.png");
+    texture.loadImageToVram(tf.texturePath, tf.internal_format, tf.format);
     texture.send(0);
 
     model->clear();

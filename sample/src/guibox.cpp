@@ -4,17 +4,17 @@
 
 #include "guibox.hpp"
 
-Guibox::Guibox(std::string const &tag) : GUI(tag), guiRender() {
+Guibox::Guibox(std::string const &tag, const char * texturePath, GLenum format,
+               glm::vec2 position, glm::vec2 scale) :
+        GUI(tag, texturePath, format, format), guiRender() {
 
-    float val = 0.1f;
-
-    model->vertices.emplace_back(-.8f, .8f, val);
-    model->vertices.emplace_back(0.f, .8f, val);
-    model->vertices.emplace_back(0.f, -.8f, val);
+    model->vertices.emplace_back(-1.f, 1.f, 0);
+    model->vertices.emplace_back(1.f, 1.f, 0);
+    model->vertices.emplace_back(1.f, -1.f, 0);
     
-    model->vertices.emplace_back(0.f, -.8f, val);
-    model->vertices.emplace_back(-.8f, -.8f, val);
-    model->vertices.emplace_back(-.8f, .8f, val);
+    model->vertices.emplace_back(1.f, -1.f, 0);
+    model->vertices.emplace_back(-1.f, -1.f, 0);
+    model->vertices.emplace_back(-1.f, 1.f, 0);
     
     model->uvs.emplace_back(0, 0);
     model->uvs.emplace_back(1, 0);
@@ -25,6 +25,9 @@ Guibox::Guibox(std::string const &tag) : GUI(tag), guiRender() {
     model->uvs.emplace_back(0, 0);
 
 
+    dynamicData.scale = glm::vec3(scale, 0);
+
+    dynamicData.position = glm::vec3(position - glm::vec2(-1.f, 1.f) * scale, 0);
     dynamicData.update();
 
     guiRender.setData(this);

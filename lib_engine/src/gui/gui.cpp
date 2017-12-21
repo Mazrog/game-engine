@@ -6,7 +6,9 @@
 
 #include "gui/gui.hpp"
 
-GUI::GUI(std::string const& tag) : tag(tag), visible(true), model(new Model()) {}
+GUI::GUI(std::string const& tag, const char * texturePath, GLenum internalFormat, GLenum format) :
+        tag(tag), visible(true), model(new Model()),
+        textureFormat(texturePath, internalFormat, format) {}
 
 GUI::~GUI() {
     delete model;

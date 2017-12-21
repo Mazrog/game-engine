@@ -72,8 +72,14 @@ void main_game_init(GameState * self) {
     self->bind(SG_NODE_TYPE::SG_DYNAMIC, "player", player);
 
     /* Loading GUI */
-    Guibox * inventory = new Guibox("inventory");
+    Guibox * inventory = new Guibox("inventory",
+                                    "sample/img/gui/box.png",
+                                    GL_RGBA, glm::vec2(.25f, .05f), glm::vec2(.35f, .42f));
+    Guibox * char_info = new Guibox("charInfo",
+                                    "sample/img/crate.jpg", GL_RGB,
+                                    glm::vec2(-.98f, .45f), glm::vec2(.27f, .47f));
     self->add_gui(inventory);
+    self->add_gui(char_info);
 }
 
 void main_game_exit(GameState * self) {

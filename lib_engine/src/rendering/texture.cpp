@@ -6,6 +6,11 @@
 
 #include "rendering/texture.hpp"
 
+
+TextureFormat::TextureFormat(const char * texturePath, GLenum internal_format, GLenum format) :
+        internal_format(internal_format), format(format), texturePath(texturePath) {}
+
+
 Texture::Texture(GLenum type) : type(type) {
     glGenTextures(1, &id);      get_error("Texture generation");
 }
@@ -25,7 +30,7 @@ Texture& Texture::operator=(Texture && text) {
     return *this;
 }
 
-void Texture::loadImageToVram(const char *image) {
+void Texture::loadImageToVram(const char *image, GLenum internal_format, GLenum format) {
     ilInit();
     ILuint src = ilGenImage();
     ilBindImage(src);
@@ -34,10 +39,10 @@ void Texture::loadImageToVram(const char *image) {
 
     bind();
 
-    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB,
+    glTexImage2D(GL_TEXTURE_2D, 0, internal_format,
                  ilGetInteger(IL_IMAGE_WIDTH),
                  ilGetInteger(IL_IMAGE_HEIGHT), 0,
-                 GL_RGB, GL_UNSIGNED_BYTE, surf);
+                 format, GL_UNSIGNED_BYTE, surf);
     get_error("tex image 2D");
 
     ilDeleteImage(src);
