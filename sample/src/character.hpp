@@ -2,17 +2,17 @@
 // Created by mazrog on 04/12/17.
 //
 
-#ifndef ENGINE_PLAYER_HPP
-#define ENGINE_PLAYER_HPP
+#ifndef ENGINE_CHARACTER_HPP
+#define ENGINE_CHARACTER_HPP
 
 #include <scenegraph/sg_logic.hpp>
 #include <events/keyboard.hpp>
 
 template < class Render >
-class Player : public SGL_Node {
+class Character : public SGL_Node {
 public:
-    Player(const char * model);
-    ~Player() = default;
+    Character(const char * model);
+    ~Character() = default;
 
     void move() override;
 
@@ -23,17 +23,16 @@ private:
 };
 
 template < class Render >
-Player<Render>::Player(const char * model) : SGL_Node(model) {
+Character<Render>::Character(const char * model) : SGL_Node(model) {
     dynamicData.scale = glm::vec3(2.f);
-
+    dynamicData.position.y += 20;
     dynamicData.update();
 
-    Render::init();
     renderer.setData(this);
 }
 
 template < class Render >
-void Player<Render>::move() {
+void Character<Render>::move() {
     Keyboard keyboard = Keyboard::keyboard;
 
     int key_press = keyboard.action == GLFW_PRESS || keyboard.action == GLFW_REPEAT;

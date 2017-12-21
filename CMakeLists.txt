@@ -86,6 +86,7 @@ set(EXEC_SRC_FILES
 
         sample/rendering/renderEntity.cpp
         sample/rendering/terrainRender.cpp
+        sample/rendering/guiRender.cpp
 )
 
 add_executable(

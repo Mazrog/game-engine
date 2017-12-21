@@ -18,7 +18,9 @@ void RenderEntity::init() {
 }
 
 RenderEntity::RenderEntity() :
-        vao(), transform(), texture() {}
+        vao(), transform(), texture() {
+    RenderEntity::init();
+}
 
 void RenderEntity::setData(SGL_Node * node) {
     transform.loadUniform(prog.getProgId(), "transform");

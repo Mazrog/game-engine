@@ -9,9 +9,9 @@
 
 #include "renderEntity.hpp"
 #include "rendering/light.hpp"
-#include "src/player.hpp"
 #include "terrainRender.hpp"
 #include "terrain.hpp"
+#include "character.hpp"
 
 
 void main_menu_init(GameState *) {}
@@ -55,7 +55,7 @@ void main_game_init(GameState * self) {
 
     auto terrain = new Terrain<TerrainRenderer>("sample/img/thin_height_map.png");
 
-    auto player = new Player<RenderEntity>("elf");
+    auto player = new Character<RenderEntity>("elf");
 
     Camera * camera = new Camera(glm::vec3(50, 50, 50), glm::vec3(0, 50, 0));
     camera->bind_camera(TerrainRenderer::prog.getProgId(), RenderEntity::prog.getProgId());
