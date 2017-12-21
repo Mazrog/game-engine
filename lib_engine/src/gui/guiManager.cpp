@@ -20,7 +20,7 @@ void GuiManager::add(GUI *gui) {
     if ( guis.find(gui->tag) == guis.end() ) {
         guis[gui->tag] = gui;
     } else {
-        error( std::string("Warning : You tried to insert two GUI element with the same tag [") + gui->tag + std::string("].") );
+        std::cerr << "Warning : You tried to insert two GUI element with the same tag [" << gui->tag << " ]." << std::endl;
     }
 }
 

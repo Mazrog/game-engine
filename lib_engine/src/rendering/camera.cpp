@@ -52,7 +52,6 @@ void Camera::update() {
         glm::vec3 target_pos = target->get_dynamic_data().position;
 
         aim = target_pos;
-        aim.y += 20;
 
     } else {
         glm::vec3 tengent = glm::normalize(pdt_vec(aim - pos, up));

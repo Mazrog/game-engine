@@ -17,6 +17,6 @@ void DynamicData::update() {
             scale.x, 0, 0, 0,
             0, scale.y, 0, 0,
             0, 0, scale.z, 0,
-            position.x, position.y + 20, position.z, 1.f
+            position.x, position.y, position.z, 1.f
     );
 }

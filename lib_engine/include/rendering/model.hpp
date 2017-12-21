@@ -5,6 +5,7 @@
 #ifndef ENGINE_MODEL_HPP
 #define ENGINE_MODEL_HPP
 
+#include "scenegraph/scenegraph.hpp"
 
 struct Material {
     float ka;

@@ -12,6 +12,7 @@ ShaderProgram GuiRender::prog;
 
 void GuiRender::init() {
     if(!GuiRender::prog.getProgId()) {
+        GuiRender::prog = ShaderProgram("sample/shaders/gui_vert.glsl", "sample/shaders/gui_frag.glsl");
         std::cout << "GUI PROG ID : " << GuiRender::prog.getProgId() << std::endl;
     }
 }

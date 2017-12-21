@@ -43,6 +43,9 @@ set(LIB_SRC
 
         lib_engine/src/events/mouse.cpp
         lib_engine/src/events/keyboard.cpp
+
+        lib_engine/src/gui/gui.cpp
+        lib_engine/src/gui/guiManager.cpp
 )
 
 add_library(
