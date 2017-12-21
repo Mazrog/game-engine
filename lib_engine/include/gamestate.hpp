@@ -55,6 +55,8 @@ public:
 
     MapModel& get_models() { return models; }
 
+    GuiManager * get_guiManager() { return guiManager; }
+
 protected:
     std::function<void(GameState * self)>   onInit;
     std::function<int(GameState * self)>    logic;
@@ -62,6 +64,7 @@ protected:
 
     SGL         * sgl;
     MapModel      models;
+    GuiManager  * guiManager;
 
     /* Properties */
     bool        hasBeenInit;

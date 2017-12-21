@@ -11,9 +11,8 @@ GameState::GameState(
         std::function<void(GameState * self)> const&   init,
         std::function<void(GameState * self)>  const&  exit) :
         onInit(init), logic(logic), onExit(exit),
-        sgl(nullptr), hasBeenInit(false), saved(false){
-    sgl = new SGL();
-}
+        sgl(new SGL()), models(), guiManager(new GuiManager),
+        hasBeenInit(false), saved(false){}
 
 GameState::~GameState() { delete sgl; }
 

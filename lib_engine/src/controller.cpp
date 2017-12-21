@@ -41,7 +41,7 @@ void Controller::load_sgl_from_state() {
 }
 
 void Controller::build_sgv_from_sgl() {
-    std::unique_ptr<SGV> sgv = std::make_unique<SGV>(sgl);
+    std::unique_ptr<SGV> sgv = std::make_unique<SGV>(sgl, states.at(current_state)->get_guiManager());
 
     /* Convert phase */
     /* Updating the sgv */

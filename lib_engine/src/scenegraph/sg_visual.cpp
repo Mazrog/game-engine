@@ -4,10 +4,11 @@
 
 #include "scenegraph/sg_visual.hpp"
 
-SGV::SGV(SGL * const& sgl) : /* nodes(), */
+SGV::SGV(SGL * const& sgl, GuiManager * guiManager) :
                       current_camera(sgl->current_camera),
                       cameras(&sgl->cameras) {
     for(auto const& elem : sgl->rendering_order){ nodes.push_back(elem); }
+    for(auto const& pair : guiManager->get_guis()){ guis.push_back(pair.second); }
 }
 
 void SGV::clear() {
@@ -26,6 +27,11 @@ void SGV::render(){
         /* Then rendering all the static and dynamic nodes following the rendering order */
         for (auto &node : nodes) {
             node->render();
+        }
+
+        /* Rendering GUIs */
+        for(auto & gui : guis) {
+            gui->render();
         }
     }
 }
