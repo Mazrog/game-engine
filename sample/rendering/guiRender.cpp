@@ -13,7 +13,6 @@ ShaderProgram GuiRender::prog;
 void GuiRender::init() {
     if(!GuiRender::prog.getProgId()) {
         GuiRender::prog = ShaderProgram("sample/shaders/gui_vert.glsl", "sample/shaders/gui_frag.glsl");
-        std::cout << "GUI PROG ID : " << GuiRender::prog.getProgId() << std::endl;
     }
 }
 
@@ -43,5 +42,7 @@ void GuiRender::operator()(DynamicData const& dd) {
     transform.send(dd.transform);
     texture.send(0);
 
+    glDisable(GL_DEPTH_TEST);
     glDrawArrays(GL_TRIANGLES, 0, 6); get_error("render gui");
+    glEnable(GL_DEPTH_TEST);
 }

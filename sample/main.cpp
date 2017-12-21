@@ -3,6 +3,7 @@
 #include <sstream>
 #include <IL/il.h>
 #include <events/mouse.hpp>
+#include <guibox.hpp>
 
 #include "engine.hpp"
 #include "base.hpp"
@@ -71,6 +72,8 @@ void main_game_init(GameState * self) {
     self->bind(SG_NODE_TYPE::SG_DYNAMIC, "player", player);
 
     /* Loading GUI */
+    Guibox * inventory = new Guibox("inventory");
+    self->add_gui(inventory);
 }
 
 void main_game_exit(GameState * self) {

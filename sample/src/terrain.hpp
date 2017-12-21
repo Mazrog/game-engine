@@ -38,7 +38,7 @@ float Terrain<Render>::get_height(unsigned x, unsigned z, ILubyte * heightmap) {
     ILuint bpp = ilGetInteger(IL_IMAGE_BYTES_PER_PIXEL);
     ILuint width = ilGetInteger(IL_IMAGE_WIDTH);
 
-    if(x < 0 || x > width || z < 0 || z > width) { return 0; }
+    if(x < 0 || x >= width || z < 0 || z >= width) { return 0; }
 
     ILubyte * pixel = heightmap + z * width * bpp + x * bpp;
 

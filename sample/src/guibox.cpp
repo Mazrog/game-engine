@@ -6,7 +6,7 @@
 
 Guibox::Guibox(std::string const &tag) : GUI(tag), guiRender() {
 
-    float val = 0.f;
+    float val = 0.1f;
 
     model->vertices.emplace_back(-.8f, .8f, val);
     model->vertices.emplace_back(0.f, .8f, val);
