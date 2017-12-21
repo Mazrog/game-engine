@@ -24,14 +24,22 @@ void SGV::render(){
             cameras->at(current_camera)->render();
         }
 
+        glEnable(GL_DEPTH_TEST); get_error("enable depth");
+        glEnable(GL_CULL_FACE); get_error("enable cull");
+        glCullFace(GL_BACK); get_error("cull both");
         /* Then rendering all the static and dynamic nodes following the rendering order */
         for (auto &node : nodes) {
             node->render();
         }
 
+        glDisable(GL_DEPTH_TEST); get_error("disable depth test");
+        glDisable(GL_CULL_FACE);  get_error("disable cull face");
+        glEnable(GL_BLEND); get_error("enable blend");
+        glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA); get_error("blend func");
         /* Rendering GUIs */
         for(auto & gui : guis) {
             gui->render();
         }
+        glDisable(GL_BLEND);
     }
 }

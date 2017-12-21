@@ -7,6 +7,6 @@ in vec2 pass_uvs;
 out vec4 color;
 
 void main() {
-//    color = texture(gui_texture, pass_uvs) + vec4(1.f, 0.f, 0.f, 1.f);
-    color = vec4(1.f, 0.f, 0.f, 1.f);
+    color = texture(gui_texture, pass_uvs);
+//    color = vec4(1.f, 0.f, 0.f, 1.f);
 }

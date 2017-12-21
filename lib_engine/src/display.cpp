@@ -50,9 +50,6 @@ void Display::init(GLFWwindow * & win) {
     }
     glGetError();
 
-    glEnable(GL_DEPTH_TEST); get_error("enable depth");
-    glEnable(GL_CULL_FACE); get_error("enable cull");
-    glCullFace(GL_BACK); get_error("cull both");
     glfwSwapInterval(1);
 }
 

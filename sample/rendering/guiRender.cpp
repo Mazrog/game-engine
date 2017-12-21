@@ -42,7 +42,5 @@ void GuiRender::operator()(DynamicData const& dd) {
     transform.send(dd.transform);
     texture.send(0);
 
-    glDisable(GL_DEPTH_TEST);
     glDrawArrays(GL_TRIANGLES, 0, 6); get_error("render gui");
-    glEnable(GL_DEPTH_TEST);
 }

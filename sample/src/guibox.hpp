@@ -13,7 +13,11 @@ public:
     Guibox(std::string const& tag);
     ~Guibox();
 
-    void render() override { guiRender(dynamicData); }
+    void render() override {
+        if( isVisible() ) {
+            guiRender(dynamicData);
+        }
+    }
 
 private:
     GuiRender   guiRender;
