@@ -3,7 +3,7 @@
 //
 
 #include "guibox.hpp"
-/*
+
 Guibox::Guibox(std::string const &tag) : GUI(tag), guiRender() {
 
     float val = 0.f;
@@ -32,4 +32,3 @@ Guibox::Guibox(std::string const &tag) : GUI(tag), guiRender() {
 
 Guibox::~Guibox() {}
 
- */

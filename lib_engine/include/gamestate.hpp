@@ -46,6 +46,10 @@ public:
     void clear();
     void load_model(const char * tag, const char * file);
 
+    /* GUI */
+    void add_gui(GUI * gui);
+    void gui_events();
+
     /* Element getters */
     SGL_Node * get(const char * name);
     Camera   * get_as_camera(const char * name);

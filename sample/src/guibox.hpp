@@ -7,7 +7,7 @@
 
 #include <gui/gui.hpp>
 #include "guiRender.hpp"
-/*
+
 class Guibox : public GUI {
 public:
     Guibox(std::string const& tag);
@@ -18,6 +18,6 @@ public:
 private:
     GuiRender   guiRender;
 };
-*/
+
 
 #endif //ENGINE_GUI_HPP

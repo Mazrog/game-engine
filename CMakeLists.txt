@@ -86,6 +86,7 @@ target_include_directories( geom
 # Exec config
 set(EXEC_SRC_FILES
         sample/main.cpp
+        sample/src/guibox.cpp
 
         sample/rendering/renderEntity.cpp
         sample/rendering/terrainRender.cpp

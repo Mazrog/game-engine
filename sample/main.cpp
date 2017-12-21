@@ -47,6 +47,8 @@ int main_game_loop(GameState * self) {
     self->get("player")->move();
     self->get_as_camera("main_camera")->move();
 
+    self->gui_events();
+
     return -1;
 }
 
@@ -54,7 +56,6 @@ void main_game_init(GameState * self) {
     self->load_model("elf", "sample/obj/character/nightelffemale/nightelffemale.obj");
 
     auto terrain = new Terrain<TerrainRenderer>("sample/img/thin_height_map.png");
-
     auto player = new Character<RenderEntity>("elf");
 
     Camera * camera = new Camera(glm::vec3(50, 50, 50), glm::vec3(0, 50, 0));
@@ -68,6 +69,8 @@ void main_game_init(GameState * self) {
     self->bind(SG_NODE_TYPE::SG_LIGHT, "sun", sun);
     self->bind(SG_NODE_TYPE::SG_STATIC, "terrain", terrain);
     self->bind(SG_NODE_TYPE::SG_DYNAMIC, "player", player);
+
+    /* Loading GUI */
 }
 
 void main_game_exit(GameState * self) {

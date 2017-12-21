@@ -72,6 +72,14 @@ void GameState::load_model(const char *tag, const char *file) {
     else { std::cerr << "Double model insertion for tag : " << tag << std::endl; }
 }
 
+void GameState::add_gui(GUI *gui) {
+    guiManager->add(gui);
+}
+
+void GameState::gui_events() {
+    guiManager->spread_events();
+}
+
 SGL_Node * GameState::get(const char *name) {
     return sgl->graph.at(name);
 }
