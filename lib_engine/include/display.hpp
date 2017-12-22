@@ -24,6 +24,13 @@ public:
     void frame();
 
     void render_sgv(SGV * sgv);
+
+    int get_windowWidth() const { return window_width; }
+    int get_windowHeight() const { return window_height; }
+
+private:
+    int     window_width;
+    int     window_height;
 };
 
 

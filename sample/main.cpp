@@ -1,18 +1,19 @@
 #include <iostream>
 #include <array>
 #include <sstream>
-#include <IL/il.h>
-#include <events/mouse.hpp>
-#include <guibox.hpp>
 
-#include "engine.hpp"
-#include "base.hpp"
+#include <events/mouse.hpp>
+#include <engine.hpp>
+#include <base.hpp>
 
 #include "renderEntity.hpp"
 #include "rendering/light.hpp"
 #include "terrainRender.hpp"
 #include "terrain.hpp"
 #include "character.hpp"
+
+#include "guibox.hpp"
+#include <gui/text.hpp>
 
 
 void main_menu_init(GameState *) {}
@@ -78,8 +79,13 @@ void main_game_init(GameState * self) {
     Guibox * char_info = new Guibox("charInfo",
                                     "sample/img/crate.jpg", GL_RGB,
                                     glm::vec2(-.98f, .45f), glm::vec2(.27f, .47f));
+    Guibox * help = new Guibox("help",
+                                    "sample/img/gui/box.png",
+                                    GL_RGBA, glm::vec2(-.5f, .99f), glm::vec2(.46f, .27f));
+    help->show();
     self->add_gui(inventory);
     self->add_gui(char_info);
+    self->add_gui(help);
 }
 
 void main_game_exit(GameState * self) {
@@ -103,7 +109,6 @@ int main() {
 
     Engine::add_states(game, pause, main_menu);
     Engine::start();
-
 
     return 0;
 }

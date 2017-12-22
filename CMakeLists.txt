@@ -46,6 +46,7 @@ set(LIB_SRC
 
         lib_engine/src/gui/gui.cpp
         lib_engine/src/gui/guiManager.cpp
+        lib_engine/src/gui/text.cpp
 )
 
 add_library(
@@ -57,6 +58,7 @@ add_library(
 target_include_directories( ${project_name}
         PRIVATE lib_engine/include
         PRIVATE lib_geom/include
+        PUBLIC /usr/include/freetype2
 )
 
 target_link_libraries( ${project_name}
@@ -64,6 +66,7 @@ target_link_libraries( ${project_name}
         ${OPENGL_LIBRARIES}
         ${GLEW_LIBRARIES}
         IL
+        freetype
 )
 # ####################################################
 #                       GEOMETRY
@@ -91,6 +94,7 @@ set(EXEC_SRC_FILES
         sample/rendering/renderEntity.cpp
         sample/rendering/terrainRender.cpp
         sample/rendering/guiRender.cpp
+        sample/rendering/textRender.cpp
 )
 
 add_executable(

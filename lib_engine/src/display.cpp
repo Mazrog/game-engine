@@ -8,7 +8,7 @@
 #include "display.hpp"
 #include "utils.hpp"
 
-Display::Display() {
+Display::Display() : window_width(1600), window_height(900) {
     if(!glfwInit()){
         std::cerr << "GLFW INIT error" << std::endl;
     }
@@ -26,8 +26,8 @@ Display::~Display() {
 
 void Display::init(GLFWwindow * & win) {
     win = glfwCreateWindow(
-            1600,
-            900,
+            window_width,
+            window_height,
             "Plop Engine",
             nullptr,
             nullptr

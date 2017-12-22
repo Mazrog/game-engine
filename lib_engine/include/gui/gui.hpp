@@ -9,6 +9,14 @@
 #include "rendering/model.hpp"
 #include "rendering/texture.hpp"
 
+#include <freetype2/ft2build.h>
+
+struct GuiData {
+    std::wstring text;
+
+    GuiData(std::wstring const& t = L"Default phrase...") : text(t) {}
+};
+
 class GUI {
 public:
     GUI(std::string const& tag,
@@ -39,6 +47,8 @@ protected:
     DynamicData       dynamicData;
 
     TextureFormat     textureFormat;
+
+    GuiData           guiData;
 };
 
 

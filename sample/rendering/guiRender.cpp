@@ -38,7 +38,7 @@ void GuiRender::setData(GUI * gui) {
 }
 
 void GuiRender::operator()(DynamicData const& dd) {
-    prog.useProgram();
+    GuiRender::prog.useProgram();
     vao.bind();
     transform.send(dd.transform);
     texture.send(0);

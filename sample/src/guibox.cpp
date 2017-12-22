@@ -31,6 +31,7 @@ Guibox::Guibox(std::string const &tag, const char * texturePath, GLenum format,
     dynamicData.update();
 
     guiRender.setData(this);
+    textRender.setData(this);
 }
 
 Guibox::~Guibox() {}

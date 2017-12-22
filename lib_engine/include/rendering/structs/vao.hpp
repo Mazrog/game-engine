@@ -24,11 +24,14 @@ public:
     void bind();
     void clean();
 
+
     template < class T >
     void linkDataAttribute(GLuint index, int coordinateSize, size_t size, T * data) {
         bind();
         vbos.emplace_back();
-        vbos.back().setBufferData(size, data);
+        if( size ) {
+            vbos.back().setBufferData(size, data);
+        }
 
         glEnableVertexAttribArray(index);   get_error("VAO enable vertex index");
         glVertexAttribPointer(index, coordinateSize, GL_FLOAT, GL_FALSE, 0, (void *) 0);    get_error("VAO vertex pointer");

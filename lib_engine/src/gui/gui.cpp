@@ -7,8 +7,10 @@
 #include "gui/gui.hpp"
 
 GUI::GUI(std::string const& tag, const char * texturePath, GLenum internalFormat, GLenum format) :
-        tag(tag), visible(true), model(new Model()),
-        textureFormat(texturePath, internalFormat, format) {}
+        tag(tag), visible(false), model(new Model()),
+        textureFormat(texturePath, internalFormat, format) {
+    guiData.text.assign(tag.begin(), tag.end());
+}
 
 GUI::~GUI() {
     delete model;
@@ -16,14 +18,14 @@ GUI::~GUI() {
 
 void GUI::show() {
     if( !visible ) {
-        std::cout << "Affichage : " << tag << std::endl;
+//        std::cout << "Affichage : " << tag << std::endl;
         visible = true;
     }
 }
 
 void GUI::hide() {
     if( visible ) {
-        std::cout << "Cache : " << tag << std::endl;
+//        std::cout << "Cache : " << tag << std::endl;
         visible = false;
     }
 }

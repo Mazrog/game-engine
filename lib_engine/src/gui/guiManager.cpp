@@ -30,18 +30,26 @@ void GuiManager::spread_events() {
     int key_press = keyboard.action == GLFW_PRESS || keyboard.action == GLFW_REPEAT;
 
     if( keyboard.key == GLFW_KEY_B && keyboard.action == GLFW_PRESS ) {
-        guis.at("inventory")->show();
-    }
-
-    if( keyboard.key == GLFW_KEY_N && keyboard.action == GLFW_PRESS ) {
-        guis.at("inventory")->hide();
+        if ( keyboard.mods == GLFW_MOD_SHIFT ) {
+            guis.at("inventory")->hide();
+        } else {
+            guis.at("inventory")->show();
+        }
     }
 
     if( keyboard.key == GLFW_KEY_C && keyboard.action == GLFW_PRESS ) {
-        guis.at("charInfo")->show();
+        if ( keyboard.mods == GLFW_MOD_SHIFT ) {
+            guis.at("charInfo")->hide();
+        } else {
+            guis.at("charInfo")->show();
+        }
     }
 
-    if( keyboard.key == GLFW_KEY_X && keyboard.action == GLFW_PRESS ) {
-        guis.at("charInfo")->hide();
+    if( keyboard.key == GLFW_KEY_H && keyboard.action == GLFW_PRESS ) {
+        if ( keyboard.mods == GLFW_MOD_SHIFT ) {
+            guis.at("help")->hide();
+        } else {
+            guis.at("help")->show();
+        }
     }
 }

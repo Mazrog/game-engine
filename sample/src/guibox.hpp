@@ -6,7 +6,9 @@
 #define ENGINE_GUIBOX_HPP
 
 #include <gui/gui.hpp>
+#include <gui/text.hpp>
 #include "guiRender.hpp"
+#include "textRender.hpp"
 
 class Guibox : public GUI {
 public:
@@ -18,11 +20,13 @@ public:
     void render() override {
         if( isVisible() ) {
             guiRender(dynamicData);
+            textRender(dynamicData, guiData);
         }
     }
 
 private:
     GuiRender   guiRender;
+    TextRender  textRender;
 };
 
 
