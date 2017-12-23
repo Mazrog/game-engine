@@ -38,7 +38,8 @@ void RenderEntity::setData(SGL_Node * node) {
 
 
     texture.loadUniform(prog.getProgId(), "texture_entity");
-    texture.loadImageToVram("sample/img/terrain_texture.png");
+    texture.loadImageToVram("sample/obj/character/nightelffemale/nightelffemale_Body.tga",
+                            GL_RGBA, GL_BGRA_EXT);
     texture.send(0);
 
     unsigned long count = model->links.size();
@@ -48,6 +49,7 @@ void RenderEntity::setData(SGL_Node * node) {
 }
 
 void RenderEntity::operator()(DynamicData const& dd) {
+    RenderEntity::prog.useProgram();
     vao.bind();
     transform.send(dd.transform);
     texture.send(0);

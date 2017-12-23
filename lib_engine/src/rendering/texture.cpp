@@ -56,8 +56,8 @@ void Texture::bind() const {
 }
 
 void Texture::send(int slot) const {
-    glActiveTexture(GL_TEXTURE0 + slot);    get_error("Texture active");
     bind();
+    glActiveTexture(GL_TEXTURE0 + slot);    get_error("Texture active");
     texture.send(slot);
 }
 

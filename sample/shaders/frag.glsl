@@ -20,5 +20,5 @@ void main() {
     /* Ajout d'une lumière ambiante (.2f et non 0) */
     brightness = max(brightness, .2f);
 
-    color = 0.3f * texture(texture_entity, pass_uvs) + (brightness * vec4(sun_color, 0.0));
+    color = texture(texture_entity, pass_uvs);// * (brightness * vec4(sun_color, 1.0));
 }
