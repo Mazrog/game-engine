@@ -41,7 +41,8 @@ void TerrainRenderer::setData(SGL_Node *node) {
     vao.linkDataAttribute(2, 3, sizeof(glm::vec3) * model->normals.size(), model->normals.data());
 
     texture.loadUniform(prog.getProgId(), "terrain_texture");
-    texture.loadImageToVram("sample/img/terrain.png");
+//    texture.loadImageToVram("sample/img/terrain.png");
+    texture.loadImageToVram("sample/img/height_map.png");
     texture.send(0);
 
     renderConfig.count = model->links.size();

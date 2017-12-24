@@ -40,7 +40,7 @@ float Terrain<Render>::get_height(unsigned x, unsigned z, ILubyte * heightmap) {
 
     if(x < 0 || x >= width || z < 0 || z >= width) { return 0; }
 
-    ILubyte * pixel = heightmap + z * width * bpp + x * bpp;
+    ILubyte * pixel = heightmap + x * width * bpp + z * bpp;
 
     float val = (uint8_t) *pixel + (uint8_t) *(pixel+1) + (uint8_t) *(pixel+2);
     val = (val * MAX_HEIGHT) / (float) MAX_COLOR;

@@ -10,8 +10,8 @@
 #include <memory>
 #include <glm/glm.hpp>
 
-using vecord = std::vector<glm::vec3>;
-using vecuvs = std::vector<glm::vec2>;
+using vecf = std::vector<glm::vec3>;
+using vec2f = std::vector<glm::vec2>;
 using vecui  = std::vector<unsigned>;
 
 enum class SG_NODE_TYPE : unsigned {

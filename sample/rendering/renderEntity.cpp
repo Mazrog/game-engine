@@ -38,12 +38,15 @@ void RenderEntity::setData(SGL_Node * node) {
 
 
     texture.loadUniform(prog.getProgId(), "texture_entity");
-    texture.loadImageToVram("sample/obj/character/nightelffemale/nightelffemale_Body.tga",
-                            GL_RGBA, GL_BGRA_EXT);
-    texture.send(0);
+
+    for( auto const& pair: model->mtlLib ) {
+        pair.second->map_indexes[1] = texture.loadImageToVram(pair.second->map_Kd.c_str(), GL_RGBA, GL_BGRA_EXT);
+    }
 
     unsigned long count = model->links.size();
     renderConfig.count = count ? count : model->vertices.size();
+
+    mtlLib = std::move(model->mtlLib);
 
     model->clear();
 }
@@ -52,13 +55,21 @@ void RenderEntity::operator()(DynamicData const& dd) {
     RenderEntity::prog.useProgram();
     vao.bind();
     transform.send(dd.transform);
-    texture.send(0);
 
     if(renderConfig.is_element) {
-        glDrawElements(renderConfig.primitive, renderConfig.count, GL_UNSIGNED_INT, (void *) 0);
-        get_error("render entity");
+        for( auto const& pair : mtlLib ) {
+            for( auto const& vert_info : pair.second->vert_infos ) {
+                glDrawElements(renderConfig.primitive, vert_info.first, GL_UNSIGNED_INT, (void *) 0);
+                get_error("render entity");
+            }
+        }
     } else {
-        glDrawArrays(renderConfig.primitive, 0, renderConfig.count);
-        get_error("render entity");
+        for( auto const& pair : mtlLib ) {
+            texture.send(pair.second->map_indexes[1], 0);
+            for( auto const& vert_info : pair.second->vert_infos ) {
+                glDrawArrays(renderConfig.primitive, vert_info.first, vert_info.second);
+                get_error("render entity");
+            }
+        }
     }
 }

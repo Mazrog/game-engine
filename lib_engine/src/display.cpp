@@ -8,7 +8,7 @@
 #include "display.hpp"
 #include "utils.hpp"
 
-Display::Display() : window_width(1600), window_height(900) {
+Display::Display() : window_width(1680), window_height(1050) {
     if(!glfwInit()){
         std::cerr << "GLFW INIT error" << std::endl;
     }

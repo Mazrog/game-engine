@@ -65,7 +65,7 @@ void GameState::bind(SG_NODE_TYPE type, const char * name, SGL_Node *node) {
 }
 
 void GameState::load_model(const char *tag, const char *file) {
-    Model * model = new Model(file);
+    auto * model = new Model(file);
     auto it = models.find(tag);
 
     if( it == models.end() ) { models[tag] = model; }

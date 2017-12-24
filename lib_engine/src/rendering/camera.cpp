@@ -7,6 +7,7 @@
 #include <glm/gtc/type_ptr.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 #include <base.hpp>
+#include <engine.hpp>
 
 #include "rendering/camera.hpp"
 #include "events/keyboard.hpp"
@@ -32,7 +33,8 @@ void Camera::init() {
     move_speed = .05f;
     d_roll = d_yaw = d_pitch = 0.f;
 
-    set_carac();
+    Display& display = Engine::engine.get_display();
+    set_carac(70.f, display.get_windowWidth() / (float) display.get_windowHeight());
     update();
     updated = true;
 }

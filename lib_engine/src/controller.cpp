@@ -20,7 +20,11 @@ Controller::~Controller() {
 
 void Controller::init() {
     /* Setting the events callback */
-    glfwSetKeyCallback(Engine::engine.data.win, key_callback);
+    GLFWwindow * win = Engine::engine.data.win;
+    glfwSetKeyCallback(win, key_callback);
+    glfwSetCursorPosCallback(win, cursor_position_callback);
+    glfwSetMouseButtonCallback(win, mouse_button_callback);
+    glfwSetScrollCallback(win, scroll_callback);
 
     states.clear();
 }

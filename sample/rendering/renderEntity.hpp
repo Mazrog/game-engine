@@ -32,6 +32,8 @@ private:
 
     Uniform         transform;
     Texture         texture;
+
+    MtlLib          mtlLib;
 };
 
 

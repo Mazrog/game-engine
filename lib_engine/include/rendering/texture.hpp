@@ -21,20 +21,22 @@ public:
     ~Texture();
 
     Texture& operator=(Texture const&) = delete;
-
     Texture& operator=(Texture && text);
 
-    void loadImageToVram(const char * image,
+    void genTexture();
+
+    int loadImageToVram(const char * image,
                          GLenum internal_format = GL_RGB, GLenum format = GL_RGB);
     void loadUniform(GLuint progID, const char * var_name);
 
     void bind() const;
-    void send(int slot) const;
+    void bind(GLuint index) const;
+    void send(int index, int slot = 0) const;
 
 private:
-    Uniform     texture;
-    GLenum      type;
-    GLuint      id;
+    Uniform                 texture;
+    GLenum                  type;
+    std::vector<GLuint>     ids;
 };
 
 

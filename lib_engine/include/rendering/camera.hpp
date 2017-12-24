@@ -41,7 +41,7 @@ public:
     /* Build characteristics */
     void init();
 
-    void set_carac(cref<float> angle_rad = 55.f,
+    void set_carac(cref<float> angle_rad = 70.f,
                    cref<float> ratio = 16.f / 9.f,
                    cref<float> near = 0.1f,
                    cref<float> far = 1000.f);

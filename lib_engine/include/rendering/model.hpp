@@ -7,25 +7,37 @@
 
 #include "scenegraph/scenegraph.hpp"
 
+using VertInfo = std::pair<unsigned, unsigned>;
+
 struct Material {
-    float ka;
-    float kd;
-    float ks;
+    glm::vec3   ka;
+    glm::vec3   kd;
+    glm::vec3   ks;
+
+    std::string map_Ka;
+    std::string map_Kd;
+    std::string map_Ks;
+
+    int     map_indexes[3];
+
+    std::vector<VertInfo> vert_infos;
 };
 
+using MtlLib = std::map<std::string, Material *>;
 
 struct Model {
     Model();
     Model(const char * file);
+    ~Model();
     void clear();
 
 
-    vecord  vertices;
-    vecuvs  uvs;
-    vecord  normals;
+    vecf    vertices;
+    vec2f   uvs;
+    vecf    normals;
     vecui   links;
 
-    Material material;
+    MtlLib  mtlLib;
 };
 
 
