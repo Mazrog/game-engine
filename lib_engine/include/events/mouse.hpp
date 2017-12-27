@@ -19,8 +19,29 @@ public:
 public:
     ~Mouse();
 
+
+    /* Attributes */
+    GLFWwindow      * window;
+    double            xpos;
+    double            ypos;
+
+    int               state_left;
+
+    struct Click {
+        int     button;
+        int     action;
+        int     mods;
+
+    }   click;
+
+    struct Scroll {
+        double      xoffset;
+        double      yoffset;
+
+    }   scroll;
+
 private:
-    Mouse();
+    Mouse() = default;
 };
 
 

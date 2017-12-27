@@ -21,13 +21,11 @@ void Text::init(GLuint progId) {
         glGenTextures(1, &texId); get_error("gen texture");
         glBindTexture(GL_TEXTURE_2D, texId); get_error("bind texture");
 
-//        glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
-
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
 
-        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
 
         texLoc = glGetUniformLocation(progId, "glyph_texture");
 
@@ -57,7 +55,7 @@ int Text::load_font(const char *fontFile) {
     return Text::fonts.size() - 1;
 }
 
-void Text::write(unsigned fontIndex, unsigned fontSize, glm::vec2 position, std::wstring const &text) {
+void Text::write(unsigned fontIndex, unsigned fontSize, glm::vec2 const& position, std::wstring const &text, glm::vec2 const& limits) {
     if( fontIndex >= Text::fonts.size() ) {
         throw std::runtime_error("Font index out of range");
     }
@@ -84,6 +82,12 @@ void Text::write(unsigned fontIndex, unsigned fontSize, glm::vec2 position, std:
 
         if( FT_Load_Char(face, c, FT_LOAD_RENDER) ) {
             std::cerr << "Could not load character " << c << std::endl;
+            continue;
+        }
+
+        if ( c == '\n' || cur_x >= limits.x) {
+            cur_x = position.x;
+            cur_y -= (fontSize + 3) * sy;
             continue;
         }
 
@@ -114,4 +118,43 @@ void Text::write(unsigned fontIndex, unsigned fontSize, glm::vec2 position, std:
         cur_y += (g->advance.y / 64.f) * sy;
     }
     glPixelStorei(GL_UNPACK_ALIGNMENT, 4);
+}
+
+Dimension Text::preview_text(unsigned fontIndex, unsigned fontSize, std::wstring const &text) const {
+    if( fontIndex >= Text::fonts.size() ) {
+        throw std::runtime_error("Font index out of range");
+    }
+
+    FT_Face face = Text::fonts.at(fontIndex);
+    FT_Set_Pixel_Sizes(face, 0, fontSize);
+
+    Display& display = Engine::engine.get_display();
+    float sx = 2.f / display.get_windowWidth();
+    float sy = 2.f / display.get_windowHeight();
+
+    float cur_x = 0, cur_y = 0;
+    Dimension dimension;
+
+    for(auto const& c : text) {
+        if( FT_Load_Char(face, c, FT_LOAD_RENDER) ) {
+            std::cerr << "Could not load character " << c << std::endl;
+            continue;
+        }
+
+        if ( c == '\n' ) {
+            dimension.x = ( cur_x > dimension.x ) ? cur_x : dimension.x;
+            cur_x = 0;
+            cur_y -= (fontSize + 3) * sy;
+            continue;
+        }
+
+        FT_GlyphSlot g = face->glyph;
+
+        cur_x += (g->advance.x / 64.f) * sx;
+        cur_y += (g->advance.y / 64.f) * sy;
+    }
+    dimension.x = ( cur_x > dimension.x ) ? cur_x : dimension.x;
+    dimension.y = cur_y + (fontSize + 3) * sy;
+
+    return dimension;
 }

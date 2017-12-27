@@ -33,6 +33,8 @@ private:
 
     Uniform         transform;
     Texture         texture;
+
+    Point           anchor;
 };
 
 

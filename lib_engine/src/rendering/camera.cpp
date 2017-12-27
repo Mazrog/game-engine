@@ -53,7 +53,11 @@ void Camera::update() {
     if( target ) {
         glm::vec3 target_pos = target->get_dynamic_data().position;
 
-        aim = target_pos;
+        aim = target_pos + glm::vec3(0.f, 2.f, 0.f);
+
+        pos = target_pos;
+        pos.x -= dist_from_target;
+        pos.y = aim.y + dist_from_target * sinf(glm::radians(40.f));
 
     } else {
         glm::vec3 tengent = glm::normalize(pdt_vec(aim - pos, up));
@@ -81,16 +85,22 @@ void Camera::set_carac(const float &angle_rad, const float &ratio, const float &
 /* Move functions */
 
 void Camera::move_forward() {
-    glm::vec3 qte =  move_speed * (aim - pos);
-    pos += qte;
-    aim += qte;
+    if ( target ) {
+        dist_from_target = (dist_from_target <= 1.f) ? 1.f : dist_from_target - .5f;
+    } else {
+        glm::vec3 qte = move_speed * (aim - pos);
+        pos += qte;
+    }
     updated = true;
 }
 
 void Camera::move_backward() {
-    glm::vec3 qte =  move_speed * (aim - pos);
-    pos -= qte;
-    aim -= qte;
+    if ( target ) {
+        dist_from_target = (dist_from_target > 40) ? 40.f : dist_from_target + .5f;
+    } else {
+        glm::vec3 qte = move_speed * (aim - pos);
+        pos -= qte;
+    }
     updated = true;
 }
 
@@ -123,13 +133,12 @@ void Camera::follow(SGL_Node *target_elem) {
     target = target_elem;
     dist_from_target = 10;
 
-    pos = target_elem->get_dynamic_data().position - dist_from_target * glm::vec3(1, -5, 1);
-
     update();
 }
 
 void Camera::move() {
     Keyboard keyboard = Keyboard::keyboard;
+    Mouse    mouse    = Mouse::mouse;
 
     int key_press = keyboard.action == GLFW_PRESS || keyboard.action == GLFW_REPEAT;
 
@@ -155,5 +164,13 @@ void Camera::move() {
 
     if (keyboard.key == GLFW_KEY_DOWN && key_press) {
         move_backward();
+    }
+
+    if( mouse.state_left == GLFW_PRESS ) {
+        std::cout << "kappa" << std::endl;
+    }
+
+    if ( mouse.click.button == GLFW_MOUSE_BUTTON_LEFT && mouse.click.action == GLFW_PRESS ) {
+        std::cout << "press left" << std::endl;
     }
 }

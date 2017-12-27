@@ -12,8 +12,9 @@
 #include "terrain.hpp"
 #include "character.hpp"
 
-#include "guibox.hpp"
-#include <gui/text.hpp>
+#include "gui/guibox.hpp"
+#include "gui/textblock.hpp"
+#include "gui/table.hpp"
 
 
 void main_menu_init(GameState *) {}
@@ -73,16 +74,28 @@ void main_game_init(GameState * self) {
     self->bind(SG_NODE_TYPE::SG_DYNAMIC, "player", player);
 
     /* Loading GUI */
-    Guibox * inventory = new Guibox("inventory",
-                                    "sample/img/gui/box.png",
-                                    GL_RGBA, glm::vec2(.25f, .05f), glm::vec2(.35f, .42f));
-    Guibox * char_info = new Guibox("charInfo",
-                                    "sample/img/crate.jpg", GL_RGB,
-                                    glm::vec2(-.98f, .45f), glm::vec2(.27f, .47f));
-    Guibox * help = new Guibox("help",
-                                    "sample/img/gui/box.png",
-                                    GL_RGBA, glm::vec2(-.5f, .99f), glm::vec2(.46f, .27f));
+    Guibox * inventory = new Guibox("inventory", "Inventaire",
+                                    "sample/img/gui/box.png", glm::vec2(.2f, .35f),
+                                    glm::vec2(.65f, 1.1f), GL_RGBA);
+    Guibox * char_info = new Guibox("charInfo", "Personnage",
+                                    "sample/img/crate.jpg", glm::vec2(-.999f, .52f),
+                                    glm::vec2(.55f, 1.1f), GL_RGB);
+//    Guibox * help = new Guibox("help", "Aide",
+//                               "sample/img/gui/box.png", glm::vec2(-.5f, .99f),
+//                               glm::vec2(1.f, .37f), GL_RGBA);
+
+    auto * help = new Table("help", "Aide", 4, 2, "sample/img/gui/box.png",
+                               glm::vec2(-.5f, .99f),
+                               glm::vec2(1.f, .37f), GL_RGBA);
+    help->add_cell(0, new TextBlock("a", L"Caractéristiques : "));
+    help->add_cell(1, new TextBlock("b", L"Force :"));
+    help->add_cell(1, new TextBlock("c", L"12"));
+    help->add_cell(2, new TextBlock("d", L"Endurance :"));
+    help->add_cell(2, new TextBlock("e", L"17"));
+    help->add_cell(3, new TextBlock("e", L"Dextérité : "));
+    help->add_cell(3, new TextBlock("f", L"21"));
     help->show();
+
     self->add_gui(inventory);
     self->add_gui(char_info);
     self->add_gui(help);

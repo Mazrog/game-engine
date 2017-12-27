@@ -47,6 +47,7 @@ set(LIB_SRC
         lib_engine/src/gui/gui.cpp
         lib_engine/src/gui/guiManager.cpp
         lib_engine/src/gui/text.cpp
+        lib_engine/src/gui/guiData.cpp
 )
 
 add_library(
@@ -89,7 +90,9 @@ target_include_directories( geom
 # Exec config
 set(EXEC_SRC_FILES
         sample/main.cpp
-        sample/src/guibox.cpp
+        sample/src/gui/guibox.cpp
+        sample/src/gui/textblock.cpp
+        sample/src/gui/table.cpp
 
         sample/rendering/renderEntity.cpp
         sample/rendering/terrainRender.cpp

@@ -12,17 +12,22 @@
 
 class Guibox : public GUI {
 public:
-    Guibox(std::string const& tag, const char * texturePath,
-           GLenum format = GL_RGB, glm::vec2 position = glm::vec2(-1.f, 1.f),
-           glm::vec2 scale = glm::vec2(1.f));
+    Guibox(std::string const& tag, std::string const& title, const char * texturePath = nullptr,
+           glm::vec2 const& position = glm::vec2(-1.f, 1.f),
+           glm::vec2 const& dimension = glm::vec2(1.f),
+           GLenum format = GL_RGB);
+
     ~Guibox();
 
     void render() override {
         if( isVisible() ) {
             guiRender(dynamicData);
             textRender(dynamicData, guiData);
+            GUI::render();
         }
     }
+
+    void set_title(std::wstring const& title);
 
 private:
     GuiRender   guiRender;

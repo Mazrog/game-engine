@@ -26,6 +26,8 @@ void Controller::init() {
     glfwSetMouseButtonCallback(win, mouse_button_callback);
     glfwSetScrollCallback(win, scroll_callback);
 
+    glfwSetInputMode(win, GLFW_STICKY_MOUSE_BUTTONS, 1);
+
     states.clear();
 }
 

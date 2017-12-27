@@ -20,10 +20,11 @@ public:
 
     void setData(GUI * gui);
 
-    void operator()( DynamicData const& dd, GuiData const& gd );
+    void operator()( DynamicData const& dd, GuiData & gd );
 
 private:
     Uniform         transform;
+    Uniform         font_color;
     Text            text;
 };
 

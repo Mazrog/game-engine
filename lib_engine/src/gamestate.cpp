@@ -14,7 +14,10 @@ GameState::GameState(
         sgl(new SGL()), models(), guiManager(new GuiManager),
         hasBeenInit(false), saved(false){}
 
-GameState::~GameState() { delete sgl; }
+GameState::~GameState() {
+    delete sgl;
+    delete guiManager;
+}
 
 GameState::GameState(GameState && gs) :
         onInit(std::move(gs.onInit)), logic(std::move(gs.logic)),

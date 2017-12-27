@@ -29,7 +29,10 @@ public:
 
     static int load_font(const char * fontFile);
 
-    void write(unsigned fontIndex, unsigned fontSize, glm::vec2 position, std::wstring const& text);
+    void write(unsigned fontIndex, unsigned fontSize, glm::vec2 const& position,
+               std::wstring const& text, glm::vec2 const& limits = glm::vec2(1.f, -1.f));
+
+    Dimension preview_text(unsigned fontIndex, unsigned fontSize, std::wstring const& text) const;
 
     void bindFont();
 

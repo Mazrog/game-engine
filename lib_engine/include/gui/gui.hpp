@@ -6,16 +6,12 @@
 #define ENGINE_GUI_HPP
 
 #include <string>
-#include "rendering/model.hpp"
-#include "rendering/texture.hpp"
-
+#include <vector>
 #include <freetype2/ft2build.h>
 
-struct GuiData {
-    std::wstring text;
-
-    GuiData(std::wstring const& t = L"Default phrase...") : text(t) {}
-};
+#include "rendering/model.hpp"
+#include "rendering/texture.hpp"
+#include "guiData.hpp"
 
 class GUI {
 public:
@@ -31,23 +27,36 @@ public:
 
     virtual void render();
 
+    void add(GUI * child);
+
+    virtual void spread_visibility();
+
+    /* DEBUG FUNCTIONS */
+    void debug() const;
+
     /* Getters */
     Model * get_model() { return model; }
+    Point const& get_anchor() const { return guiData.anchor; }
+    Dimension const& get_dimension() const { return guiData.dimension; }
 
     bool isVisible() const { return visible; }
     TextureFormat const& get_textureFormat() const { return textureFormat; }
 
+    /* Setters */
+    void set_anchor(Point const& point) { guiData.anchor = point; }
+    void set_visibility(bool visibility) { visible = visibility; }
+    void set_dimension(Dimension const& dim) { guiData.dimension = dim; }
+
 public:
-    std::string     tag;
+    std::string         tag;
+    std::vector<GUI *>  children;
 
 protected:
     bool              visible;
 
     Model           * model;
     DynamicData       dynamicData;
-
     TextureFormat     textureFormat;
-
     GuiData           guiData;
 };
 

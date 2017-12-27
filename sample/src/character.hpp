@@ -23,8 +23,8 @@ private:
 };
 
 template < class Render >
-Character<Render>::Character(const char * model) : SGL_Node(model) {
-    dynamicData.scale = glm::vec3(2.f);
+Character<Render>::Character(const char * model_name) : SGL_Node(model_name) {
+    dynamicData.scale = glm::vec3(1.f);
     dynamicData.position.y += 20;
     dynamicData.update();
 

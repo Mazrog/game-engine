@@ -2,6 +2,7 @@
 // Created by mazrog on 10/11/17.
 //
 
+#include <glm/gtc/matrix_transform.hpp>
 #include "scenegraph/scenegraph.hpp"
 
 
@@ -13,10 +14,6 @@ DynamicData::DynamicData() {
 }
 
 void DynamicData::update() {
-    transform = glm::mat4(
-            scale.x, 0, 0, 0,
-            0, scale.y, 0, 0,
-            0, 0, scale.z, 0,
-            position.x, position.y, position.z, 1.f
-    );
+    transform = glm::translate(glm::mat4(1.f), position);
+    transform = glm::scale(transform, scale);
 }

@@ -33,6 +33,8 @@ public:
     void bind(GLuint index) const;
     void send(int index, int slot = 0) const;
 
+    bool isActive() const { return !ids.empty(); }
+
 private:
     Uniform                 texture;
     GLenum                  type;

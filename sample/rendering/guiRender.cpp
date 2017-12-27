@@ -23,6 +23,7 @@ GuiRender::GuiRender() :
 
 void GuiRender::setData(GUI * gui) {
     transform.loadUniform(prog.getProgId(), "transform");
+    anchor = gui->get_anchor();
 
     Model * model = gui->get_model();
 
@@ -30,9 +31,11 @@ void GuiRender::setData(GUI * gui) {
     vao.linkDataAttribute(1, 2, sizeof(glm::vec2) * model->uvs.size(), model->uvs.data());
 
     TextureFormat const& tf = gui->get_textureFormat();
-    texture.loadUniform(prog.getProgId(), "gui_texture");
-    texture.loadImageToVram(tf.texturePath, tf.internal_format, tf.format);
-    texture.send(0);
+    if ( tf.texturePath ) {
+        texture.loadUniform(prog.getProgId(), "gui_texture");
+        texture.loadImageToVram(tf.texturePath, tf.internal_format, tf.format);
+        texture.send(0);
+    }
 
     model->clear();
 }
@@ -41,7 +44,8 @@ void GuiRender::operator()(DynamicData const& dd) {
     GuiRender::prog.useProgram();
     vao.bind();
     transform.send(dd.transform);
-    texture.send(0);
+    if ( texture.isActive() ) { texture.send(0); }
 
     glDrawArrays(GL_TRIANGLES, 0, 6); get_error("render gui");
 }
+
