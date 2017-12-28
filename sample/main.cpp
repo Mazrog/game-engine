@@ -12,9 +12,9 @@
 #include "terrain.hpp"
 #include "character.hpp"
 
-#include "gui/guibox.hpp"
-#include "gui/textblock.hpp"
-#include "gui/table.hpp"
+#include "gui/elements/guibox.hpp"
+#include "gui/elements/textblock.hpp"
+#include "gui/characterPanel.hpp"
 
 
 void main_menu_init(GameState *) {}
@@ -74,26 +74,20 @@ void main_game_init(GameState * self) {
     self->bind(SG_NODE_TYPE::SG_DYNAMIC, "player", player);
 
     /* Loading GUI */
-    Guibox * inventory = new Guibox("inventory", "Inventaire",
+    auto * inventory = new Guibox("inventory", "Inventaire",
                                     "sample/img/gui/box.png", glm::vec2(.2f, .35f),
                                     glm::vec2(.65f, 1.1f), GL_RGBA);
-    Guibox * char_info = new Guibox("charInfo", "Personnage",
-                                    "sample/img/crate.jpg", glm::vec2(-.999f, .52f),
-                                    glm::vec2(.55f, 1.1f), GL_RGB);
-//    Guibox * help = new Guibox("help", "Aide",
-//                               "sample/img/gui/box.png", glm::vec2(-.5f, .99f),
-//                               glm::vec2(1.f, .37f), GL_RGBA);
 
-    auto * help = new Table("help", "Aide", 4, 2, "sample/img/gui/box.png",
+    auto * char_info = new CharacterPanel(player);
+
+    auto * help = new Guibox("help", "Aide", "sample/img/gui/box.png",
                                glm::vec2(-.5f, .99f),
                                glm::vec2(1.f, .37f), GL_RGBA);
-    help->add_cell(0, new TextBlock("a", L"Caractéristiques : "));
-    help->add_cell(1, new TextBlock("b", L"Force :"));
-    help->add_cell(1, new TextBlock("c", L"12"));
-    help->add_cell(2, new TextBlock("d", L"Endurance :"));
-    help->add_cell(2, new TextBlock("e", L"17"));
-    help->add_cell(3, new TextBlock("e", L"Dextérité : "));
-    help->add_cell(3, new TextBlock("f", L"21"));
+    help->add(new TextBlock("",
+                            L"W, A, S, D pour déplacer le joueur\n\nPour fermer une fenêtre, SHIFT + [Touche correspondante]\n\
+C : Informations personnage\nH : Aide\nB : Inventaire"
+              )
+    );
     help->show();
 
     self->add_gui(inventory);

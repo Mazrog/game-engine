@@ -55,6 +55,8 @@ void GUI::toggle() {
     visible ? hide() : show();
 }
 
+void GUI::build_guiData() {}
+
 void GUI::render() {
     for(auto const& gui : children) {
         gui->render();

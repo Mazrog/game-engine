@@ -38,6 +38,7 @@ void SGV::render(){
         glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA); get_error("blend func");
         /* Rendering GUIs */
         for(auto & gui : guis) {
+            gui->build_guiData();
             gui->render();
         }
         glDisable(GL_BLEND);

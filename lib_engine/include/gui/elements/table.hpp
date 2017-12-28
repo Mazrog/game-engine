@@ -5,8 +5,8 @@
 #ifndef ENGINE_TABLE_HPP
 #define ENGINE_TABLE_HPP
 
-#include "guiRender.hpp"
-#include "textRender.hpp"
+#include "gui/guiRender.hpp"
+#include "gui/textRender.hpp"
 
 using Grid = std::vector<std::vector<GUI *>>;
 
@@ -20,6 +20,7 @@ public:
     ~Table();
 
     void add_row();
+    void col_config(unsigned col_number, float size);
     void add_cell(unsigned row_number, GUI * element);
 
     void spread_visibility();
@@ -32,8 +33,10 @@ private:
     TextRender  textRender;
 
     /* -- */
-    unsigned    max_col;
     Grid        grid;
+    unsigned    max_col;
+
+    std::vector<float>  col_sizes;
 };
 
 

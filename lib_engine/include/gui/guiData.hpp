@@ -32,6 +32,7 @@ public:
     void add_element(const char * tag, std::wstring const& text, unsigned font_size = 24, glm::vec3 const& font_color = glm::vec3(1.f));
 
     Dimension   dimension;
+    Dimension   contentDimension;
     Point       anchor;
 
 public:

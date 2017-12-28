@@ -130,7 +130,6 @@ Terrain<Render>::Terrain(const char * pathheightmap,
 
 template < class Render >
 Terrain<Render>::~Terrain() {
-    std::cout << "delete terrain" << std::endl;
     delete [] heights;
     renderer.clean();
 }

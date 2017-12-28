@@ -6,7 +6,7 @@
 #include <base.hpp>
 
 #include "display.hpp"
-#include "guiRender.hpp"
+#include "gui/guiRender.hpp"
 
 ShaderProgram GuiRender::prog;
 

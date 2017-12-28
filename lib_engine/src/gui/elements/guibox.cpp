@@ -2,7 +2,7 @@
 // Created by mazrog on 21/12/17.
 //
 
-#include "guibox.hpp"
+#include "gui/elements/guibox.hpp"
 
 Guibox::Guibox(std::string const &tag, std::string const& title, const char * texturePath,
                glm::vec2 const& position, glm::vec2 const& dimension, GLenum format) :

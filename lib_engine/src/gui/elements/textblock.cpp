@@ -2,12 +2,12 @@
 // Created by mazrog on 26/12/17.
 //
 
-#include "textblock.hpp"
+#include "gui/elements/textblock.hpp"
 
 TextBlock::TextBlock(std::string const &tag, std::string const& text, glm::vec2 position, glm::vec2 dimension) :
         TextBlock(tag, str_to_wstr(text), position, dimension) {}
 
-TextBlock::TextBlock(std::string const &tag, std::wstring const &text, glm::vec2 position, glm::vec2 dimension) : GUI("", nullptr) {
+TextBlock::TextBlock(std::string const &tag, std::wstring const &text, glm::vec2 position, glm::vec2 dimension) : GUI(tag, nullptr) {
     guiData.add_element("content", text, 20);
 
     dynamicData.scale = glm::vec3(dimension / 2.f, 0);

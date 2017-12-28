@@ -5,10 +5,10 @@
 #ifndef ENGINE_GUIBOX_HPP
 #define ENGINE_GUIBOX_HPP
 
-#include <gui/gui.hpp>
-#include <gui/text.hpp>
-#include "guiRender.hpp"
-#include "textRender.hpp"
+//#include "gui/gui.hpp"
+//#include "gui/text.hpp"
+#include "gui/guiRender.hpp"
+#include "gui/textRender.hpp"
 
 class Guibox : public GUI {
 public:

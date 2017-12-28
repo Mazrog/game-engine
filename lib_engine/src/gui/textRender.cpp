@@ -3,13 +3,13 @@
 //
 
 #include <engine.hpp>
-#include "textRender.hpp"
+#include "gui/textRender.hpp"
 
 //
 // Created by mazrog on 21/12/17.
 //
 
-#include "textRender.hpp"
+#include "gui/textRender.hpp"
 
 ShaderProgram TextRender::prog;
 
@@ -48,13 +48,16 @@ void TextRender::operator()(DynamicData const& dd, GuiData & gd) {
     if ( it != end ) {
         dim = text.preview_text(0, it->second->font_size, it->second->text);
 
-        position.x = position.x + dimension.x / 2.f - dim.x / 2.f;
-        position.y = position.y - ((it->second->font_size + 3) * sy);
+        position.y -= ((it->second->font_size + 3) * sy);
+        if ( dim.x > 0 ) {
+            position.x = position.x + dimension.x / 2.f - dim.x / 2.f;
 
-        font_color.send(it->second->font_color);
-        text.write(0, it->second->font_size, position, it->second->text);
+            font_color.send(it->second->font_color);
+            text.write(0, it->second->font_size, position, it->second->text);
+        }
     }
 
+    position.x = gd.anchor.x;
     position.y -= dim.y;
 
     it = gd.guiContent.find("content");
@@ -64,5 +67,5 @@ void TextRender::operator()(DynamicData const& dd, GuiData & gd) {
         font_color.send(it->second->font_color);
         text.write(0, it->second->font_size, position, it->second->text);
     }
-    gd.dimension = dim;
+    gd.contentDimension = dim;
 }

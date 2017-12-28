@@ -25,6 +25,7 @@ void GuiManager::add(GUI *gui) {
 }
 
 void GuiManager::spread_events() {
+    /* TODO: Déporter gestion events user side */
     Keyboard keyboard = Keyboard::keyboard;
 
     int key_press = keyboard.action == GLFW_PRESS || keyboard.action == GLFW_REPEAT;
@@ -39,9 +40,9 @@ void GuiManager::spread_events() {
 
     if( keyboard.key == GLFW_KEY_C && keyboard.action == GLFW_PRESS ) {
         if ( keyboard.mods == GLFW_MOD_SHIFT ) {
-            guis.at("charInfo")->hide();
+            guis.at("characterPanel")->hide();
         } else {
-            guis.at("charInfo")->show();
+            guis.at("characterPanel")->show();
         }
     }
 

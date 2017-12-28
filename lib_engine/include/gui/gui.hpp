@@ -24,12 +24,13 @@ public:
     virtual void show();
     virtual void hide();
     virtual void toggle();
+    virtual void build_guiData();
 
     virtual void render();
 
-    void add(GUI * child);
-
     virtual void spread_visibility();
+
+    void add(GUI * child);
 
     /* DEBUG FUNCTIONS */
     void debug() const;
@@ -38,6 +39,7 @@ public:
     Model * get_model() { return model; }
     Point const& get_anchor() const { return guiData.anchor; }
     Dimension const& get_dimension() const { return guiData.dimension; }
+    Dimension const& get_content_dimension() const { return guiData.contentDimension; }
 
     bool isVisible() const { return visible; }
     TextureFormat const& get_textureFormat() const { return textureFormat; }
@@ -46,6 +48,7 @@ public:
     void set_anchor(Point const& point) { guiData.anchor = point; }
     void set_visibility(bool visibility) { visible = visibility; }
     void set_dimension(Dimension const& dim) { guiData.dimension = dim; }
+    void set_content_dimension(Dimension const& dim) { guiData.contentDimension = dim; }
 
 public:
     std::string         tag;

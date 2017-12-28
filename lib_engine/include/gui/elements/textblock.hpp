@@ -5,9 +5,8 @@
 #ifndef ENGINE_TEXTBLOCK_HPP
 #define ENGINE_TEXTBLOCK_HPP
 
-#include "guiRender.hpp"
-#include "textRender.hpp"
-#include <gui/gui.hpp>
+#include "gui/guiRender.hpp"
+#include "gui/textRender.hpp"
 
 class TextBlock : public GUI {
 public:

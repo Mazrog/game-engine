@@ -157,8 +157,6 @@ namespace Loader {
                 matlib[mat_name] = mat;
             }
         }
-
-        std::cout << "END PARSING MAT" << std::endl;
     }
 
     void load_obj_element(const char * obj_file, Model & model) {
