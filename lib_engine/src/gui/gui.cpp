@@ -8,10 +8,8 @@
 
 /* ------------------------------------------------- */
 GUI::GUI(std::string const& tag, const char * texturePath, GLenum internalFormat, GLenum format) :
-        tag(tag), visible(false), model(new Model()),
-        textureFormat(texturePath, internalFormat, format) {
-    guiData.add_element("title", str_to_wstr(tag));
-}
+        tag(tag), visible(false), vert_flow(0), model(new Model()),
+        textureFormat(texturePath, internalFormat, format) {}
 
 GUI::~GUI() {
     delete model;
@@ -26,8 +24,28 @@ void GUI::debug() const {
 }
 
 void GUI::add(GUI *child) {
-    child->set_anchor(guiData.anchor);
+    Point anchor = guiData.anchor;
+    anchor.y -= vert_flow;
+    child->set_anchor(anchor);
+    child->update_dynamicData();
     children.push_back(child);
+
+    vert_flow += child->get_dimension().y;
+}
+
+void GUI::add(std::string const &, std::wstring const &, unsigned int , const glm::vec3 &) {}
+
+void GUI::update_dynamicData() {
+    update_dynamicData(get_anchor(), get_dimension());
+}
+
+void GUI::update_dynamicData(glm::vec2 const &position, glm::vec2 const &dimension) {
+    /* Dimension to scale */
+    dynamicData.scale = glm::vec3(dimension / 2.f, 0);
+    /* Setting the translate to the upper left corner */
+    dynamicData.position = glm::vec3(position, 0.f) - glm::vec3(-1.f, 1.f, 0.f) * dynamicData.scale;
+
+    dynamicData.update();
 }
 
 void GUI::spread_visibility() {

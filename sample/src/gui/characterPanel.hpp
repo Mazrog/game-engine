@@ -8,7 +8,7 @@
 
 #include <scenegraph/sg_logic.hpp>
 #include <gui/elements/guibox.hpp>
-
+#include <gui/elements/textblock.hpp>
 
 class CharacterPanel : public Guibox {
 public:
@@ -16,9 +16,10 @@ public:
     ~CharacterPanel();
 
     void build_guiData() override;
+    void render() override;
 
 private:
-    SGL_Node       * character;
+    SGL_Node                    * character;
 };
 
 

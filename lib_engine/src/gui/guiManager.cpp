@@ -11,9 +11,7 @@
 GuiManager::GuiManager() {}
 
 GuiManager::~GuiManager() {
-    for(auto & pair : guis) {
-        delete pair.second;
-    }
+    clear();
 }
 
 void GuiManager::add(GUI *gui) {
@@ -24,11 +22,18 @@ void GuiManager::add(GUI *gui) {
     }
 }
 
+void GuiManager::clear() {
+    for(auto & pair : guis) {
+        delete pair.second;
+    }
+    guis.clear();
+}
+
 void GuiManager::spread_events() {
     /* TODO: Déporter gestion events user side */
     Keyboard keyboard = Keyboard::keyboard;
 
-    int key_press = keyboard.action == GLFW_PRESS || keyboard.action == GLFW_REPEAT;
+//    int key_press = keyboard.action == GLFW_PRESS || keyboard.action == GLFW_REPEAT;
 
     if( keyboard.key == GLFW_KEY_B && keyboard.action == GLFW_PRESS ) {
         if ( keyboard.mods == GLFW_MOD_SHIFT ) {

@@ -2,11 +2,14 @@
 // Created by mazrog on 19/11/17.
 //
 
+#include <GL/glew.h>
+#include <jsoncpp/json/json.h>
 #include <iostream>
 #include <fstream>
 #include <sstream>
-#include <GL/glew.h>
 #include <algorithm>
+#include <codecvt>
+#include <locale>
 
 #include "utils.hpp"
 
@@ -20,6 +23,17 @@ void get_error(const char * t){
 
 void glfw_error_callback(int error, const char * message) {
     std::cerr << "GLFW Error ( " << error << " ) : " <<  message << std::endl;
+}
+
+std::string read_json(const char * pathFile) {
+    std::ifstream file(pathFile, std::ios::binary);
+    Json::Value root;
+
+    if (file) {
+        file >> root;
+
+        return root["plop"]["name"].asString();
+    }
 }
 
 namespace Loader {

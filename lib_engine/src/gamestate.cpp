@@ -61,6 +61,7 @@ void GameState::save_state() {
 void GameState::clear() {
     sgl->clear();
     models.clear();
+    guiManager->clear();
 }
 
 void GameState::bind(SG_NODE_TYPE type, const char * name, SGL_Node *node) {

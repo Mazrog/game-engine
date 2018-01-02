@@ -14,6 +14,7 @@ SGV::SGV(SGL * const& sgl, GuiManager * guiManager) :
 void SGV::clear() {
     nodes.clear();
     cameras->clear();
+    guis.clear();
     current_camera = 0;
 }
 
@@ -31,7 +32,9 @@ void SGV::render(){
         for (auto &node : nodes) {
             node->render();
         }
+    }
 
+    if ( !guis.empty() ) {
         glDisable(GL_DEPTH_TEST); get_error("disable depth test");
         glDisable(GL_CULL_FACE);  get_error("disable cull face");
         glEnable(GL_BLEND); get_error("enable blend");

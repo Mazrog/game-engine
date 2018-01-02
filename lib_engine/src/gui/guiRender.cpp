@@ -36,8 +36,6 @@ void GuiRender::setData(GUI * gui) {
         texture.loadImageToVram(tf.texturePath, tf.internal_format, tf.format);
         texture.send(0);
     }
-
-    model->clear();
 }
 
 void GuiRender::operator()(DynamicData const& dd) {

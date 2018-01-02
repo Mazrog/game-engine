@@ -23,19 +23,14 @@ Table::Table(std::string const &tag, std::string const& title, unsigned rows, un
     model->uvs.emplace_back(0, 1);
     model->uvs.emplace_back(0, 0);
 
-    /* Dimension to scale */
-    dynamicData.scale = glm::vec3(dimension / 2.f, 0);
-    /* Setting the translate to the upper left corner */
-    dynamicData.position = glm::vec3(position, 0.f) - glm::vec3(-1.f, 1.f, 0.f) * dynamicData.scale;
-
-    dynamicData.update();
 
     max_col = cols;
     grid.resize(rows);
 
     set_anchor(position);
     set_dimension(dimension);
-    guiData.guiContent.at("title")->text.assign(title.begin(), title.end());
+    update_dynamicData();
+    vert_flow += guiData.add_element("title", str_to_wstr(title)).y;
 
     col_sizes.assign(max_col, guiData.dimension.x / (float) max_col);
 
@@ -81,10 +76,16 @@ void Table::spread_visibility() {
     }
 }
 
+GUI* Table::at(unsigned row, unsigned col) {
+    return grid.at(row).at(col);
+}
+
 void Table::render() {
     if( isVisible() ) {
         /* Rendering table */
-        guiRender(dynamicData);
+        if ( hasTexture() ) {
+            guiRender(dynamicData);
+        }
         textRender(dynamicData, guiData);
 
         Point point = guiData.anchor;

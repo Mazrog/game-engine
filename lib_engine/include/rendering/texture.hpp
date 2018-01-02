@@ -27,6 +27,10 @@ public:
 
     int loadImageToVram(const char * image,
                          GLenum internal_format = GL_RGB, GLenum format = GL_RGB);
+
+    int loadCubeMapToVram(const char * folderPath,
+                        GLenum internal_format = GL_RGB, GLenum format = GL_RGB);
+
     void loadUniform(GLuint progID, const char * var_name);
 
     void bind() const;

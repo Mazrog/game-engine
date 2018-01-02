@@ -27,6 +27,8 @@ public:
 
     void render() override;
 
+    GUI * at(unsigned row, unsigned col);
+
 private:
     /* Rendering stuff */
     GuiRender   guiRender;

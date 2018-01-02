@@ -16,7 +16,9 @@ void TerrainRenderer::init() {
     }
 }
 
-TerrainRenderer::TerrainRenderer() : vao(), transform(), texture() {}
+TerrainRenderer::TerrainRenderer() : vao(), transform(), texture() {
+    TerrainRenderer::init();
+}
 
 TerrainRenderer::~TerrainRenderer() {}
 

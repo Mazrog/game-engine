@@ -15,6 +15,8 @@ void get_error(const char * t = "");
 
 void glfw_error_callback(int error, const char * message);
 
+std::string read_json(const char * pathFile);
+
 namespace Loader {
 
     struct Vertex {

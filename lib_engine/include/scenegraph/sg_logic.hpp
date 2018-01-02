@@ -18,8 +18,8 @@ class SGL;
 
 class SGL_Node {
 public:
-    SGL_Node(int dr_order = 0);
-    SGL_Node(const char * model, int dr_order = 0);
+    SGL_Node(int dr_order = 1);
+    SGL_Node(const char * model, int dr_order = 1);
     virtual ~SGL_Node();
 
     virtual void render() = 0;

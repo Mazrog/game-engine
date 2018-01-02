@@ -29,7 +29,9 @@ void Text::init(GLuint progId) {
 
         texLoc = glGetUniformLocation(progId, "glyph_texture");
 
-        load_font("sample/fonts/hackFont.ttf");
+        if ( Text::fonts.empty() ) {
+            load_font("sample/fonts/hackFont.ttf");
+        }
     }
 }
 
@@ -69,6 +71,8 @@ void Text::write(unsigned fontIndex, unsigned fontSize, glm::vec2 const& positio
     glBindBuffer(GL_ARRAY_BUFFER, vbo);
 
     FT_Face face = Text::fonts.at(fontIndex);
+
+    FT_Select_Charmap(face, FT_ENCODING_UNICODE);
 
     FT_Set_Pixel_Sizes(face, 0, fontSize);
 
@@ -120,7 +124,7 @@ void Text::write(unsigned fontIndex, unsigned fontSize, glm::vec2 const& positio
     glPixelStorei(GL_UNPACK_ALIGNMENT, 4);
 }
 
-Dimension Text::preview_text(unsigned fontIndex, unsigned fontSize, std::wstring const &text) const {
+Dimension Text::preview_text(unsigned fontIndex, unsigned fontSize, std::wstring const &text) {
     if( fontIndex >= Text::fonts.size() ) {
         throw std::runtime_error("Font index out of range");
     }

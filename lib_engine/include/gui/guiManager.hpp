@@ -18,6 +18,8 @@ public:
 
     void spread_events();
 
+    void clear();
+
     /* Getters */
     MapGUI const& get_guis() const { return guis; }
 

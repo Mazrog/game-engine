@@ -1,0 +1,19 @@
+{
+	"races": [
+		{
+			"id": 0,
+			"name": "Humains",
+			"details": "Les humains : peuple lambda et souvent inintéressant mais qui fait souvent de bons méchants car avide de pouvoir et d'argent."
+		},
+		{
+			"id": 1,
+			"name": "Nains",
+			"details": ""
+		},
+		{
+			"id": 2,
+			"name": "Elfes",
+			"details": ""
+		}
+	]
+}

@@ -3,11 +3,9 @@
 //
 
 #include <iostream>
-#include <IL/il.h>
 
 #include "display.hpp"
 #include "renderEntity.hpp"
-#include "rendering/program.hpp"
 
 ShaderProgram RenderEntity::prog;
 
@@ -29,7 +27,6 @@ void RenderEntity::setData(SGL_Node * node) {
 
     if(!model->links.empty()) {
         vao.linkElementDataAttribute(sizeof(GLuint) * model->links.size(), model->links.data());
-        renderConfig.is_element = true;
     }
 
     vao.linkDataAttribute(0, 3, sizeof(glm::vec3) * model->vertices.size(), model->vertices.data());
@@ -47,8 +44,6 @@ void RenderEntity::setData(SGL_Node * node) {
     renderConfig.count = count ? count : model->vertices.size();
 
     mtlLib = std::move(model->mtlLib);
-
-    model->clear();
 }
 
 void RenderEntity::operator()(DynamicData const& dd) {
@@ -56,20 +51,11 @@ void RenderEntity::operator()(DynamicData const& dd) {
     vao.bind();
     transform.send(dd.transform);
 
-    if(renderConfig.is_element) {
-        for( auto const& pair : mtlLib ) {
-            for( auto const& vert_info : pair.second->vert_infos ) {
-                glDrawElements(renderConfig.primitive, vert_info.first, GL_UNSIGNED_INT, (void *) 0);
-                get_error("render entity");
-            }
-        }
-    } else {
-        for( auto const& pair : mtlLib ) {
-            texture.send(pair.second->map_indexes[1], 0);
-            for( auto const& vert_info : pair.second->vert_infos ) {
-                glDrawArrays(renderConfig.primitive, vert_info.first, vert_info.second);
-                get_error("render entity");
-            }
+    for( auto const& pair : mtlLib ) {
+        texture.send(pair.second->map_indexes[1], 0);
+        for( auto const& vert_info : pair.second->vert_infos ) {
+            glDrawArrays(renderConfig.primitive, vert_info.first, vert_info.second);
+            get_error("render entity");
         }
     }
 }

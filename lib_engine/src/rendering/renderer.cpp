@@ -6,5 +6,4 @@
 
 Renderer::RenderConfig::RenderConfig() :
         primitive(GL_TRIANGLES),
-        count(0),
-        is_element(false) {}
+        count(0) {}

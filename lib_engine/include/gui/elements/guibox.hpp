@@ -5,8 +5,6 @@
 #ifndef ENGINE_GUIBOX_HPP
 #define ENGINE_GUIBOX_HPP
 
-//#include "gui/gui.hpp"
-//#include "gui/text.hpp"
 #include "gui/guiRender.hpp"
 #include "gui/textRender.hpp"
 

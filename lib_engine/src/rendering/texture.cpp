@@ -46,7 +46,7 @@ int Texture::loadImageToVram(const char *image, GLenum internal_format, GLenum f
     genTexture();
     bind();
 
-    glTexImage2D(GL_TEXTURE_2D, 0, internal_format,
+    glTexImage2D(type, 0, internal_format,
                  ilGetInteger(IL_IMAGE_WIDTH),
                  ilGetInteger(IL_IMAGE_HEIGHT), 0,
                  format, GL_UNSIGNED_BYTE, surf);
@@ -54,8 +54,47 @@ int Texture::loadImageToVram(const char *image, GLenum internal_format, GLenum f
 
     ilDeleteImage(src);
 
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR); get_error("mipmap linear");
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR); get_error("texture param MAG");
+    glTexParameteri(type, GL_TEXTURE_MIN_FILTER, GL_LINEAR); get_error("mipmap linear");
+    glTexParameteri(type, GL_TEXTURE_MAG_FILTER, GL_LINEAR); get_error("texture param MAG");
+
+    return ids.size()-1;
+}
+
+int Texture::loadCubeMapToVram(const char *folderPath, GLenum internal_format, GLenum format) {
+    genTexture();
+    bind();
+
+    const char * file_names[6] = { "right.png", "left.png",
+                                   "top.png", "bottom.png",
+                                   "back.png", "front.png" };
+
+    ilInit();
+    ILuint src = ilGenImage();
+    ilBindImage(src);
+
+    char image_name[500];
+
+    for(unsigned i = 0; i < 6; ++i) {
+        snprintf(image_name, sizeof(image_name), "%s/%s", folderPath, file_names[i]);
+
+        ilLoadImage(image_name);
+        ILubyte *surf = ilGetData();
+
+        glTexImage2D(GL_TEXTURE_CUBE_MAP_POSITIVE_X + i, 0, internal_format,
+                     ilGetInteger(IL_IMAGE_WIDTH),
+                     ilGetInteger(IL_IMAGE_HEIGHT), 0,
+                     format, GL_UNSIGNED_BYTE, surf);
+        get_error("tex image 2D");
+    }
+
+    ilDeleteImage(src);
+
+    glTexParameteri(type, GL_TEXTURE_MIN_FILTER, GL_LINEAR); get_error("mipmap linear");
+    glTexParameteri(type, GL_TEXTURE_MAG_FILTER, GL_LINEAR); get_error("texture param MAG");
+
+    glTexParameteri(type, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
+    glTexParameteri(type, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+    glTexParameteri(type, GL_TEXTURE_WRAP_R, GL_CLAMP_TO_EDGE);
 
     return ids.size()-1;
 }

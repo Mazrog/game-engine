@@ -32,7 +32,7 @@ public:
     void write(unsigned fontIndex, unsigned fontSize, glm::vec2 const& position,
                std::wstring const& text, glm::vec2 const& limits = glm::vec2(1.f, -1.f));
 
-    Dimension preview_text(unsigned fontIndex, unsigned fontSize, std::wstring const& text) const;
+    static Dimension preview_text(unsigned fontIndex, unsigned fontSize, std::wstring const& text);
 
     void bindFont();
 

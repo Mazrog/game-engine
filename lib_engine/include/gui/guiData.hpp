@@ -19,7 +19,7 @@ struct TextElement {
     glm::vec3       font_color;
     unsigned        font_size;
 
-    TextElement(std::wstring const& text, glm::vec3 const& font_color = glm::vec3(1.f), unsigned font_size = 24);
+    TextElement(std::wstring const& text, unsigned font_size, glm::vec3 const& font_color);
 };
 
 using GuiContent = std::map<std::string, TextElement *>;
@@ -29,7 +29,7 @@ public:
     GuiData();
     ~GuiData();
 
-    void add_element(const char * tag, std::wstring const& text, unsigned font_size = 24, glm::vec3 const& font_color = glm::vec3(1.f));
+    Dimension add_element(const char * tag, std::wstring const& text, unsigned font_size = 24, glm::vec3 const& font_color = glm::vec3(1.f));
 
     Dimension   dimension;
     Dimension   contentDimension;
@@ -41,6 +41,8 @@ public:
 };
 
 std::wstring str_to_wstr(std::string const& text);
+
+std::string wstr_to_str(std::wstring const& text);
 
 void str_to_wstrIP(std::string const& text, std::wstring & wstring);
 

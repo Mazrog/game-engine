@@ -31,6 +31,10 @@ public:
     virtual void spread_visibility();
 
     void add(GUI * child);
+    void update_dynamicData();
+    void update_dynamicData(glm::vec2 const& position, glm::vec2 const& dimension);
+
+    void add(std::string const& tag, std::wstring const& text, unsigned font_size = 24, glm::vec3 const& font_color = glm::vec3(1.f));
 
     /* DEBUG FUNCTIONS */
     void debug() const;
@@ -42,6 +46,7 @@ public:
     Dimension const& get_content_dimension() const { return guiData.contentDimension; }
 
     bool isVisible() const { return visible; }
+    bool hasTexture() const { return textureFormat.texturePath != nullptr; }
     TextureFormat const& get_textureFormat() const { return textureFormat; }
 
     /* Setters */
@@ -56,6 +61,7 @@ public:
 
 protected:
     bool              visible;
+    float             vert_flow;
 
     Model           * model;
     DynamicData       dynamicData;

@@ -2,16 +2,16 @@
 // Created by mazrog on 21/11/17.
 //
 
-#ifndef ENGINE_PROCEDURAL_HPP
-#define ENGINE_PROCEDURAL_HPP
+#ifndef ENGINE_TERRAINRENDER_HPP
+#define ENGINE_TERRAINRENDER_HPP
 
 #include <GL/glew.h>
 
-#include "scenegraph/sg_logic.hpp"
-#include "rendering/renderer.hpp"
-#include "rendering/structs/uniform.hpp"
-#include "rendering/structs/vao.hpp"
-#include "rendering/texture.hpp"
+#include <scenegraph/sg_logic.hpp>
+#include <rendering/renderer.hpp>
+#include <rendering/structs/uniform.hpp>
+#include <rendering/structs/vao.hpp>
+#include <rendering/texture.hpp>
 
 class TerrainRenderer : public Renderer {
 public:

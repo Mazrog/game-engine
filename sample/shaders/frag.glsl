@@ -4,7 +4,7 @@
 in vec2 pass_uvs;
 in vec3 surface_normal;
 in vec3 to_light_vector;
-
+in float blend_fog;
 
 uniform sampler2D texture_entity;
 uniform vec3 sun_color;
@@ -20,5 +20,7 @@ void main() {
     /* Ajout d'une lumière ambiante (.2f et non 0) */
     brightness = max(brightness, .2f);
 
-    color = texture(texture_entity, pass_uvs);// * (brightness * vec4(sun_color, 1.0));
+    color = texture(texture_entity, pass_uvs) * (brightness * vec4(sun_color, 1.0));
+
+    color = mix(color, vec4(.7f, .7f, .7f, 1.f), blend_fog);
 }

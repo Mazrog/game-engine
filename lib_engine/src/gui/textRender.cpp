@@ -25,7 +25,7 @@ TextRender::TextRender() :
     TextRender::init();
 }
 
-void TextRender::setData(GUI * gui) {
+void TextRender::setData(GUI *) {
     transform.loadUniform(TextRender::prog.getProgId(), "transform");
     font_color.loadUniform(TextRender::prog.getProgId(), "font_color");
 }
@@ -42,23 +42,27 @@ void TextRender::operator()(DynamicData const& dd, GuiData & gd) {
 
     Dimension dim = {0, 0};
     Point position = gd.anchor;
+    float tmp;
 
     /* Rendering the title of the window, if any */
     auto it = gd.guiContent.find("title");
     if ( it != end ) {
         dim = text.preview_text(0, it->second->font_size, it->second->text);
 
-        position.y -= ((it->second->font_size + 3) * sy);
+        tmp = ((it->second->font_size + 3) * sy);
+
+        position.y -= tmp;
         if ( dim.x > 0 ) {
-            position.x = position.x + dimension.x / 2.f - dim.x / 2.f;
+            position.x = position.x + ( dimension.x - dim.x ) / 2.f;
 
             font_color.send(it->second->font_color);
             text.write(0, it->second->font_size, position, it->second->text);
+            position.y -= tmp;
         }
     }
 
-    position.x = gd.anchor.x;
     position.y -= dim.y;
+    position.x = gd.anchor.x;
 
     it = gd.guiContent.find("content");
     if ( it != end ) {

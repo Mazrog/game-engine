@@ -74,6 +74,7 @@ target_link_libraries( ${project_name}
         ${GLEW_LIBRARIES}
         IL
         freetype
+        jsoncpp
 )
 # ####################################################
 #                       GEOMETRY
@@ -96,10 +97,15 @@ target_include_directories( geom
 # Exec config
 set(EXEC_SRC_FILES
         sample/main.cpp
+        sample/src/terrain.cpp
+        sample/src/character.cpp
+        sample/src/skybox.cpp
+
         sample/src/gui/characterPanel.cpp
 
         sample/rendering/renderEntity.cpp
         sample/rendering/terrainRender.cpp
+        sample/rendering/skyboxRender.cpp
 )
 
 add_executable(

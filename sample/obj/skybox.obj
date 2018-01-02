@@ -1,0 +1,53 @@
+# Skybox
+# Made by hand
+
+v 1.0 -1.0 1.0
+v 1.0 -1.0 -1.0
+v 1.0 1.0 1.0
+v 1.0 1.0 -1.0
+v -1.0 1.0 -1.0
+v -1.0 1.0 1.0
+v -1.0 -1.0 -1.0
+v -1.0 -1.0 1.0
+
+model->vertices.emplace_back(-1.0f,  1.0f, -1.0f);
+model->vertices.emplace_back(-1.0f, -1.0f, -1.0f);
+model->vertices.emplace_back(1.0f, -1.0f, -1.0f);
+model->vertices.emplace_back(1.0f, -1.0f, -1.0f);
+model->vertices.emplace_back(1.0f,  1.0f, -1.0f);
+model->vertices.emplace_back(-1.0f,  1.0f, -1.0f);
+
+model->vertices.emplace_back(-1.0f, -1.0f,  1.0f);
+model->vertices.emplace_back(-1.0f, -1.0f, -1.0f);
+model->vertices.emplace_back(-1.0f,  1.0f, -1.0f);
+model->vertices.emplace_back(-1.0f,  1.0f, -1.0f);
+model->vertices.emplace_back(-1.0f,  1.0f,  1.0f);
+model->vertices.emplace_back(-1.0f, -1.0f,  1.0f);
+
+model->vertices.emplace_back(1.0f, -1.0f, -1.0f);
+model->vertices.emplace_back(1.0f, -1.0f,  1.0f);
+model->vertices.emplace_back(1.0f,  1.0f,  1.0f);
+model->vertices.emplace_back(1.0f,  1.0f,  1.0f);
+model->vertices.emplace_back(1.0f,  1.0f, -1.0f);
+model->vertices.emplace_back(1.0f, -1.0f, -1.0f);
+
+model->vertices.emplace_back(-1.0f, -1.0f,  1.0f);
+model->vertices.emplace_back(-1.0f,  1.0f,  1.0f);
+model->vertices.emplace_back(1.0f,  1.0f,  1.0f);
+model->vertices.emplace_back(1.0f,  1.0f,  1.0f);
+model->vertices.emplace_back(1.0f, -1.0f,  1.0f);
+model->vertices.emplace_back(-1.0f, -1.0f,  1.0f);
+
+model->vertices.emplace_back(-1.0f,  1.0f, -1.0f);
+model->vertices.emplace_back(1.0f,  1.0f, -1.0f);
+model->vertices.emplace_back(1.0f,  1.0f,  1.0f);
+model->vertices.emplace_back(1.0f,  1.0f,  1.0f);
+model->vertices.emplace_back(-1.0f,  1.0f,  1.0f);
+model->vertices.emplace_back(-1.0f,  1.0f, -1.0f);
+
+model->vertices.emplace_back(-1.0f, -1.0f, -1.0f);
+model->vertices.emplace_back(-1.0f, -1.0f,  1.0f);
+model->vertices.emplace_back(1.0f, -1.0f, -1.0f);
+model->vertices.emplace_back(1.0f, -1.0f, -1.0f);
+model->vertices.emplace_back(-1.0f, -1.0f,  1.0f);
+model->vertices.emplace_back(1.0f, -1.0f,  1.0f);
