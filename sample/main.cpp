@@ -119,13 +119,15 @@ void main_game_init(GameState * self) {
     auto * help = new Guibox("help", "Aide", "sample/img/gui/box.png",
                                glm::vec2(-.5f, 1.f),
                                glm::vec2(1.f, .37f), GL_RGBA);
-    help->add(new TextBlock("",
-                            L"W, A, S, D pour déplacer le joueur\n\nPour fermer une fenêtre, SHIFT + [Touche correspondante]\n\
-C : Informations personnage\nH : Aide\nB : Inventaire"
-              )
-    );
+//    help->add(new TextBlock("",
+//                            L"W, A, S, D pour déplacer le joueur\n\nPour fermer une fenêtre, SHIFT + [Touche correspondante]\n\
+//C : Informations personnage\nH : Aide\nB : Inventaire"
+//              )
+//    );
 
-//    help->add(new TextBlock("", read_json("sample/assets/t.json")));
+    auto data = Loader::parse_json_data("sample/assets/t.json")["name"];
+
+    help->add(new TextBlock("", data.at(0)));
 
 //    help->show();
 //    char_panel->show();
@@ -157,7 +159,7 @@ int main() {
     Engine::add_states(game, pause, main_menu);
     Engine::start();
 
-//    read_json("sample/assets/t.json");
+//    Loader::parse_json_data("sample/assets/t.json");
 
     return 0;
 }

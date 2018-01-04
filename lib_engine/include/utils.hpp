@@ -6,6 +6,12 @@
 #define ENGINE_UTILS_HPP
 
 #include <iostream>
+#include <vector>
+#include <map>
+#include <string>
+#include <locale>
+#include <codecvt>
+#include <jsoncpp/json/json.h>
 
 #include "vector_utils.hpp"
 #include "scenegraph/scenegraph.hpp"
@@ -15,10 +21,17 @@ void get_error(const char * t = "");
 
 void glfw_error_callback(int error, const char * message);
 
-std::string read_json(const char * pathFile);
-
 namespace Loader {
+    using wstring_converter = std::wstring_convert<std::codecvt_utf8<wchar_t >>;
+    using JsonData = std::map<std::string, std::vector<std::wstring>>;
 
+    std::wstring s_to_ws(wstring_converter & converter, std::string const& string);
+
+    Json::Value read_json(const char * pathFile);
+
+    JsonData parse_json_data(const char * pathFile);
+
+    /* ------------------------------ OBJ LOADING ------------------------------ */
     struct Vertex {
         int vertex_index;
         int texture_index;

@@ -3,7 +3,6 @@
 //
 
 #include <GL/glew.h>
-#include <jsoncpp/json/json.h>
 #include <iostream>
 #include <fstream>
 #include <sstream>
@@ -25,15 +24,42 @@ void glfw_error_callback(int error, const char * message) {
     std::cerr << "GLFW Error ( " << error << " ) : " <<  message << std::endl;
 }
 
-std::string read_json(const char * pathFile) {
-    std::ifstream file(pathFile, std::ios::binary);
-    Json::Value root;
+namespace Loader {
 
-    if (file) {
-        file >> root;
-
-        return root["plop"]["name"].asString();
+    std::wstring s_to_ws(wstring_converter & convert, std::string const& string) {
+        std::wstring ws = convert.from_bytes(string.data());
+        return ws;
     }
+
+    Json::Value read_json(const char *pathFile) {
+        std::ifstream file(pathFile, std::ios::binary);
+        Json::Value root;
+
+        if (file) { file >> root; }
+        file.close();
+
+        return root;
+    }
+
+    JsonData parse_json_data(const char * pathFile) {
+        JsonData data;
+        Json::Value root = read_json(pathFile);
+
+        wstring_converter converter;
+
+        auto keys = root.getMemberNames();
+
+        for(auto const& key : keys) {
+            if(!root[key].isArray()) {
+                std::wstring ws(s_to_ws(converter, root[key].asString()));
+                data[key].push_back(ws);
+            }
+
+        }
+
+        return data;
+    }
+
 }
 
 namespace Loader {
