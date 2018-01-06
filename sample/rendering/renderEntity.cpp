@@ -34,7 +34,7 @@ void RenderEntity::setData(SGL_Node * node) {
     vao.linkDataAttribute(2, 3, sizeof(glm::vec3) * model->normals.size(), model->normals.data());
 
 
-    texture.loadUniform(prog.getProgId(), "texture_entity");
+    texture.loadUniform(prog.getProgId(), "entity_texture");
 
     for( auto const& pair: model->mtlLib ) {
         pair.second->map_indexes[1] = texture.loadImageToVram(pair.second->map_Kd.c_str(), GL_RGBA, GL_BGRA_EXT);

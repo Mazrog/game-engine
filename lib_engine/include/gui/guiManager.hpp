@@ -12,11 +12,11 @@ using MapGUI = std::map<std::string, GUI *>;
 class GuiManager {
 public:
     GuiManager();
-    ~GuiManager();
+    virtual ~GuiManager();
 
     void add(GUI * gui);
 
-    void spread_events();
+    virtual void spread_events() {}
 
     void clear();
 

@@ -24,6 +24,7 @@ set(LIB_SRC
         lib_engine/src/controller.cpp
         lib_engine/src/gamestate.cpp
         lib_engine/src/utils.cpp
+        lib_engine/src/operators.cpp
 
         lib_engine/src/scenegraph/scenegraph.cpp
         lib_engine/src/scenegraph/sg_logic.cpp
@@ -102,6 +103,9 @@ set(EXEC_SRC_FILES
         sample/src/skybox.cpp
 
         sample/src/gui/characterPanel.cpp
+        sample/src/gui/button.cpp
+
+        sample/src/gui/guiManagers/mainGuiManager.cpp
 
         sample/rendering/renderEntity.cpp
         sample/rendering/terrainRender.cpp

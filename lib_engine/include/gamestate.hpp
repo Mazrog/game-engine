@@ -50,15 +50,15 @@ public:
     void add_gui(GUI * gui);
     void gui_events();
 
+    void set_guiManager(GuiManager * new_guiManager);
+
     /* Element getters */
     SGL_Node * get(const char * name);
     Camera   * get_as_camera(const char * name);
 
     /* GETTERS */
     SGL * const& get_sgl() const { return sgl; }
-
     MapModel& get_models() { return models; }
-
     GuiManager * get_guiManager() { return guiManager; }
 
 protected:

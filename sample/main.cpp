@@ -1,31 +1,104 @@
 #include <iostream>
-#include <array>
+#include <vector>
 #include <sstream>
 
 #include <events/mouse.hpp>
 #include <engine.hpp>
 #include <base.hpp>
+#include <gui/elements/table.hpp>
 
 #include "renderEntity.hpp"
 #include "rendering/light.hpp"
-#include "terrainRender.hpp"
 #include "terrain.hpp"
 #include "character.hpp"
 
 #include "gui/elements/guibox.hpp"
 #include "gui/elements/textblock.hpp"
 #include "gui/characterPanel.hpp"
+#include "gui/button.hpp"
+#include "gui/guiManagers/mainGuiManager.hpp"
 #include "skybox.hpp"
 
 
-void main_menu_init(GameState * self) {
-    auto menu = new Guibox("menu", "", "sample/img/gui/create_perso.jpg", glm::vec2(-1.f, 1.f), glm::vec2(2.f));
-    menu->show();
+void main_game_guiEvents(GuiManager * gm, GameState *) {
+    Keyboard keyboard = Keyboard::keyboard;
 
-    self->add_gui(menu);
+    if( keyboard.key == GLFW_KEY_B && keyboard.action == GLFW_PRESS ) {
+        if ( keyboard.mods == GLFW_MOD_SHIFT ) {
+            gm->get_guis().at("inventory")->hide();
+        } else {
+            gm->get_guis().at("inventory")->show();
+        }
+    }
+
+    if( keyboard.key == GLFW_KEY_C && keyboard.action == GLFW_PRESS ) {
+        if ( keyboard.mods == GLFW_MOD_SHIFT ) {
+            gm->get_guis().at("characterPanel")->hide();
+        } else {
+            gm->get_guis().at("characterPanel")->show();
+        }
+    }
+
+    if( keyboard.key == GLFW_KEY_H && keyboard.action == GLFW_PRESS ) {
+        if ( keyboard.mods == GLFW_MOD_SHIFT ) {
+            gm->get_guis().at("help")->hide();
+        } else {
+            gm->get_guis().at("help")->show();
+        }
+    }
 }
 
-int main_menu_loop(GameState *) {
+void main_menu_guiEvents(GuiManager * gm, GameState *) {
+    Keyboard keyboard = Keyboard::keyboard;
+
+    if( keyboard.key == GLFW_KEY_C && keyboard.action == GLFW_PRESS ) {
+        if ( keyboard.mods == GLFW_MOD_SHIFT ) {
+            gm->get_guis().at("aalayer")->hide();
+        } else {
+            gm->get_guis().at("aalayer")->show();
+        }
+    }
+}
+
+void main_menu_init(GameState * self) {
+    /* Models */
+    self->load_model("elf", "sample/obj/character/nightelffemale/nightelffemale.obj");
+
+    /* Character Buffer */
+    auto * character = new Character("elf", nullptr);
+    self->bind(SG_NODE_TYPE::SG_STATIC, "character", character);
+
+
+    /* GUIS */
+    /* Just to have a pattern for the final result */
+    auto * menu = new Guibox("aalayer", L"", "sample/img/gui/create_perso.jpg", glm::vec2(-1.f, 1.f), glm::vec2(2.f));
+    self->set_guiManager(new MainGuiManager(self, main_menu_guiEvents));
+
+    Loader::JsonData data = Loader::parse_json_data("sample/assets/world.json");
+    glm::vec3 fontColor = glm::vec3(1.f);
+
+    auto kappa = std::vector<std::wstring>();
+    kappa.emplace_back(L"Humains");
+    kappa.emplace_back(L"Nains");
+    kappa.emplace_back(L"Elfes");
+
+    auto * content = new Guibox("content", L"");
+
+    for(unsigned i = 0; i < kappa.size(); ++i ) {
+        content->add(new Button("", kappa.at(i), "sample/img/gui/green_cell.png", glm::vec2(-1.f + (i * 392.0_hpx), 1.f),
+                                   glm::vec2(392.0_hpx, 135.0_vpx), 36, fontColor, GL_RGBA), false);
+    }
+
+
+    /* ---------------------- */
+    menu->show();
+    self->add_gui(menu);
+
+    content->show();
+    self->add_gui(content);
+}
+
+int main_menu_loop(GameState * self) {
     Keyboard keyboard = Keyboard::keyboard;
 
     if(keyboard.key == GLFW_KEY_ESCAPE && keyboard.action == GLFW_PRESS) {
@@ -37,6 +110,12 @@ int main_menu_loop(GameState *) {
     if(keyboard.key == GLFW_KEY_ENTER && keyboard.action == GLFW_PRESS) {
         return 0;
     }
+
+    self->gui_events();
+
+    /*  ---------------------  */
+
+
 
     return  -1;
 }
@@ -87,20 +166,19 @@ void main_game_init(GameState * self) {
     auto terrain = new Terrain("sample/img/thin_height_map.png");
     auto player = new Character("elf", terrain);
 
+
     /* SkyBox(es) */
     auto skybox = new Skybox("day_1", "sample/img/skybox/sky_1");
-
     self->bind(SG_NODE_TYPE::SG_STATIC, "skybox", skybox);
 
     /* Misc : Cameras and lights */
     Camera * camera = new Camera(glm::vec3(50, 50, 50), glm::vec3(0, 50, 0));
-    camera->bind_camera(TerrainRenderer::prog.getProgId(),
-                        RenderEntity::prog.getProgId(),
+    camera->bind_camera(RenderEntity::prog.getProgId(),
                         SkyboxRender::prog.getProgId());
-    camera->follow(player);
+//    camera->follow(player);
 
     Light * sun = new Light(glm::vec3(20.f, 100.f, 20.f), glm::vec3(.788f, .886f, 1.f));
-    sun->bind_light(TerrainRenderer::prog.getProgId(), RenderEntity::prog.getProgId());
+    sun->bind_light(RenderEntity::prog.getProgId());
 
 
     /* Binding */
@@ -110,27 +188,29 @@ void main_game_init(GameState * self) {
     self->bind(SG_NODE_TYPE::SG_DYNAMIC, "player", player);
 
     /* Loading GUI */
-    auto * inventory = new Guibox("inventory", "Inventaire",
+    auto * inventory = new Guibox("inventory", L"Inventaire",
                                     "sample/img/gui/box.png", glm::vec2(.2f, .35f),
                                     glm::vec2(.65f, 1.1f), GL_RGBA);
 
     auto * char_panel = new CharacterPanel(player);
 
-    auto * help = new Guibox("help", "Aide", "sample/img/gui/box.png",
+    auto * help = new Guibox("help", L"Aide", "sample/img/gui/box.png",
                                glm::vec2(-.5f, 1.f),
                                glm::vec2(1.f, .37f), GL_RGBA);
-//    help->add(new TextBlock("",
-//                            L"W, A, S, D pour déplacer le joueur\n\nPour fermer une fenêtre, SHIFT + [Touche correspondante]\n\
-//C : Informations personnage\nH : Aide\nB : Inventaire"
-//              )
-//    );
+    /*
+    help->add(new TextBlock("",
+                            L"W, A, S, D pour déplacer le joueur\n\nPour fermer une fenêtre, SHIFT + [Touche correspondante]\n\
+C : Informations personnage\nH : Aide\nB : Inventaire"
+              )
+    );
+     */
 
-    auto data = Loader::parse_json_data("sample/assets/t.json")["name"];
-
-    help->add(new TextBlock("", data.at(0)));
+    help->add(new TextBlock("", L"Héros : Archimage"));
 
 //    help->show();
 //    char_panel->show();
+
+    self->set_guiManager(new MainGuiManager(self, main_game_guiEvents));
 
     self->add_gui(inventory);
     self->add_gui(char_panel);

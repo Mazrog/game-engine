@@ -13,6 +13,9 @@ GUI::GUI(std::string const& tag, const char * texturePath, GLenum internalFormat
 
 GUI::~GUI() {
     delete model;
+    for(auto & child: children) {
+        delete child;
+    }
 }
 
 void GUI::debug() const {
@@ -23,14 +26,16 @@ void GUI::debug() const {
     std::cout << std::endl;
 }
 
-void GUI::add(GUI *child) {
+void GUI::add(GUI *child, bool reposition) {
     Point anchor = guiData.anchor;
     anchor.y -= vert_flow;
+    if ( !reposition ) { anchor.x = child->get_anchor().x; }
+
     child->set_anchor(anchor);
     child->update_dynamicData();
     children.push_back(child);
 
-    vert_flow += child->get_dimension().y;
+    if ( reposition ) { vert_flow += child->get_dimension().y; }
 }
 
 void GUI::add(std::string const &, std::wstring const &, unsigned int , const glm::vec3 &) {}

@@ -138,6 +138,7 @@ Dimension Text::preview_text(unsigned fontIndex, unsigned fontSize, std::wstring
 
     float cur_x = 0, cur_y = 0;
     Dimension dimension;
+    float max_width = 0.f;
 
     for(auto const& c : text) {
         if( FT_Load_Char(face, c, FT_LOAD_RENDER) ) {
@@ -148,17 +149,19 @@ Dimension Text::preview_text(unsigned fontIndex, unsigned fontSize, std::wstring
         if ( c == '\n' ) {
             dimension.x = ( cur_x > dimension.x ) ? cur_x : dimension.x;
             cur_x = 0;
-            cur_y -= (fontSize + 3) * sy;
+            cur_y -= fontSize * sy;
             continue;
         }
 
         FT_GlyphSlot g = face->glyph;
 
+        max_width = std::max(max_width, g->bitmap.rows * sy);
+
         cur_x += (g->advance.x / 64.f) * sx;
         cur_y += (g->advance.y / 64.f) * sy;
     }
     dimension.x = ( cur_x > dimension.x ) ? cur_x : dimension.x;
-    dimension.y = cur_y + (fontSize + 3) * sy;
+    dimension.y = max_width;
 
     return dimension;
 }

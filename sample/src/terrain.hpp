@@ -8,14 +8,14 @@
 #include <IL/il.h>
 
 #include "scenegraph/sg_logic.hpp"
-#include "terrainRender.hpp"
+#include "renderEntity.hpp"
 
 using FloatGrid = std::vector<std::vector<float>>;
 
 class Terrain : public SGL_Node {
 public:
     /* Some values passed as arguments to constructor ? */
-    static constexpr int SIZE         = 1024;
+    static constexpr int SIZE         = 1000;
     static constexpr int MAX_COLOR    = 255 + 255 + 255;
     static constexpr int MAX_HEIGHT   = 40;
 
@@ -33,7 +33,7 @@ public:
     float get_height(float worldX, float worldZ);
 
 private:
-    TerrainRenderer renderer;
+    RenderEntity renderer;
     float           resolution;
 
     FloatGrid heights;

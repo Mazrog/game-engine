@@ -5,6 +5,7 @@
 #ifndef ENGINE_ENGINE_HPP
 #define ENGINE_ENGINE_HPP
 
+#include "operators.hpp"
 #include "display.hpp"
 #include "controller.hpp"
 

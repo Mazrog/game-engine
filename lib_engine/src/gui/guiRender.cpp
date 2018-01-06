@@ -42,7 +42,10 @@ void GuiRender::operator()(DynamicData const& dd) {
     GuiRender::prog.useProgram();
     vao.bind();
     transform.send(dd.transform);
-    if ( texture.isActive() ) { texture.send(0); }
+
+    if ( texture.isActive() ) {
+        texture.send(0);
+    }
 
     glDrawArrays(GL_TRIANGLES, 0, 6); get_error("render gui");
 }

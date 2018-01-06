@@ -113,6 +113,10 @@ void Texture::send(int index, int slot) const {
     texture.send(slot);
 }
 
+void Texture::disable() {
+    glBindTexture(type, 0);    get_error("disable texture");
+}
+
 void Texture::loadUniform(GLuint progID, const char *var_name) {
     texture.loadUniform(progID, var_name);
 }

@@ -7,10 +7,10 @@
 
 
 CharacterPanel::CharacterPanel(SGL_Node * character) :
-        Guibox("characterPanel", "Personnage", "sample/img/black.png",
+        Guibox("characterPanel", L"Personnage", "sample/img/black.png",
                glm::vec2(-1.f, .55f), glm::vec2(.7f, 1.2f)), character(character) {
 
-    auto * equipment = new Guibox("equip", "", "sample/img/height_map.png", glm::vec2(-1.f, 1.f), glm::vec2(.7f, .9f));
+    auto * equipment = new Guibox("equip", L"", "sample/img/height_map.png", glm::vec2(-1.f, 1.f), glm::vec2(.7f, .9f));
     add(equipment);
 
     auto * caracs = new Table("caracs", "Caractéristiques", 5, 4, nullptr, glm::vec2(-1.f, -.2f), glm::vec2(.7f, 1.2f));

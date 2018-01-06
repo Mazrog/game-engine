@@ -30,7 +30,7 @@ public:
 
     virtual void spread_visibility();
 
-    void add(GUI * child);
+    void add(GUI * child, bool reposition = true);
     void update_dynamicData();
     void update_dynamicData(glm::vec2 const& position, glm::vec2 const& dimension);
 

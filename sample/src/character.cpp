@@ -36,7 +36,7 @@ void Character::move() {
         dynamicData.position.z += move_speed;
     }
 
-    dynamicData.position.y = terrain->get_height(dynamicData.position.x, dynamicData.position.z);
+//    dynamicData.position.y = terrain->get_height(dynamicData.position.x, dynamicData.position.z);
 
     dynamicData.update();
 }

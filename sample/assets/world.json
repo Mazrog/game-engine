@@ -16,9 +16,7 @@
 			"details": ""
 		}
 	],
-	"classes": {
-		"humains": [],
-		"nains": [],
-		"elfes": []
-	}
+	"classes_human": [],
+	"classes_dwarf": [],
+	"classes_elf": []
 }

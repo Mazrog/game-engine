@@ -40,71 +40,71 @@ float Terrain::get_height(float worldX, float worldZ) {
 
 Terrain::Terrain(const char * pathheightmap,
                  glm::vec3 const& position) {
-    ilInit();
+//    ilInit();
+//
+//    ILuint src = ilGenImage();
+//    ilBindImage(src);
+//    ilLoadImage(pathheightmap);
+//    ILubyte * heightmap = ilGetData();
+//    ILuint VERT_COUNT = ilGetInteger(IL_IMAGE_WIDTH);
+//
+//    resolution = SIZE / (float) VERT_COUNT;
+//
+//    glm::vec3 tmp;
+//    for(unsigned i = 0; i < VERT_COUNT; ++i) {
+//        heights.emplace_back();
+//        for(unsigned j = 0; j < VERT_COUNT; ++j) {
+//            tmp.x = (float) j / ((float) VERT_COUNT - 1) * SIZE;
+//            tmp.z = (float) i / ((float) VERT_COUNT - 1) * SIZE;
+//            float height = get_height(j, i, heightmap);
+//            tmp.y = height;
+//            heights.at(i).push_back(height);
+//
+//            model->vertices.emplace_back(tmp.x, tmp.y, tmp.z);
+//
+//            tmp = calculate_normal(j, i, heightmap);
+//
+//            model->normals.emplace_back(tmp.x, tmp.y, tmp.z);
+//
+//            tmp.x = (float) j / ((float) VERT_COUNT - 1);
+//            tmp.y = (float) i / ((float) VERT_COUNT - 1);
+//            model->uvs.emplace_back(tmp.x, tmp.y);
+//        }
+//    }
+//
+//    for (unsigned gz = 0; gz < VERT_COUNT - 1; gz++) {
+//        for (unsigned gx = 0; gx < VERT_COUNT - 1; gx++) {
+//            int topLeft = (gz * VERT_COUNT) + gx;
+//            int topRight = topLeft + 1;
+//            int bottomLeft = ((gz + 1) * VERT_COUNT) + gx;
+//            int bottomRight = bottomLeft + 1;
+//
+//            model->links.push_back(topLeft);
+//            model->links.push_back(bottomLeft);
+//            model->links.push_back(topRight);
+//
+//            model->links.push_back(topRight);
+//            model->links.push_back(bottomLeft);
+//            model->links.push_back(bottomRight);
+//        }
+//    }
+//
+//    ilDeleteImage(src);
 
-    ILuint src = ilGenImage();
-    ilBindImage(src);
-    ilLoadImage(pathheightmap);
-    ILubyte * heightmap = ilGetData();
-    ILuint VERT_COUNT = ilGetInteger(IL_IMAGE_WIDTH);
+    Loader::load_obj_array("sample/obj/maps/first_terrain/test.obj", *model);
 
-    resolution = SIZE / (float) VERT_COUNT;
-
-    glm::vec3 tmp;
-    for(unsigned i = 0; i < VERT_COUNT; ++i) {
-        heights.emplace_back();
-        for(unsigned j = 0; j < VERT_COUNT; ++j) {
-            tmp.x = (float) j / ((float) VERT_COUNT - 1) * SIZE;
-            tmp.z = (float) i / ((float) VERT_COUNT - 1) * SIZE;
-            float height = get_height(j, i, heightmap);
-            tmp.y = height;
-            heights.at(i).push_back(height);
-
-            model->vertices.emplace_back(tmp.x, tmp.y, tmp.z);
-
-            tmp = calculate_normal(j, i, heightmap);
-
-            model->normals.emplace_back(tmp.x, tmp.y, tmp.z);
-
-            tmp.x = (float) j / ((float) VERT_COUNT - 1);
-            tmp.y = (float) i / ((float) VERT_COUNT - 1);
-            model->uvs.emplace_back(tmp.x, tmp.y);
-        }
-    }
-
-    for (unsigned gz = 0; gz < VERT_COUNT - 1; gz++) {
-        for (unsigned gx = 0; gx < VERT_COUNT - 1; gx++) {
-            int topLeft = (gz * VERT_COUNT) + gx;
-            int topRight = topLeft + 1;
-            int bottomLeft = ((gz + 1) * VERT_COUNT) + gx;
-            int bottomRight = bottomLeft + 1;
-
-            model->links.push_back(topLeft);
-            model->links.push_back(bottomLeft);
-            model->links.push_back(topRight);
-
-            model->links.push_back(topRight);
-            model->links.push_back(bottomLeft);
-            model->links.push_back(bottomRight);
-        }
-    }
-
-    ilDeleteImage(src);
-
-
-    glm::vec3 scale(1.f);
-
-    dynamicData.transform = glm::mat4(
-            scale.x, 0, 0, 0,
-            0, scale.y, 0, 0,
-            0, 0, scale.z, 0,
-            -SIZE/2.f + position.x, position.y, -SIZE/2.f + position.z, 1.f
+    dynamicData.scale = glm::vec3(1.f);
+    dynamicData.position = glm::vec3(
+            0,
+            20.f,
+            0
     );
+
+    dynamicData.update();
 
     renderer.setData(this);
 }
 
 Terrain::~Terrain() {
     heights.clear();
-    renderer.clean();
 }

@@ -50,11 +50,15 @@ namespace Loader {
         auto keys = root.getMemberNames();
 
         for(auto const& key : keys) {
-            if(!root[key].isArray()) {
+            auto node = root[key];
+            if ( node.isArray() ) {
+
+            } else if ( node.isObject() ) {
+
+            } else {
                 std::wstring ws(s_to_ws(converter, root[key].asString()));
                 data[key].push_back(ws);
             }
-
         }
 
         return data;

@@ -84,6 +84,11 @@ void GameState::gui_events() {
     guiManager->spread_events();
 }
 
+void GameState::set_guiManager(GuiManager *new_guiManager) {
+    delete guiManager;
+    guiManager = new_guiManager;
+}
+
 SGL_Node * GameState::get(const char *name) {
     return sgl->graph.at(name);
 }

@@ -28,34 +28,3 @@ void GuiManager::clear() {
     }
     guis.clear();
 }
-
-void GuiManager::spread_events() {
-    /* TODO: Déporter gestion events user side */
-    Keyboard keyboard = Keyboard::keyboard;
-
-//    int key_press = keyboard.action == GLFW_PRESS || keyboard.action == GLFW_REPEAT;
-
-    if( keyboard.key == GLFW_KEY_B && keyboard.action == GLFW_PRESS ) {
-        if ( keyboard.mods == GLFW_MOD_SHIFT ) {
-            guis.at("inventory")->hide();
-        } else {
-            guis.at("inventory")->show();
-        }
-    }
-
-    if( keyboard.key == GLFW_KEY_C && keyboard.action == GLFW_PRESS ) {
-        if ( keyboard.mods == GLFW_MOD_SHIFT ) {
-            guis.at("characterPanel")->hide();
-        } else {
-            guis.at("characterPanel")->show();
-        }
-    }
-
-    if( keyboard.key == GLFW_KEY_H && keyboard.action == GLFW_PRESS ) {
-        if ( keyboard.mods == GLFW_MOD_SHIFT ) {
-            guis.at("help")->hide();
-        } else {
-            guis.at("help")->show();
-        }
-    }
-}

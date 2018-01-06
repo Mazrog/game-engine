@@ -4,7 +4,7 @@
 
 #include "gui/elements/guibox.hpp"
 
-Guibox::Guibox(std::string const &tag, std::string const& title, const char * texturePath,
+Guibox::Guibox(std::string const &tag, std::wstring const& title, const char * texturePath,
                glm::vec2 const& position, glm::vec2 const& dimension, GLenum format) :
         GUI(tag, texturePath, format, format), guiRender() {
 
@@ -27,7 +27,9 @@ Guibox::Guibox(std::string const &tag, std::string const& title, const char * te
     set_anchor(position);
     set_dimension(dimension);
     update_dynamicData(position, dimension);
-    vert_flow += 1.5 * guiData.add_element("title", str_to_wstr(title)).y;
+    if( !title.empty() ) {
+        vert_flow += 1.5 * guiData.add_element("title", title).y;
+    }
 
 
     guiRender.setData(this);

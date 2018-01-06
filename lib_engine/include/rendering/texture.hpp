@@ -36,6 +36,7 @@ public:
     void bind() const;
     void bind(GLuint index) const;
     void send(int index, int slot = 0) const;
+    void disable();
 
     bool isActive() const { return !ids.empty(); }
 
