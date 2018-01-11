@@ -8,7 +8,9 @@
 #include <IL/il.h>
 
 #include "scenegraph/sg_logic.hpp"
-#include "renderEntity.hpp"
+#include "rendering/renderer/renderEntity.hpp"
+
+class GameState;
 
 using FloatGrid = std::vector<std::vector<float>>;
 
@@ -24,6 +26,8 @@ public:
             glm::vec3 const& position = glm::vec3(0.f));
 
     ~Terrain();
+
+    void load_terrain_from_file(const char * file, GameState * state);
 
     void render() override { renderer( dynamicData ); }
 

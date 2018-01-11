@@ -17,6 +17,9 @@ GameState::GameState(
 GameState::~GameState() {
     delete sgl;
     delete guiManager;
+    for ( auto & model : models ) {
+        delete model.second;
+    }
 }
 
 GameState::GameState(GameState && gs) :

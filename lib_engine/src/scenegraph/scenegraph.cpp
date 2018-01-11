@@ -6,11 +6,10 @@
 #include "scenegraph/scenegraph.hpp"
 
 
-DynamicData::DynamicData() {
-    transform = glm::mat4();
-    position = glm::vec3(0.0);
-    rotation = glm::vec3(0.0);
-    scale    = glm::vec3(1);
+DynamicData::DynamicData(glm::vec3 position,
+                         glm::vec3 rotation,
+                         glm::vec3 scale) : transform(), position(position), rotation(rotation), scale(scale) {
+    update();
 }
 
 void DynamicData::update() {

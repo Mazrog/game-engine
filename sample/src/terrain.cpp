@@ -2,7 +2,12 @@
 // Created by mazrog on 29/12/17.
 //
 
+#include <gamestate.hpp>
 #include "terrain.hpp"
+
+#include <jsoncpp/json/json.h>
+#include <fstream>
+#include <rendering/entity.hpp>
 
 float Terrain::get_height(unsigned x, unsigned z, ILubyte * heightmap) {
     ILuint bpp = ilGetInteger(IL_IMAGE_BYTES_PER_PIXEL);
@@ -38,8 +43,46 @@ float Terrain::get_height(float worldX, float worldZ) {
            heights.at(ipos.y).at(ipos.x) + .2f;
 }
 
-Terrain::Terrain(const char * pathheightmap,
-                 glm::vec3 const& position) {
+void Terrain::load_terrain_from_file(const char *file, GameState *state) {
+    Json::Value root = Loader::read_json(file);
+
+    Json::Value current = root["models"];
+    std::string path;
+
+    for( auto & dir : current.getMemberNames() ) {
+        path = dir;
+        if ( path.back() != '/' ) { path.push_back('/'); }
+        for ( auto const& model : current[dir] ) {
+            state->load_model(model.asString().c_str(), ( path + model.asString() + std::string(".obj") ).c_str());
+        }
+    }
+
+    unsigned i = 0;
+    glm::vec3 position, rotation, scale(1.f);
+    for( auto const& node : root["entities"] ) {
+        path = node["name"].asString();
+
+        unsigned j = 0;
+        for( Json::Value v : node["position"] ) {
+            position[j++] = v.asFloat();
+        }
+
+        j = 0;
+        for( Json::Value v : node["rotation"] ) {
+            rotation[j++] = v.asFloat();
+        }
+
+        j = 0;
+        for( Json::Value v : node["scale"] ) {
+            scale[j++] = v.asFloat();
+        }
+
+        state->bind(SG_NODE_TYPE::SG_STATIC, (path + std::to_string(i++)).c_str(), new Entity(path.c_str(), position, rotation, scale));
+    }
+}
+
+Terrain::Terrain(const char *,
+                 glm::vec3 const&) {
 //    ilInit();
 //
 //    ILuint src = ilGenImage();
@@ -92,13 +135,6 @@ Terrain::Terrain(const char * pathheightmap,
 //    ilDeleteImage(src);
 
     Loader::load_obj_array("sample/obj/maps/first_terrain/test.obj", *model);
-
-    dynamicData.scale = glm::vec3(1.f);
-    dynamicData.position = glm::vec3(
-            0,
-            20.f,
-            0
-    );
 
     dynamicData.update();
 

@@ -53,11 +53,11 @@ void Camera::update() {
     if( target ) {
         glm::vec3 target_pos = target->get_dynamic_data().position;
 
-        aim = target_pos + glm::vec3(0.f, 2.f, 0.f);
+        aim = target_pos + glm::vec3(0.f, 3.f, 0.f);
 
         pos = target_pos;
         pos.x -= dist_from_target;
-        pos.y = aim.y + dist_from_target * sinf(glm::radians(40.f));
+        pos.y = aim.y + dist_from_target * sinf(glm::radians(0.f));
 
     } else {
         glm::vec3 tengent = glm::normalize(pdt_vec(aim - pos, up));
@@ -166,11 +166,16 @@ void Camera::move() {
         move_backward();
     }
 
-    if( mouse.state_left == GLFW_PRESS ) {
-        std::cout << "kappa" << std::endl;
+    if ( mouse.click.button == GLFW_MOUSE_BUTTON_LEFT ) {
+      if ( mouse.click.action == GLFW_RELEASE ) {
+          last_click = {-1, -1};
+      } else {
+          if ( last_click.x < 0.f || last_click.y < 0.f ) {
+              last_click = { mouse.xpos, mouse.ypos };
+          } else {
+              std::cout << "kappa" << std::endl;
+          }
+      }
     }
 
-    if ( mouse.click.button == GLFW_MOUSE_BUTTON_LEFT && mouse.click.action == GLFW_PRESS ) {
-        std::cout << "press left" << std::endl;
-    }
 }

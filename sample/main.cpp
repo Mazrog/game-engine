@@ -6,8 +6,9 @@
 #include <engine.hpp>
 #include <base.hpp>
 #include <gui/elements/table.hpp>
+#include <rendering/entity.hpp>
 
-#include "renderEntity.hpp"
+#include "rendering/renderer/renderEntity.hpp"
 #include "rendering/light.hpp"
 #include "terrain.hpp"
 #include "character.hpp"
@@ -49,7 +50,8 @@ void main_game_guiEvents(GuiManager * gm, GameState *) {
 }
 
 void main_menu_guiEvents(GuiManager * gm, GameState *) {
-    Keyboard keyboard = Keyboard::keyboard;
+    Keyboard keyboard   = Keyboard::keyboard;
+    Mouse  mouse        = Mouse::mouse;
 
     if( keyboard.key == GLFW_KEY_C && keyboard.action == GLFW_PRESS ) {
         if ( keyboard.mods == GLFW_MOD_SHIFT ) {
@@ -58,6 +60,25 @@ void main_menu_guiEvents(GuiManager * gm, GameState *) {
             gm->get_guis().at("aalayer")->show();
         }
     }
+
+    if( keyboard.key == GLFW_KEY_V && keyboard.action == GLFW_PRESS ) {
+        if ( keyboard.mods == GLFW_MOD_SHIFT ) {
+            gm->get_guis().at("classes_tree")->hide();
+        } else {
+            gm->get_guis().at("classes_tree")->show();
+        }
+    }
+
+    if( keyboard.key == GLFW_KEY_B && keyboard.action == GLFW_PRESS ) {
+        if ( keyboard.mods == GLFW_MOD_SHIFT ) {
+            gm->get_guis().at("model_viewer")->hide();
+        } else {
+            gm->get_guis().at("model_viewer")->show();
+        }
+    }
+
+    /*  */
+
 }
 
 void main_menu_init(GameState * self) {
@@ -84,11 +105,27 @@ void main_menu_init(GameState * self) {
 
     auto * content = new Guibox("content", L"");
 
+    /* Right Sidebar */
+
+
+    /* Race chooser */
     for(unsigned i = 0; i < kappa.size(); ++i ) {
         content->add(new Button("", kappa.at(i), "sample/img/gui/green_cell.png", glm::vec2(-1.f + (i * 392.0_hpx), 1.f),
                                    glm::vec2(392.0_hpx, 135.0_vpx), 36, fontColor, GL_RGBA), false);
     }
 
+    /* Classes Tree */
+    auto * class_tree = new Guibox("class_tree", L"Classes", "sample/img/gui/green_cell.png", glm::vec2(-1.f, 1.f - 135.0_vpx),
+                                   glm::vec2(705.0_hpx, 915.0_vpx), GL_RGBA);
+
+    content->add(class_tree, false);
+
+    /* Model Viewer */
+    auto * model_viewer = new Guibox("model_viewer", L"", "sample/img/gui/green_cell.png",
+                                     glm::vec2(-1.f + 705.0_hpx, 1.f - 135.0_vpx),
+                                     glm::vec2(470.0_hpx, 915.0_vpx), GL_RGBA);
+
+    content->add(model_viewer, false);
 
     /* ---------------------- */
     menu->show();
@@ -150,6 +187,10 @@ int main_game_loop(GameState * self) {
         return 2;
     }
 
+    if ( keyboard.key == GLFW_KEY_RIGHT ) {
+        rotate(self->get("tree")->get_dynamic_data().transform, 1.f, glm::vec3(0, 1, 0));
+    }
+
     self->get("player")->move();
     self->get_as_camera("main_camera")->move();
 
@@ -166,6 +207,7 @@ void main_game_init(GameState * self) {
     auto terrain = new Terrain("sample/img/thin_height_map.png");
     auto player = new Character("elf", terrain);
 
+    terrain->load_terrain_from_file("sample/assets/first.json", self);
 
     /* SkyBox(es) */
     auto skybox = new Skybox("day_1", "sample/img/skybox/sky_1");
@@ -223,7 +265,6 @@ void main_game_exit(GameState * self) {
     }
 }
 
-
 int main() {
     Engine::init();
 
@@ -234,7 +275,6 @@ int main() {
     ),
     *pause = new GameState( paused_game, [] (GameState *) {}, [] (GameState *) {} ),
     *main_menu = new GameState(main_menu_loop, main_menu_init, [] ( GameState * ) {});
-
 
     Engine::add_states(game, pause, main_menu);
     Engine::start();

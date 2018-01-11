@@ -36,11 +36,14 @@ set(LIB_SRC
         lib_engine/src/rendering/program.cpp
         lib_engine/src/rendering/texture.cpp
         lib_engine/src/rendering/model.cpp
+        lib_engine/src/rendering/entity.cpp
 
         lib_engine/src/rendering/structs/uniform.cpp
         lib_engine/src/rendering/structs/ssbuffer.cpp
         lib_engine/src/rendering/structs/vao.cpp
         lib_engine/src/rendering/structs/vbo.cpp
+
+        lib_engine/src/rendering/renderer/renderEntity.cpp
 
         lib_engine/src/events/mouse.cpp
         lib_engine/src/events/keyboard.cpp
@@ -107,7 +110,6 @@ set(EXEC_SRC_FILES
 
         sample/src/gui/guiManagers/mainGuiManager.cpp
 
-        sample/rendering/renderEntity.cpp
         sample/rendering/terrainRender.cpp
         sample/rendering/skyboxRender.cpp
 )

@@ -6,7 +6,7 @@
 #define ENGINE_CHARACTER_HPP
 
 #include "terrain.hpp"
-#include "renderEntity.hpp"
+#include "rendering/renderer/renderEntity.hpp"
 
 class Character : public SGL_Node {
 public:

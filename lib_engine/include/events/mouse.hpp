@@ -25,8 +25,6 @@ public:
     double            xpos;
     double            ypos;
 
-    int               state_left;
-
     struct Click {
         int     button;
         int     action;

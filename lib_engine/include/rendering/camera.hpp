@@ -12,6 +12,8 @@
 #include "scenegraph/sg_logic.hpp"
 #include "utils.hpp"
 
+using Point = glm::vec2;
+
 enum CAM_DIR : unsigned short {
     UP,
     RIGHT,
@@ -104,6 +106,9 @@ private:
     /* Target and following options */
     SGL_Node    * target;
     float         dist_from_target;
+
+    /* Mouse commands */
+    Point last_click;
 };
 
 

@@ -16,9 +16,7 @@ SGL_Node::SGL_Node(const char * model_name, int dr_order) :
     model = Engine::engine.get_controller().get_current_state()->get_models().at(model_name);
 }
 
-SGL_Node::~SGL_Node() {
-    delete model;
-}
+SGL_Node::~SGL_Node() {}
 
 bool SGL_Node::operator<(SGL_Node && b) { return draw_order < b.draw_order; }
 

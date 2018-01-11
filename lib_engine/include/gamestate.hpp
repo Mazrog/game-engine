@@ -7,7 +7,7 @@
 
 
 #include <functional>
-
+#include "gui/guiManager.hpp"
 #include "scenegraph/sg_logic.hpp"
 
 
