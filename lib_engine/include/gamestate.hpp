@@ -9,7 +9,7 @@
 #include <functional>
 #include "gui/guiManager.hpp"
 #include "scenegraph/sg_logic.hpp"
-
+#include "rendering/renderPass.hpp"
 
 using MapModel = std::map<std::string, Model *>;
 
@@ -69,6 +69,10 @@ protected:
     SGL         * sgl;
     MapModel      models;
     GuiManager  * guiManager;
+
+    std::vector<RenderGroup *>      renderGroups;
+    std::vector<RenderPass *>       renderPasses;
+    std::map<std::string, Fbo *>    fbos;
 
     /* Properties */
     bool        hasBeenInit;

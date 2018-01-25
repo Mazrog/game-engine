@@ -77,7 +77,7 @@ public:
     void move_forward();
     void move_backward();
 
-    void move_aim(cref<short> direction);
+    void move_aim(short direction);
 
     /* ------------------------------------------- */
 private:

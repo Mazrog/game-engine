@@ -217,7 +217,7 @@ void main_game_init(GameState * self) {
     Camera * camera = new Camera(glm::vec3(50, 50, 50), glm::vec3(0, 50, 0));
     camera->bind_camera(RenderEntity::prog.getProgId(),
                         SkyboxRender::prog.getProgId());
-//    camera->follow(player);
+    camera->follow(player);
 
     Light * sun = new Light(glm::vec3(20.f, 100.f, 20.f), glm::vec3(.788f, .886f, 1.f));
     sun->bind_light(RenderEntity::prog.getProgId());

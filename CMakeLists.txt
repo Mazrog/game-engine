@@ -37,11 +37,14 @@ set(LIB_SRC
         lib_engine/src/rendering/texture.cpp
         lib_engine/src/rendering/model.cpp
         lib_engine/src/rendering/entity.cpp
+        lib_engine/src/rendering/renderPass.cpp
+        lib_engine/src/rendering/renderGroup.cpp
 
         lib_engine/src/rendering/structs/uniform.cpp
         lib_engine/src/rendering/structs/ssbuffer.cpp
         lib_engine/src/rendering/structs/vao.cpp
         lib_engine/src/rendering/structs/vbo.cpp
+        lib_engine/src/rendering/structs/fbo.cpp
 
         lib_engine/src/rendering/renderer/renderEntity.cpp
 

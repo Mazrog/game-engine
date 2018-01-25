@@ -10,10 +10,10 @@ CharacterPanel::CharacterPanel(SGL_Node * character) :
         Guibox("characterPanel", L"Personnage", "sample/img/black.png",
                glm::vec2(-1.f, .55f), glm::vec2(.7f, 1.2f)), character(character) {
 
-    auto * equipment = new Guibox("equip", L"", "sample/img/height_map.png", glm::vec2(-1.f, 1.f), glm::vec2(.7f, .9f));
+    auto * equipment = new Guibox("equip", L"", "sample/img/white.png", glm::vec2(-1.f, 1.f), glm::vec2(.7f, .9f));
     add(equipment);
 
-    auto * caracs = new Table("caracs", "Caractéristiques", 5, 4, nullptr, glm::vec2(-1.f, -.2f), glm::vec2(.7f, 1.2f));
+    auto * caracs = new Table("caracs", L"Caractéristiques", 5, 4, nullptr, glm::vec2(-1.f, -.2f), glm::vec2(.7f, 1.2f));
     caracs->add_cell(0, new TextBlock("", L"Force"));
     caracs->add_cell(0, new TextBlock("", L" : 12"));
     caracs->add_cell(0, new TextBlock("", L"Dextérité"));

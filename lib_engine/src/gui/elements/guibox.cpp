@@ -29,6 +29,7 @@ Guibox::Guibox(std::string const &tag, std::wstring const& title, const char * t
     update_dynamicData(position, dimension);
     if( !title.empty() ) {
         vert_flow += 1.5 * guiData.add_element("title", title).y;
+        vert_flow += 0.01f;
     }
 
 

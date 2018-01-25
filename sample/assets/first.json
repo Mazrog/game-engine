@@ -23,6 +23,8 @@
 		{ "name": "ironforgepine01", "position": [ 60, 0, 400 ] },
 		{ "name": "ironforgepine01", "position": [ 99, 0, 450 ] },
 
+		{ "name": "statue", "position": [ 50, 0, 50 ], "scale": [10, 10, 10] },
+
 		{ "name": "ironforgepine02", "position": [ -35, 0, -100 ] },
 		{ "name": "ironforgepine02", "position": [ -120, 0, -70 ] },
 		{ "name": "ironforgepine02", "position": [ -75, 0, 0 ] },

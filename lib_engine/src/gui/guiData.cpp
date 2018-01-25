@@ -21,7 +21,7 @@ Dimension GuiData::add_element(const char *tag, std::wstring const& text, unsign
     auto * elem = new TextElement(text, font_size, font_color);
     guiContent.insert({tag, elem});
 
-    return Text::preview_text(0, font_size, L"A");
+    return Text::preview_text(0, font_size, text);
 }
 
 std::wstring str_to_wstr(std::string const& text) {

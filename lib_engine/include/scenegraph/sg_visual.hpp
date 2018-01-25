@@ -24,5 +24,4 @@ public:
     std::vector<GUI *>           guis;
 };
 
-
 #endif //ENGINE_SG_VISUAL_HPP

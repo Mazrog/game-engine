@@ -161,7 +161,7 @@ Dimension Text::preview_text(unsigned fontIndex, unsigned fontSize, std::wstring
         cur_y += (g->advance.y / 64.f) * sy;
     }
     dimension.x = ( cur_x > dimension.x ) ? cur_x : dimension.x;
-    dimension.y = max_width;
+    dimension.y = 0.07;
 
     return dimension;
 }

@@ -104,7 +104,7 @@ void Camera::move_backward() {
     updated = true;
 }
 
-void Camera::move_aim(const short &direction) {
+void Camera::move_aim(short direction) {
     /* Move yaw, pitch, roll */
     int v_sign = 0,
         h_sign = 0;

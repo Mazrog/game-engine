@@ -12,7 +12,7 @@ using Grid = std::vector<std::vector<GUI *>>;
 
 class Table : public GUI {
 public:
-    Table(std::string const& tag, std::string const& title = "", unsigned rows = 0, unsigned cols = 0, const char * texturePath = nullptr,
+    Table(std::string const& tag, std::wstring const& title = L"", unsigned rows = 0, unsigned cols = 0, const char * texturePath = nullptr,
             glm::vec2 position = glm::vec2(-1.f, 1.f),
             glm::vec2 dimension = glm::vec2(1.f),
             GLenum format = GL_RGB);

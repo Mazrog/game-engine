@@ -4,7 +4,7 @@
 
 #include "gui/elements/table.hpp"
 
-Table::Table(std::string const &tag, std::string const& title, unsigned rows, unsigned cols,
+Table::Table(std::string const &tag, std::wstring const& title, unsigned rows, unsigned cols,
              const char *texturePath, glm::vec2 position, glm::vec2 dimension, GLenum format) :
         GUI(tag, texturePath, format, format) {
     model->vertices.emplace_back(-1.f, 1.f, 0);
@@ -30,7 +30,7 @@ Table::Table(std::string const &tag, std::string const& title, unsigned rows, un
     set_anchor(position);
     set_dimension(dimension);
     update_dynamicData();
-    vert_flow += guiData.add_element("title", str_to_wstr(title)).y;
+    vert_flow += guiData.add_element("title", title).y;
 
     col_sizes.assign(max_col, guiData.dimension.x / (float) max_col);
 
@@ -95,14 +95,14 @@ void Table::render() {
         for( auto & row : grid ) {
             max_height = 0.f;
             indice = 0;
+            point.x = guiData.anchor.x;
+            point.y -= max_height;
             for( auto & cell : row ) {
                 cell->set_anchor(point);
                 cell->render();
                 point.x += col_sizes.at(indice++);
                 max_height = ( cell->get_content_dimension().y > max_height ) ? cell->get_content_dimension().y : max_height;
             }
-            point.x = guiData.anchor.x;
-            point.y -= max_height;
         }
     }
 }

@@ -17,7 +17,7 @@ Display::Display() : window_width(1680), window_height(1050) {
 
     glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 4);
     glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
-    glfwWindowHint(GLFW_DEPTH_BITS, 8);
+    glfwWindowHint(GLFW_DEPTH_BITS, 24);
 }
 
 Display::~Display() {
