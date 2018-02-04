@@ -5,19 +5,26 @@
 #ifndef ENGINE_RENDERPASS_HPP
 #define ENGINE_RENDERPASS_HPP
 
+#include <functional>
 #include "renderGroup.hpp"
 #include "structs/fbo.hpp"
 
 class RenderPass {
 public:
-    RenderPass();
+    RenderPass(RenderGroup * renderGroup = nullptr, VoidFunc const& prepareFunction = [] {});
     ~RenderPass();
 
     void prepare();
-    void render();
+    void render(Camera * camera);
+
+    void setRenderGroup(RenderGroup * renderGroup) { group = renderGroup; }
+    void setRenderPrepareFunction(VoidFunc const& prepareFunction) { prepareFunc = prepareFunction; }
 
 private:
-    RenderGroup group;
+    VoidFunc prepareFunc;
+
+    RenderGroup     * group;
+    Fbo             * fbo;
 };
 
 

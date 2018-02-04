@@ -8,8 +8,10 @@
 
 class Fbo {
 public:
-    Fbo();
-    ~Fbo();
+    Fbo() {};
+    ~Fbo() {};
+
+    void bind() {};
 
 private:
 

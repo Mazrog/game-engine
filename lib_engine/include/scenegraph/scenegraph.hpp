@@ -18,8 +18,7 @@ enum class SG_NODE_TYPE : unsigned {
     SG_STATIC,
     SG_DYNAMIC,
     SG_CAMERA,
-    SG_LIGHT,
-    SG_FORCE
+    SG_LIGHT
 };
 
 struct DynamicData{

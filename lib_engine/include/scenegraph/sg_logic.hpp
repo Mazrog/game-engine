@@ -6,6 +6,7 @@
 #define ENGINE_SG_LOGIC_HPP
 
 #include <set>
+#include <functional>
 
 #include "scenegraph.hpp"
 #include "rendering/model.hpp"
@@ -13,7 +14,8 @@
 /* Forward declarations */
 class Camera;
 class SGL;
-
+class RenderPass;
+class RenderGroup;
 /* --------------------- */
 
 class SGL_Node {
@@ -38,26 +40,35 @@ protected:
     DynamicData       dynamicData;
 };
 
-
+/* Usings */
+using VoidFunc = std::function<void()>;
+using RenderPasses = std::vector<RenderPass *>;
+using EntityGroup = std::map<std::string, SGL_Node *>;
+/* --------------------- */
 
 class SGL {
 public:
     SGL();
     ~SGL();
 
-    void bind(SG_NODE_TYPE type, const char * name, SGL_Node * node);
+    void bind(SG_NODE_TYPE type, const char * name, SGL_Node * node, unsigned renderGroupID);
     void load_model(const char * tag, const char * file);
+
+    /* We either add a complete renderPass */
+    void addRenderPass(RenderPass * renderPass);
+
+    /* Or we build one in place and fill it afterwards */
+    void makeRenderPass(VoidFunc const& prepareFunction);
+    void setRenderPassPrepareFunction(unsigned id, VoidFunc const& prepareFunction);
+    void setRenderPassRenderGroup(unsigned idPass, unsigned idGroup);
 
     void clear();
 
     /* Attributs */
-    unsigned                                        current_camera;
-
-    std::vector<Camera *>                           cameras;
-
-    std::map<std::string, SGL_Node *>               graph;
-    std::map<SG_NODE_TYPE, std::vector<SGL_Node *>> nodes;
-    std::set<SGL_Node *>                            rendering_order;
+    std::vector<RenderGroup *>    renderGroup;
+    RenderPasses                  renderPasses;
+    Camera                      * camera;
+    EntityGroup                   graph;
 };
 
 

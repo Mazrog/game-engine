@@ -8,15 +8,14 @@
 #include <map>
 #include "scenegraph/sg_logic.hpp"
 
-using EntityGroup = std::map<std::string, SGL_Node *>;
-
-
 class RenderGroup {
 public:
     RenderGroup();
     ~RenderGroup();
 
-    void bind();
+    void add(const char * name, SGL_Node * node);
+
+    void render();
 
 private:
     EntityGroup     group;

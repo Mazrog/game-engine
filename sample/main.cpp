@@ -10,6 +10,7 @@
 
 #include "rendering/renderer/renderEntity.hpp"
 #include "rendering/light.hpp"
+#include "rendering/camera.hpp"
 #include "terrain.hpp"
 #include "character.hpp"
 
@@ -87,7 +88,7 @@ void main_menu_init(GameState * self) {
 
     /* Character Buffer */
     auto * character = new Character("elf", nullptr);
-    self->bind(SG_NODE_TYPE::SG_STATIC, "character", character);
+    self->bind(SG_NODE_TYPE::SG_STATIC, "character", character, 0);
 
 
     /* GUIS */
@@ -192,7 +193,7 @@ int main_game_loop(GameState * self) {
     }
 
     self->get("player")->move();
-    self->get_as_camera("main_camera")->move();
+    self->get_camera()->move();
 
     self->gui_events();
 
@@ -211,7 +212,7 @@ void main_game_init(GameState * self) {
 
     /* SkyBox(es) */
     auto skybox = new Skybox("day_1", "sample/img/skybox/sky_1");
-    self->bind(SG_NODE_TYPE::SG_STATIC, "skybox", skybox);
+    self->bind(SG_NODE_TYPE::SG_STATIC, "skybox", skybox, 0);
 
     /* Misc : Cameras and lights */
     Camera * camera = new Camera(glm::vec3(50, 50, 50), glm::vec3(0, 50, 0));
@@ -224,10 +225,10 @@ void main_game_init(GameState * self) {
 
 
     /* Binding */
-    self->bind(SG_NODE_TYPE::SG_CAMERA, "main_camera", camera);
-    self->bind(SG_NODE_TYPE::SG_LIGHT, "sun", sun);
-    self->bind(SG_NODE_TYPE::SG_STATIC, "terrain", terrain);
-    self->bind(SG_NODE_TYPE::SG_DYNAMIC, "player", player);
+    self->bind(SG_NODE_TYPE::SG_CAMERA, "main_camera", camera, 0);
+    self->bind(SG_NODE_TYPE::SG_LIGHT, "sun", sun, 0);
+    self->bind(SG_NODE_TYPE::SG_STATIC, "terrain", terrain, 0);
+    self->bind(SG_NODE_TYPE::SG_DYNAMIC, "player", player, 0);
 
     /* Loading GUI */
     auto * inventory = new Guibox("inventory", L"Inventaire",
@@ -260,9 +261,9 @@ C : Informations personnage\nH : Aide\nB : Inventaire"
 }
 
 void main_game_exit(GameState * self) {
-    for(auto & pair: self->get_sgl()->graph) {
-        delete pair.second;
-    }
+//    for(auto & pair: self->get_sgl()->graph) {
+//        delete pair.second;
+//    }
 }
 
 int main() {

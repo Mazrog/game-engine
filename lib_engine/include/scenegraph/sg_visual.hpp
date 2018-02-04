@@ -6,22 +6,20 @@
 #define ENGINE_SG_VISUAL_HPP
 
 #include "sg_logic.hpp"
-#include "rendering/camera.hpp"
 #include "gui/guiManager.hpp"
+#include "rendering/renderPass.hpp"
 
 class SGV {
 public:
-    SGV(SGL * const& sgl, GuiManager * guiManager);
+    SGV(SGL * sgl, GuiManager * guiManager);
 
     void render();
     void clear();
 
     /* Attributs */
-    std::vector<SGL_Node *>      nodes;
-    unsigned                     current_camera;
-    std::vector<Camera *>      * cameras;
-
-    std::vector<GUI *>           guis;
+    RenderPasses              renderPasses;
+    Camera                  * camera;
+    std::vector<GUI *>        guis;
 };
 
 #endif //ENGINE_SG_VISUAL_HPP

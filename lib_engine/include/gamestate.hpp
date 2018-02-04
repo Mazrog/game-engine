@@ -42,7 +42,7 @@ public:
     void save_state();
 
     /* FONCTIONS EXPOSURE */
-    void bind(SG_NODE_TYPE type, const char * name, SGL_Node * node);
+    void bind(SG_NODE_TYPE type, const char *name, SGL_Node *node, unsigned renderGroupID);
     void clear();
     void load_model(const char * tag, const char * file);
 
@@ -54,7 +54,7 @@ public:
 
     /* Element getters */
     SGL_Node * get(const char * name);
-    Camera   * get_as_camera(const char * name);
+    Camera   * get_camera();
 
     /* GETTERS */
     SGL * const& get_sgl() const { return sgl; }
@@ -70,9 +70,7 @@ protected:
     MapModel      models;
     GuiManager  * guiManager;
 
-    std::vector<RenderGroup *>      renderGroups;
-    std::vector<RenderPass *>       renderPasses;
-    std::map<std::string, Fbo *>    fbos;
+    RenderPasses    renderPasses;
 
     /* Properties */
     bool        hasBeenInit;

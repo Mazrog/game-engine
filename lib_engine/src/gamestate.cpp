@@ -4,6 +4,7 @@
 
 #include "engine.hpp"
 #include "gamestate.hpp"
+#include "rendering/camera.hpp"
 
 /* Classe State */
 GameState::GameState(
@@ -67,8 +68,8 @@ void GameState::clear() {
     guiManager->clear();
 }
 
-void GameState::bind(SG_NODE_TYPE type, const char * name, SGL_Node *node) {
-    sgl->bind(type, name, node);
+void GameState::bind(SG_NODE_TYPE type, const char *name, SGL_Node *node, unsigned renderGroupID) {
+    sgl->bind(type, name, node, renderGroupID);
 }
 
 void GameState::load_model(const char *tag, const char *file) {
@@ -96,6 +97,6 @@ SGL_Node * GameState::get(const char *name) {
     return sgl->graph.at(name);
 }
 
-Camera * GameState::get_as_camera(const char *name) {
-    return dynamic_cast<Camera *>(sgl->graph.at(name));
+Camera * GameState::get_camera() {
+    return sgl->camera;
 }

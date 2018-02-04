@@ -4,34 +4,19 @@
 
 #include "scenegraph/sg_visual.hpp"
 
-SGV::SGV(SGL * const& sgl, GuiManager * guiManager) :
-                      current_camera(sgl->current_camera),
-                      cameras(&sgl->cameras) {
-    for(auto const& elem : sgl->rendering_order){ nodes.push_back(elem); }
+SGV::SGV(SGL * sgl, GuiManager * guiManager) : renderPasses(sgl->renderPasses), camera(sgl->camera) {
     for(auto const& pair : guiManager->get_guis()){ guis.push_back(pair.second); }
 }
 
 void SGV::clear() {
-    nodes.clear();
-    cameras->clear();
     guis.clear();
-    current_camera = 0;
+    renderPasses.clear();
 }
 
 void SGV::render(){
-    if(!nodes.empty()) {
-        /* Sending the current camera information to the programs */
-        if (current_camera < cameras->size()) {
-            cameras->at(current_camera)->render();
-        }
-
-        glEnable(GL_DEPTH_TEST); get_error("enable depth");
-        glEnable(GL_CULL_FACE); get_error("enable cull");
-        glCullFace(GL_BACK); get_error("cull both");
-        /* Then rendering all the static and dynamic nodes following the rendering order */
-        for (auto &node : nodes) {
-            node->render();
-        }
+    glEnable(GL_DEPTH_TEST); get_error("enabling depth test");
+    for(auto const& renderPass: renderPasses) {
+        renderPass->render(camera);
     }
 
     if ( !guis.empty() ) {

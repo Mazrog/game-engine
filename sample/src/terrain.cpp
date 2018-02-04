@@ -77,7 +77,8 @@ void Terrain::load_terrain_from_file(const char *file, GameState *state) {
             scale[j++] = v.asFloat();
         }
 
-        state->bind(SG_NODE_TYPE::SG_STATIC, (path + std::to_string(i++)).c_str(), new Entity(path.c_str(), position, rotation, scale));
+        state->bind(SG_NODE_TYPE::SG_STATIC, (path + std::to_string(i++)).c_str(),
+                    new Entity(path.c_str(), position, rotation, scale), 0);
     }
 }
 
